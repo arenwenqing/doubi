@@ -2,7 +2,7 @@ export const LangPkg: any = {
   'zh': {
     success: {
       btn: '返回',
-      title: '成功',
+      title: '成功2',
       content: '购买完毕，如有任何疑问，请与客服联系'
     },
     fail: {
@@ -14,7 +14,7 @@ export const LangPkg: any = {
   'zh-CN': {
     success: {
       btn: '返回',
-      title: '成功',
+      title: '成功2',
       content: '购买完毕，如有任何疑问，请与客服联系'
     },
     fail: {
@@ -80,10 +80,10 @@ export const LangPkg: any = {
       content: 'Compra completada, si tiene alguna pregunta, comuníquese con el servicio al cliente.'
     },
     fail: {
-      btn: 'atrás',
+      btn: 'atrás1',
       title: 'fracaso',
       content: 'Pago fallido. Si tiene alguna pregunta, por favor póngase en contacto con el servicio al cliente.'
     }
   }
-}
-export const language = ['zh','zh-CN', 'en', 'pt-PT', 'pt', 'es-ES', ]
+};
+export const language = ['zh','zh-CN', 'en', 'pt-PT', 'pt', 'es-ES' ];

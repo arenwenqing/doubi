@@ -2,15 +2,13 @@
   "name": "doubi",
   "version": "1.1.2",
   "description": "中台金融支付落地页",
-  "main": "lib/index.js",
-  "module": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/arenwenqing/doubi.git"
   },
   "scripts": {
     "start": "webpack serve --config ./config/webpack.dev.config.js",
-    "build": "webpack --config ./config/webpack.prod.config.js",
+    "build": "webpack --config ./config/webpack.prod.config.js --env production --progress",
     "version:patch": "npm version patch",
     "version:minor": "npm version minor",
     "version:major": "npm version major",
@@ -40,7 +38,8 @@
     "@types/node": "^18.7.18",
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6",
-    "@typescript-eslint/parser": "^5.37.0",
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/parser": "^5.42.1",
     "axios-service": "^1.4.4",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
@@ -49,6 +48,7 @@
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "confusing-browser-globals": "^1.0.10",
     "css-loader": "^5.2.7",
+    "css-minimizer-webpack-plugin": "^4.2.2",
     "error-overlay-webpack-plugin": "^1.0.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
@@ -63,7 +63,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-standard": "^5.0.0",
     "eslint-webpack-plugin": "^3.0.1",
-    "html-webpack-plugin": "^5.3.1",
+    "html-webpack-plugin": "^5.5.0",
     "less": "^4.1.1",
     "less-loader": "^8.1.1",
     "mini-css-extract-plugin": "^1.5.0",
@@ -75,7 +75,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.3",
-    "react-router-dom": "^5.2.0",
+    "react-router-dom": "^6.4.3",
     "style-loader": "^2.0.0",
     "ts-loader": "^9.3.1",
     "tsconfig-paths-webpack-plugin": "^4.0.0",
@@ -90,10 +90,37 @@
     "axios": ">0.15.0",
     "react": ">=16.8.0"
   },
+  "eslintConfig": {
+    "parser": "babel-eslint"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "chrome": "49",
+          "ios": "9"
+        }
+      }
+    ],
+    "plugins": [
+      [
+        "import",
+        {
+          "libraryName": "antd-mobile",
+          "libraryDirectory": "es/components",
+          "style": false
+        }
+      ]
+    ]
+  },
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "dependencies": {
+    "antd-mobile": "^5.25.1"
+  }
 }
