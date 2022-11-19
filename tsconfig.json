@@ -12,11 +12,16 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "module": "esnext",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "noEmit": false,
+    "skipLibCheck": true,
     "target": "es5",// 转化成的目标语言
     "baseUrl": ".",
-    "types": [
-      "node"
-    ],
+    // "types": [
+    //   "node"
+    // ],
     "typeRoots": [
       "./node_modules/@types"
     ],
@@ -26,7 +31,7 @@
       "es2015"
     ],
     "jsx": "react",
-    "allowJs": false
+    "allowJs": true
   },
   "include": [
     "src/**/*.ts",
@@ -38,38 +43,3 @@
     "*.test.ts"
   ]
 }
-
-// {
-//   "compilerOptions": {
-//     "baseUrl": ".",
-//     "paths": {
-//       "@src": [
-//         "src"
-//       ],
-//     },
-//     "target": "es5",
-//     "lib": [
-//       "dom",
-//       "dom.iterable",
-//       "esnext"
-//     ],
-//     "allowJs": true,
-//     "skipLibCheck": true,
-//     "esModuleInterop": true,
-//     "allowSyntheticDefaultImports": true,
-//     "strict": true,
-//     "forceConsistentCasingInFileNames": true,
-//     "noFallthroughCasesInSwitch": true,
-//     "module": "esnext",
-//     "moduleResolution": "node",
-//     "resolveJsonModule": true,
-//     "isolatedModules": true,
-//     "noEmit": false,
-//     "jsx": "react-jsx",
-//     "declaration": true,
-//   },
-//   // "extends": "./tsconfig.paths.json",
-//   "include": [
-//     "src"
-//   ]
-// }

@@ -1,8 +1,13 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import { Button, Tabs } from 'antd-mobile'
+import Api from './apis'
 import './index.css'
 
 const Home: React.FC = () => {
+  useEffect(() => {
+    Api.getUser()
+  }, [])
+
   return <Suspense fallback='加载中...'>
     <div className='home-page'>
       这是首页

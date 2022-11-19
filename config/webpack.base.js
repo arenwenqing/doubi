@@ -47,7 +47,8 @@ module.exports = {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: {
       src: path.resolve(__dirname, '../src'),
-      pages: path.resolve(__dirname, '../src/pages')
+      pages: path.resolve(__dirname, '../src/pages'),
+      requestConfig: path.resolve(__dirname, '../requestConfig')
     },
     plugins: [new TsconfigPathsPlugin({
       configFile: path.resolve(__dirname, '../tsconfig.json'),
