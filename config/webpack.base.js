@@ -32,8 +32,9 @@ const getStyleLoaders = () => {
               minPixelValue: 1, // 默认值1，小于或等于1px则不进行转换
               mediaQuery: true, // 是否在媒体查询的css代码中也进行转换，默认false
               replace: true, // 是否转换后直接更换属性值
-              // exclude: [/node_modules/], // 设置忽略文件，用正则做目录名匹配
-              include: /\/src\//, // 设置仅转换/src/mobile/下的文件
+              exclude: [/node_module/],
+              // exclude: /\/node_modules\//, // 设置忽略文件，用正则做目录名匹配
+              // include: /\/src\//, // 设置仅转换/src/下的文件
               landscape: false // 是否处理横屏情况
             }
           ]
@@ -47,7 +48,7 @@ module.exports = {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: {
       src: path.resolve(__dirname, '../src'),
-      pages: path.resolve(__dirname, '../src/pages'),
+      '@pages': path.resolve(__dirname, '../src/pages'),
       requestConfig: path.resolve(__dirname, '../requestConfig')
     },
     plugins: [new TsconfigPathsPlugin({
@@ -77,7 +78,7 @@ module.exports = {
       },
       {
         test: /.less$/,
-        exclude: /node_modules/,
+        // exclude: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
           // 'style-loader',

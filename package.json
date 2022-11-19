@@ -1,7 +1,7 @@
 {
   "name": "doubi",
   "version": "1.1.2",
-  "description": "中台金融支付落地页",
+  "description": "抖",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/arenwenqing/doubi.git"
@@ -18,14 +18,12 @@
     "analyze": "npm run build --analyze"
   },
   "keywords": [
-    "金融支付",
-    "落地页"
   ],
   "types": "./lib/types/index.d.ts",
   "files": [
     "lib"
   ],
-  "author": "gugf",
+  "author": "renwenqing",
   "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.13.16",
@@ -68,6 +66,7 @@
     "less-loader": "^8.1.1",
     "mini-css-extract-plugin": "^1.5.0",
     "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-import": "^15.0.0",
     "postcss-loader": "^7.0.1",
     "postcss-preset-env": "^7.8.2",
     "postcss-px-to-viewport": "git+https://github.com/evrone/postcss-px-to-viewport.git",

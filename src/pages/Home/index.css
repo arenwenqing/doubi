@@ -1,7 +1,0 @@
-:root {
-  --color-ren: red;
-}
-.home-page {
-  font-size: 30px;
-  color: var(--color-ren);
-}
