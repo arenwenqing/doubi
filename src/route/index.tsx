@@ -1,13 +1,13 @@
 import React from 'react'
 import { useRoutes, Navigate } from 'react-router-dom'
 import Home from '../pages/Home'
-import Test from '../pages/Test'
+import Login from '@pages/Login'
 
 const ComponentAppRoute = () => {
   const routes = useRoutes([
     { path: '/', element: <Navigate to='/home' />},
     { path: '/home', element: <Home /> },
-    { path: '/test', element: <Test /> }
+    { path: '/login', element: <Login /> }
   ])
   return routes
 }
