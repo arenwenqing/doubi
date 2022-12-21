@@ -48,6 +48,7 @@ module.exports = {
     alias: {
       src: path.resolve(__dirname, '../src'),
       '@pages': path.resolve(__dirname, '../src/pages'),
+      '@components': path.resolve(__dirname, '../src/pages/Component'),
       requestConfig: path.resolve(__dirname, '../requestConfig')
     },
     plugins: [new TsconfigPathsPlugin({
@@ -82,8 +83,8 @@ module.exports = {
           MiniCssExtractPlugin.loader,
           // 'style-loader',
           'css-loader',
-          'less-loader',
-          getStyleLoaders()
+          getStyleLoaders(),
+          'less-loader'
         ]
       }
     ]

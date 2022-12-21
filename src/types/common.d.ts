@@ -1,12 +1,12 @@
 declare namespace CommonType {
-  type ItemType = {
+  interface ItemType {
     name: string
     value: string | boolean
     label: string
   }
 }
 
-type ReturnListOtherType = {
+interface ReturnListOtherType {
   page: number
   total: number
 }
@@ -16,4 +16,8 @@ type ReturnListType<T> = { list: InferType<T> [] } & ReturnListOtherType
 
 type ConversionRequiredType<T> = {
   [Key in keyof T]?: T[Key]
+}
+
+interface Window {
+  [propName: string]: any
 }

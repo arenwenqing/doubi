@@ -17,8 +17,7 @@
     "publish:major": "npm run version:major && npm publish",
     "analyze": "npm run build --analyze"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "types": "./lib/types/index.d.ts",
   "files": [
     "lib"
@@ -73,7 +72,7 @@
     "prettier": "^2.7.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-redux": "^7.2.3",
+    "react-redux": "^7.2.9",
     "react-router-dom": "^6.4.3",
     "style-loader": "^2.0.0",
     "ts-loader": "^9.3.1",
@@ -120,6 +119,8 @@
     "not op_mini all"
   ],
   "dependencies": {
-    "antd-mobile": "^5.25.1"
+    "@reduxjs/toolkit": "^1.9.1",
+    "antd-mobile": "^5.25.1",
+    "antd-mobile-icons": "^0.3.0"
   }
 }

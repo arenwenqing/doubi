@@ -62,8 +62,8 @@ const devConfig = {
       target: 'http://localhost:12345'
     },
     proxy: {
-      '/legal/api/v1/**': {
-        target: 'https://test-legal.inkept.cn/'
+      '/mystery/**': {
+        target: 'http://101.34.127.78:8090/'
       }
     }
   }

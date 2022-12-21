@@ -23,7 +23,7 @@ module.exports = {
     // 分号结尾
     // semi: [0],
     'no-unused-vars': [
-      2,
+      1,
       {
         // 允许声明未使用变量
         vars: 'local',
@@ -47,9 +47,13 @@ module.exports = {
     //this别名
     'consistent-this': [2, 'that'],
     'linebreak-style': ['error', 'unix'],
-    '@typescript-eslint/no-explicit-any':'off', //关闭any类型警告
+    '@typescript-eslint/no-explicit-any': 'off', //关闭any类型警告
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
-    '@typescript-eslint/no-var-requires': 0
+    '@typescript-eslint/no-var-requires': 0,
+    '@typescript-eslint/consistent-type-definitions': [
+      'error',
+      'interface'
+    ]
   }
 };

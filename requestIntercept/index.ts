@@ -34,7 +34,7 @@ axiosService.init(axios, {
     // server端数据的key
     dataKey: 'data',
     // server端请求状态的key
-    codeKey: 'status',
+    codeKey: 'code',
     // server端请求成功的状态, 注意: 此为response.data下该接口请求成功状态码, 非浏览器中http请求返回的成功状态(200)
     successCode: 0
   }
