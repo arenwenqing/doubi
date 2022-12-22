@@ -9,7 +9,7 @@ import reducer, { Context, setViewModal, initialState, setDetailModal, setLotter
 import RechargeKey from './component/RechargeKey'
 import DetailDescription from './component/DetailDescription'
 import Lottery from './component/LotteryModal'
-import Apis from 'src/apis'
+// import Apis from 'src/apis'
 import './index.less'
 
 const boxMap = {
@@ -19,16 +19,16 @@ const boxMap = {
 }
 const Home: React.FC = () => {
   const [currentBox, setCurrentBox] = useState('tong')
-  const [keyData, setKeyData] = useState([{
-    keyType: 3,
-    keyCount: 0
-  }, {
-    keyType: 4,
-    keyCount: 0
-  }, {
-    keyType: 5,
-    keyCount: 0
-  }])
+  // const [keyData, setKeyData] = useState([{
+  //   keyType: 3,
+  //   keyCount: 0
+  // }, {
+  //   keyType: 4,
+  //   keyCount: 0
+  // }, {
+  //   keyType: 5,
+  //   keyCount: 0
+  // }])
   const [state, dispatch] = useEnhancedReducerv(reducer, initialState)
   const navigate = useNavigate()
   useEffect(() => {
@@ -72,11 +72,11 @@ const Home: React.FC = () => {
     }))
   }
 
-  const getUserKeyInfo = () => {
-    Apis.getKeyMessage().then(res => {
-      res.data.keyCountInfoList?.length
-    })
-  }
+  // const getUserKeyInfo = () => {
+  //   Apis.getKeyMessage().then(res => {
+  //     res.data.keyCountInfoList?.length
+  //   })
+  // }
 
   useEffect(() => {
     if (window.localStorage.getItem('userId')) {
