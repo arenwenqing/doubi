@@ -4,7 +4,8 @@ import { createSlice } from '@reduxjs/toolkit'
 export const Context = React.createContext(null)
 
 export const initialState = {
-  loginCurrentKey: 'login'
+  loginCurrentKey: 'login',
+  userId: ''
 }
 
 export const reduxSlice = createSlice({
@@ -13,12 +14,15 @@ export const reduxSlice = createSlice({
   reducers: {
     setLoginCurrentKey: (state, { payload }) => {
       state.loginCurrentKey = payload
+    },
+    setUserId: (state, { payload }) => {
+      state.userId = payload
     }
   }
 })
 
 // Action creators are generated for each case reducer function
-export const { setLoginCurrentKey } = reduxSlice.actions
+export const { setLoginCurrentKey, setUserId } = reduxSlice.actions
 
 // redux-thunk actions
 // 拉取是否开通接口

@@ -38,6 +38,26 @@ class Apis {
    * 用户-抖币信息
    */
   getDymoney = get('/mystery/user/dymoney')
+
+  /**
+   * 【首页】飘屏
+   */
+  getFloatScreen = get('/mystery/announce/floatScreen')
+
+  /**
+   * 【首页】公屏
+   */
+  getCommonScreen = get('/mystery/announce/commonScreen')
+
+  /**
+   * 【首页】盲盒-开
+   */
+  lotteryDraw = post('/mystery/box/lottery/draw')
+
+  /**
+   * 获取钥匙数量
+   */
+  getKeys = get('/mystery/user/keyInfo')
 }
 
 export const ServiceApis = Apis;

@@ -7,6 +7,7 @@ import './index.less'
 let count = 60
 const RegisteredForm:React.FC = () => {
   const [verificaationText, setVerificaationText] = useState('获取验证码')
+  const [text, setText] = useState('账号注册成功请登录')
   const { dispatch } = useContext(Context)
   const [showToast, setShowToast] = useState(false)
   const [form] = Form.useForm()
@@ -22,6 +23,7 @@ const RegisteredForm:React.FC = () => {
         dispatch(setLoginCurrentKey('login'))
       } else {
         setShowToast(true)
+        setText(res.data.registerMsg)
         setTimeout(() => {
           setShowToast(false)
         }, 2000)
@@ -128,7 +130,7 @@ const RegisteredForm:React.FC = () => {
     <div className='login-btn login-register-btn' onClick={registerHandle}>
       <span>注册</span>
     </div>
-    <Toast content='账号注册成功请登录' visible={showToast} />
+    <Toast content={text} visible={showToast} />
   </div>
 }
 export default RegisteredForm

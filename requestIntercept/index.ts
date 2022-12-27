@@ -2,9 +2,11 @@ import axios from 'axios'
 import axiosService from 'axios-service'
 // import loading from 'components/loading'
 // import $user from 'user'
+const userInfo = JSON.parse(window.localStorage.getItem('user') || '{}')
 
 const setTicketToHeader = config => {
   const { headers } = config
+  headers.userId = userInfo.userId
   console.log(headers)
   // headers.ticket = cookie.getItem('ticket') || window.localStorage.getItem('ticket')
   // if (window.localStorage.getItem('mail')) {

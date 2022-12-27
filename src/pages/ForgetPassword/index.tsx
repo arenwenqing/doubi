@@ -123,7 +123,7 @@ const ForgetPassword: React.FC = () => {
       <div className='login-item'>
         <span className='login-item-title'>新密码</span>
         <div className='login-item-component'>
-          <Form.Item name='passwd' validateTrigger={['onBlur']} rules={[
+          <Form.Item name='newPasswd' validateTrigger={['onBlur']} rules={[
             { required: true, message: '8~16位数字、英文混合'},
             passwordRule
           ]}>

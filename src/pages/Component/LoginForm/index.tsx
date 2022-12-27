@@ -1,12 +1,17 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useContext } from 'react'
 import { Form, Input,Toast } from 'antd-mobile'
 import { EyeInvisibleOutline, EyeOutline } from 'antd-mobile-icons'
 import { useNavigate } from 'react-router-dom'
 import Apis from 'src/apis'
+import {
+  setUserId,
+  Context
+} from 'src/store'
 import './index.less'
 
 const LoginForm: React.FC = () => {
   const [visible, setVisible] = useState(false)
+  const { dispatch } = useContext(Context)
   const [form] = Form.useForm()
   const navigate = useNavigate()
   const loginHande = useCallback( async () => {
@@ -17,6 +22,8 @@ const LoginForm: React.FC = () => {
           icon: 'success',
           content: '成功'
         })
+        window.localStorage.setItem('user', JSON.stringify(res.data.user || {}))
+        dispatch(setUserId(res.data.user.userId))
         navigate({
           pathname: '/home'
         })
