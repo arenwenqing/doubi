@@ -1,4 +1,4 @@
 import React from 'react';
-import './index.css';
+import './index.less';
 declare const Home: React.FC;
 export default Home;

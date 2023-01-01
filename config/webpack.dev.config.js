@@ -62,8 +62,8 @@ const devConfig = {
       target: 'http://localhost:12345'
     },
     proxy: {
-      '/mystery/**': {
-        target: 'http://101.34.127.78:8090/'
+      '/api/mystery/**': {
+        target: 'http://mystery.tuanzhzh.com/'
       }
     }
   }

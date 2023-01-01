@@ -2,11 +2,11 @@ const path = require('path')
 const { merge } = require('webpack-merge')
 const baseConfig = require('./webpack.base.js')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { npm_config_analyze: analyze } = process.env
+// const { npm_config_analyze: analyze } = process.env
 const entry = {
   // mobile: path.join(__dirname, '../src/mobile/index.ts'),
   // pc: path.join(__dirname, '../src/pc/index.ts'),
@@ -21,7 +21,8 @@ const prodConfig = {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, '../dist'),
     clean: true,
-    libraryTarget: 'umd' // 采用通用模块定义
+    publicPath: '/'
+    // libraryTarget: 'umd' // 采用通用模块定义
     // libraryExport: 'default' // 兼容 ES6 的模块系统、CommonJS 和 AMD 模块规范
   },
   module: {
@@ -43,10 +44,20 @@ const prodConfig = {
         },
         // vendor: 打包node_modules中的文件（上面的 lodash）
         vendor: {
-          name: 'vendor',
-          test: /node_modules/,
+          test: /[\\/]node_modules[\\/]/,
           chunks: 'all',
-          priority: 10
+          name(module) {
+            // 匹配包名
+            const packageName = module.context.match(
+              /[\\/]node_modules[\\/](.*?)([\\/]|$)/,
+            )[1]
+            // npm package 是 URL 安全的，但有些服务不喜欢 @ 符号
+            return `chunk-vendor.${packageName.replace('@', '')}`
+          }
+          // name: 'vendor',
+          // test: /node_modules/,
+          // chunks: 'all',
+          // priority: 10
         }
       }
     },
@@ -58,6 +69,8 @@ const prodConfig = {
   },
   plugins: [
     new HtmlWebpackPlugin({
+      filename: './index.html',
+      template: path.join(__dirname, '../build/index.html'),
       minify: {
         removeComments: true,
         collapseWhitespace: true,
@@ -75,23 +88,23 @@ const prodConfig = {
       filename: '[name].css',
       chunkFilename: '[id].css'
     }),
-    new CleanWebpackPlugin(),
-    analyze ? new BundleAnalyzerPlugin() : null
+    new CleanWebpackPlugin()
+    // analyze ? new BundleAnalyzerPlugin() : null
   ].filter(item => item),
   externals: { // 定义外部依赖，不打包react/react-dom/antd/axios
-    react: {
-      root: 'React',
-      commonjs2: 'react',
-      commonjs: 'react',
-      amd: 'react'
-    },
-    'react-dom': {
-      root: 'ReactDOM',
-      commonjs2: 'react-dom',
-      commonjs: 'react-dom',
-      amd: 'react-dom'
-    },
-    'antd-mobile': 'antd-mobile'
+    // react: {
+    //   root: 'React',
+    //   commonjs2: 'react',
+    //   commonjs: 'react',
+    //   amd: 'react'
+    // },
+    // 'react-dom': {
+    //   root: 'ReactDOM',
+    //   commonjs2: 'react-dom',
+    //   commonjs: 'react-dom',
+    //   amd: 'react-dom'
+    // },
+    // 'antd-mobile': 'antd-mobile'
     // antd: 'antd',
     // axios: 'axios'
   }

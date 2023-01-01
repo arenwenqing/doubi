@@ -1,40 +1,44 @@
-import React, { useEffect, useState } from 'react'
-import { ErrorBlock, Toast } from 'antd-mobile'
-import Apis from 'src/apis'
+import React, { useEffect, useContext } from 'react'
+import { ErrorBlock } from 'antd-mobile'
+import { Context, getCommonScreen } from 'src/pages/Home/store'
 import './index.less'
 
 // const userInfo = JSON.parse(window.localStorage.getItem('user') || '{}')
 const RollingList:React.FC = () => {
-  const [dataSource, setDataSource] = useState([])
-  // 获取公屏
-  const getCommonScreen = () => {
-    Apis.getCommonScreen().then(res => {
-      console.log(res.data)
-      const tempArr = []
-      res.data?.forEach(item => {
-        tempArr.push({
-          userName: item.user.nickName,
-          giftName: item.gift.giftName,
-          dyMoneyAmount: item.gift.dyMoneyAmount
-        })
-      })
-      setDataSource(tempArr)
-    }, err => {
-      console.log(err)
-      Toast.show({
-        icon: 'fail',
-        content: '错误'
-      })
-    })
-  }
+  const { state, dispatch } = useContext(Context)
+
+  const {
+    commonScreenData
+  } = state
+  // // 获取公屏
+  // const getCommonScreen = () => {
+  //   Apis.getCommonScreen().then(res => {
+  //     console.log(res.data)
+  //     const tempArr = []
+  //     res.data?.forEach(item => {
+  //       tempArr.push({
+  //         userName: item.user.nickName,
+  //         giftName: item.gift.giftName,
+  //         dyMoneyAmount: item.gift.dyMoneyAmount
+  //       })
+  //     })
+  //     setDataSource(tempArr)
+  //   }, err => {
+  //     console.log(err)
+  //     Toast.show({
+  //       icon: 'fail',
+  //       content: '错误'
+  //     })
+  //   })
+  // }
   useEffect(() => {
-    getCommonScreen()
+    dispatch(getCommonScreen())
   }, [])
 
   return <div className='rolling-list-wrapper'>
     <div className='list-content'>
       {
-        dataSource.map((item, i) => {
+        commonScreenData.map((item, i) => {
           return <div className='list-item' key={i}>
             <span>
               <label className='list-item-name'>{item.userName}</label>
@@ -49,7 +53,7 @@ const RollingList:React.FC = () => {
       }
     </div>
     {
-      dataSource.length && <ErrorBlock
+      !commonScreenData.length && <ErrorBlock
         className='err-block'
         title={null}
         image='https://cdn.tuanzhzh.com/doubi-image/home-empty.png'

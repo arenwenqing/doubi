@@ -8,26 +8,8 @@ const PATHNAME = window.location.pathname
 const SERACH = window.location.search
 
 const prodRootMap = {
-  'test-legal.inkept.cn': {
-    uploadMediaRoot: 'https://upload.inkept.cn/',
-    uploadRoot: 'https://family-upload.inkept.cn/',
-    root: 'https://test-legal.inkept.cn/',
-    authRoot: 'https://test-purview.inkept.cn/',
-    flowRoot: 'https://test-workflow.inkept.cn/'
-  },
-  'gray-legal.inkept.cn': {
-    uploadMediaRoot: 'https://upload.inkept.cn/',
-    uploadRoot: 'https://family-upload.inkept.cn/',
-    root: 'https://gray-legal.inkept.cn/',
-    authRoot: 'https://gray-purview.inkept.cn/',
-    flowRoot: 'https://gray-workflow.inkept.cn/'
-  },
-  'legal.inkept.cn': {
-    uploadMediaRoot: 'https://upload.inkept.cn/',
-    uploadRoot: 'https://family-upload.inkept.cn/',
-    root: 'https://legal.inkept.cn/',
-    authRoot: 'https://purview.inkept.cn/',
-    flowRoot: 'https://workflow.inkept.cn/'
+  'mystery.tuanzhzh.com': {
+    root: 'https://mystery.tuanzhzh.com/'
   }
 }
 

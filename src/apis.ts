@@ -12,52 +12,77 @@ class Apis {
   /**
    * 获取验证码
    */
-  getVerifyCode = post('/mystery/user/register/phone/verifyCode')
+  getVerifyCode = post('/api/mystery/user/register/phone/verifyCode')
 
   /**
    * 注册
    */
-  registerFromPhone = post('/mystery/user/register/phone')
+  registerFromPhone = post('/api/mystery/user/register/phone')
 
   /**
    * 登录
    */
-  login = post('/mystery/user/login/phone')
+  login = post('/api/mystery/user/login/phone')
 
   /**
    * 用户-找回密码
    */
-  getBackPwd = post('/mystery/user/password/reset')
+  getBackPwd = post('/api/mystery/user/password/reset')
 
   /**
    * 用户-钥匙数量信息
    */
-  getKeyMessage = get('/mystery/user/keyInfo')
+  getKeyMessage = get('/api/mystery/user/keyInfo')
 
   /**
    * 用户-抖币信息
    */
-  getDymoney = get('/mystery/user/dymoney')
+  getDymoney = get('/api/mystery/user/dymoney')
 
   /**
    * 【首页】飘屏
    */
-  getFloatScreen = get('/mystery/announce/floatScreen')
+  getFloatScreen = get('/api/mystery/announce/floatScreen')
 
   /**
    * 【首页】公屏
    */
-  getCommonScreen = get('/mystery/announce/commonScreen')
+  getCommonScreen = get('/api/mystery/announce/commonScreen')
 
   /**
    * 【首页】盲盒-开
    */
-  lotteryDraw = post('/mystery/box/lottery/draw')
+  lotteryDraw = post('/api/mystery/box/lottery/draw')
 
   /**
    * 获取钥匙数量
    */
-  getKeys = get('/mystery/user/keyInfo')
+  getKeys = get('/api/mystery/user/keyInfo')
+
+  /**
+   * 【抖币】抖币-提取记录
+   */
+  getCoinHostory = post('/api/mystery/dymoney/draw/history')
+
+  /**
+   * 【用户】用户-抖币信息
+   */
+  getCoinInfo = get('/api/mystery/user/dymoney')
+
+  /**
+   * 【抖币】抖币-提取
+   */
+  coinExtract = post('/api/mystery/dymoney/draw')
+
+  /**
+   * 【首页】钥匙-充值-钥匙信息列表
+   */
+  rechargeKeysList = get('/api/mystery/key/deposit/list')
+
+  /**
+   * 【首页】钥匙-充值-预支付-微信
+   */
+  prepareWx = post('/api/mystery/key/deposit/prepare/wx')
 }
 
 export const ServiceApis = Apis;

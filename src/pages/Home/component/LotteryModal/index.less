@@ -1,4 +1,5 @@
 .lottery-wrapper {
+  ul,li{list-style:none;}
   .lottery-content {
     position: absolute;
     left: 50%;
@@ -17,6 +18,84 @@
       height: 48px;
       right: 32px;
       top: 32px;
+    }
+
+    .max-value-lottery {
+      width: 472px;
+      height: 472px;
+      margin: 84px auto 46px;
+      img {
+        width: 100%;
+      }
+    }
+    .lottery-list-ul {
+      margin: 0 34px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      .lottery-list-item {
+        width: 108px;
+        height: 178px;
+        border-radius: 6px;
+        margin: 0 9px 18px 0;
+      }
+      img {
+        width: 100%;
+      }
+    }
+    .lottery-box-xiang-btn-wrapper {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin: 0 auto;
+      bottom: 58px;
+      .one-key-btn {
+        --background-color: #30333C;
+        --border-color:  #30333C;
+        border-radius: 48px;
+        width: 280px;
+        height: 80px;
+        font-size: 30px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #5E6272;
+        margin-right: 46px;
+
+        .one-key-bg-icon {
+          display: inline-block;
+          width: 48px;
+          height: 48px;
+          background: url('https://cdn.tuanzhzh.com/doubi-image/one-open-key-icon.png') no-repeat;
+          background-position: center;
+          background-size: contain;
+          vertical-align: middle;
+          margin-right: 10px;
+        }
+      }
+      .ten-key-btn {
+        --background-color:  #FD3636;
+        --border-color:   #FD3636;
+        width: 280px;
+        height: 80px;
+        box-shadow: 0px 24px 48px 0px rgba(0,0,0,0.5);
+        border-radius: 48px;
+        font-size: 30px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #FFFFFF;
+        .ten-key-bg-icon {
+          display: inline-block;
+          width: 48px;
+          height: 48px;
+          margin-right: 10px;
+          background: url('https://cdn.tuanzhzh.com/doubi-image/ten-open-key-icon.png') no-repeat;
+          background-position: center;
+          background-size: contain;
+          vertical-align: middle;
+        }
+      }
     }
   }
 }
