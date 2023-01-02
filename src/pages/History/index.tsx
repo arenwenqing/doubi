@@ -1,11 +1,13 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import TopRolling from '@pages/Component/TopRolling'
 import { useNavigate } from 'react-router-dom'
-import { NavBar, List } from 'antd-mobile'
+import { NavBar, List, Toast } from 'antd-mobile'
+import Apis from 'src/apis'
 import './index.less'
 
 const History:React.FC = () => {
-  const data = ['1', '1','1','1','1','1']
+  const [data, setData] = useState<any[]>([])
+  const userInfo = JSON.parse(window.localStorage.getItem('user') || '{}')
   const navigate = useNavigate()
   const back = useCallback(() => {
     navigate({
@@ -17,6 +19,31 @@ const History:React.FC = () => {
       pathname: '/home'
     })
   }
+
+  // 获取历史记录
+  const getLotteryHistory = () => {
+    Apis.getLotteryHistory({
+      userId: userInfo.userId,
+      page: 1,
+      pageSize: 15
+    }).then(res => {
+      // let arr =[]
+      res.data?.forEach((item, i) => {
+        const tempArr = item.giftList?.filter(list => list.giftId === item.maxValueGiftId) || []
+        res.data[i].giftList = tempArr
+      })
+      setData(res.data)
+    }, () => {
+      Toast.show({
+        content: '获取历史记录出错'
+      })
+    })
+  }
+
+  useEffect(() => {
+    getLotteryHistory()
+  }, [])
+
   return <div className='history-wrapper'>
     <NavBar
       onBack={back}
@@ -32,24 +59,23 @@ const History:React.FC = () => {
       <List>
         {
           data.map((item, i) => {
-            console.log(item)
             return <List.Item key={i}>
               <div className={ i % 2 === 0 ? 'extract-list-item' : 'extract-list-item extract-list-item2'}>
                 <div className='extract-list-content'>
                   <div className='list-item-top'>
                     <span>
-                      <span className='list-item-user'>202210170098</span>
-                      <span>海***</span>
+                      <span className='list-item-user'>{item.LotteryId??'--'}</span>
+                      {/* <span>海***</span> */}
                     </span>
                     {
-                      i % 2 !== 0 ? <span className='list-item-prize-name'>小心心</span> : ''
+                      i % 2 !== 0 ? <span className='list-item-prize-name'>{item.giftList[0]?.giftName || '--'}</span> : ''
                     }
                   </div>
                   <div className='list-item-bottom'>
-                    <span className='list-item-time'>2022-03-24 23:34:12</span>
+                    <span className='list-item-time'>{item.lotteryTime??'--'}</span>
                     <span className='list-item-bottom-right'>
                       <label>抖音价值</label>
-                      <label className='list-item-douyin-number'>99999</label>
+                      <label className='list-item-douyin-number'>{item.giftList[0]?.dyMoneyAmount??0}</label>
                     </span>
                   </div>
                 </div>

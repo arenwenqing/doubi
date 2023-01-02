@@ -43,6 +43,26 @@ declare class Apis {
      * 获取钥匙数量
      */
     getKeys: import("axios-service").IAxiosFun;
+    /**
+     * 【抖币】抖币-提取记录
+     */
+    getCoinHostory: import("axios-service").IAxiosFun;
+    /**
+     * 【用户】用户-抖币信息
+     */
+    getCoinInfo: import("axios-service").IAxiosFun;
+    /**
+     * 【抖币】抖币-提取
+     */
+    coinExtract: import("axios-service").IAxiosFun;
+    /**
+     * 【首页】钥匙-充值-钥匙信息列表
+     */
+    rechargeKeysList: import("axios-service").IAxiosFun;
+    /**
+     * 【首页】钥匙-充值-预支付-微信
+     */
+    prepareWx: import("axios-service").IAxiosFun;
 }
 export declare const ServiceApis: typeof Apis;
 declare const _default: Apis;

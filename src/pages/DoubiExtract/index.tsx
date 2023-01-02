@@ -7,13 +7,21 @@ import Api from 'src/apis'
 import './index.less'
 
 let number = 1
+const showText = {
+  1: '提取中',
+  2: '已完成',
+  3: '已退回'
+}
+let cacheDyIds = []
 const DoubiExtract:React.FC = () => {
   const [visible, setVisible] = useState(false)
-  const [data, setData] = useState<string[]>(['1', '1','1','1','1','1'])
+  const [data, setData] = useState<any[]>([])
   const [hasMore, setHasMore] = useState(true)
   const [coinNum, setCoinNum] = useState(0)
   const [extractNum, setEextractNum] = useState(0)
   const [douyin, setDouyin] = useState('')
+  const [dyIds, setDyIds] = useState([])
+  const [showDyIds, setShowDyIds] = useState(false)
 
   const userInfo = JSON.parse(window.localStorage.getItem('user') || '{}')
   const navigate = useNavigate()
@@ -33,7 +41,6 @@ const DoubiExtract:React.FC = () => {
       pageSize: 10,
       userId: userInfo.userId
     }).then(res => {
-      console.log(res.data)
       setData(val => [...val, ...res.data])
       setHasMore(res.data?.length > 0)
       if (res.data?.length) {
@@ -77,10 +84,16 @@ const DoubiExtract:React.FC = () => {
 
   const douYinChangeHandle = (val) => {
     setDouyin(val)
+    const tempArr = cacheDyIds.filter(item => item.indexOf(val) !== -1)
+    setDyIds(tempArr)
   }
 
   // 抖币提取
   const coinExtract = () => {
+    Toast.show({
+      icon: 'loading',
+      content: '加载中…'
+    })
     Api.coinExtract({
       userId: userInfo.userId,
       drawDyMoneyAmount: extractNum,
@@ -91,15 +104,22 @@ const DoubiExtract:React.FC = () => {
           content: res.data.drawFailedMsg
         })
       } else {
+        Toast.clear()
         Toast.show({
           content: '提取成功'
         })
+        number = 1
+        getCoinInfo()
+        getCoinHistory()
         setVisible(false)
       }
     }, err => {
       Toast.show({
         content: err.drawFailedMsg
       })
+      setTimeout(() => {
+        Toast.clear()
+      }, 2000)
     })
   }
 
@@ -117,9 +137,48 @@ const DoubiExtract:React.FC = () => {
     })
   }
 
+  // 抖音号记录
+  const getDyIds = () => {
+    Api.getDyIds({
+      userId: userInfo.userId
+    }).then(res => {
+      setDyIds(res.data??[])
+      cacheDyIds = res.data??[]
+    }, () => {
+      Toast.show({
+        content: '获取抖音号失败，请输入'
+      })
+    })
+  }
+
+  // 获取焦点
+  const dyFocus = () => {
+    setTimeout(() => {
+      setShowDyIds(true)
+    }, 100)
+  }
+
+  // 失去焦点
+  const dyBlur = () => {
+    setTimeout(() => {
+      setShowDyIds(false)
+    }, 0)
+  }
+
+  // 选择抖音号
+  const choiceDyIds = (val) => {
+    setDouyin(val)
+  }
+
   useEffect(() => {
     getCoinInfo()
   }, [])
+
+  useEffect(() => {
+    if (visible) {
+      getDyIds()
+    }
+  }, [visible])
 
   return <div className='extract-wrapper'>
     <NavBar
@@ -154,29 +213,28 @@ const DoubiExtract:React.FC = () => {
       <List>
         {
           data.map((item, i) => {
-            console.log(item)
             return <List.Item key={i}>
-              <div className={ i % 2 === 0 ? 'extract-list-item' : 'extract-list-item extract-list-item2'}>
+              <div className={ item.status === 3 ? 'extract-list-item extract-list-item2' : 'extract-list-item'}>
                 <div className='extract-list-content'>
                   <div className='list-item-top'>
-                    <span className='list-item-user'>垃圾***呀</span>
+                    <span className='list-item-user'>{item.name || '--'}</span>
                     <span>
                       <label>提取抖币</label>
-                      <label className='list-item-num'>1243</label>
+                      <label className='list-item-num'>{item.drawDyMoneyAmount || 0}</label>
                     </span>
                     <span className='list-item-zhi'>至</span>
                     {
-                      i % 2 !== 0 ? <span className='list-item-error'>抖音账号异常</span> : ''
+                      item.status === 3 ? <span className='list-item-error'>抖音账号异常</span> : ''
                     }
                   </div>
                   <div className='list-item-bottom'>
-                    <span className='list-item-time'>2022-03-24 23:34:12</span>
+                    <span className='list-item-time'>{item.drawTime || '--'}</span>
                     <span>
                       <label>抖音</label>
-                      <label className='list-item-douyin-number'>34223KJKAQ</label>
+                      <label className='list-item-douyin-number'>{item.dyId || '--'}</label>
                     </span>
-                    <span className={ i % 2 === 0 ? 'list-item-operation-btn' : 'list-item-operation-btn list-item-operation-btn2'}>
-                      <label>{ i % 2 === 0 ? '已完成' : '已退回'}</label>
+                    <span className={ item.status === 3 ? 'list-item-operation-btn list-item-operation-btn2' : 'list-item-operation-btn'}>
+                      <label>{showText[item.status]}</label>
                     </span>
                   </div>
                 </div>
@@ -214,7 +272,19 @@ const DoubiExtract:React.FC = () => {
               className='form-input-style'
               clearable
               onChange={douYinChangeHandle}
+              onFocus={dyFocus}
+              value={douyin}
+              onBlur={dyBlur}
             />
+            {
+              <ul className={ showDyIds ? 'form-douyin-id-ul' : 'form-douyin-id-ul hide'}>
+                {
+                  dyIds.map((list, k) => {
+                    return <li key={k} onClick={choiceDyIds.bind(this, list)}>{list}</li>
+                  })
+                }
+              </ul>
+            }
           </div>
         </div>
         <div className='extract-bottom-wrapper'>

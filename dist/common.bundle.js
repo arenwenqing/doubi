@@ -374,7 +374,7 @@ var _qs = _interopRequireDefault(__webpack_require__(129));
 
 var _requestTypes = __webpack_require__(6121);
 
-var _utils = __webpack_require__(5911);
+var _utils = __webpack_require__(8237);
 
 var _config = __webpack_require__(1075);
 
@@ -926,7 +926,7 @@ var _typeof2 = _interopRequireDefault(__webpack_require__(8698));
 
 var _createDecorator = _interopRequireDefault(__webpack_require__(192));
 
-var _utils = __webpack_require__(5911);
+var _utils = __webpack_require__(8237);
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -1296,7 +1296,7 @@ var _createClass2 = _interopRequireDefault(__webpack_require__(9728));
 
 var _config = __webpack_require__(1075);
 
-var _utils = __webpack_require__(5911);
+var _utils = __webpack_require__(8237);
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -1368,7 +1368,7 @@ exports["default"] = Service;
 
 /***/ }),
 
-/***/ 5911:
+/***/ 8237:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -9224,7 +9224,7 @@ exports.staged = staged;
 
 /***/ }),
 
-/***/ 8237:
+/***/ 7594:
 /***/ (function(__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -32604,278 +32604,6 @@ const Toast = {
 
 
 
-;// CONCATENATED MODULE: ./requestConfig/build.ts
-/**
- * build 层配置信息
- * 注意: build层是基于node的, 不能用import等语法, 不能对讲exports出去的对象给pages进行计算, 不能有window等对象,
- */
-// const process = require('process')
-var IS_DEV = false; // process && process.env.NODE_ENV === 'development';
-var PROD_CONF = {};
-var DEV_CONF = {};
-var CONFIG = {
-    IS_DEV: IS_DEV,
-    DEV: DEV_CONF,
-    PROD: PROD_CONF,
-    ENV: {
-        SSO_LOGIN: true,
-        PHONE_LOGIN: false
-    }
-};
-// module.exports = CONFIG;
-/* harmony default export */ var build = (CONFIG);
-
-;// CONCATENATED MODULE: ./requestConfig/index.ts
-var requestConfig_assign = (undefined && undefined.__assign) || function () {
-    requestConfig_assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return requestConfig_assign.apply(this, arguments);
-};
-
-var requestConfig_IS_DEV = build.IS_DEV;
-var HOST = window.location.host;
-var ORIGIN = window.location.origin;
-var PATHNAME = window.location.pathname;
-var SERACH = window.location.search;
-var prodRootMap = {
-    'mystery.tuanzhzh.com': {
-        root: 'https://mystery.tuanzhzh.com/'
-    }
-};
-var rootObj = prodRootMap[Object.keys(prodRootMap).find(function (key) { return HOST.indexOf(key) === 0; })] || {};
-var DEFAULT_ROOT = '/';
-var getRootStr = function (rootStr) {
-    return rootStr || DEFAULT_ROOT;
-};
-var PROD = {
-    APIS: {
-        uploadMediaRoot: getRootStr(rootObj.uploadMediaRoot),
-        uploadRoot: getRootStr(rootObj.uploadRoot),
-        flowRoot: getRootStr(rootObj.flowRoot),
-        root: getRootStr(rootObj.root),
-        authRoot: getRootStr(rootObj.authRoot)
-    }
-};
-var DEV = {
-    APIS: {
-        uploadMediaRoot: DEFAULT_ROOT,
-        uploadRoot: DEFAULT_ROOT,
-        flowRoot: DEFAULT_ROOT,
-        root: DEFAULT_ROOT,
-        authRoot: DEFAULT_ROOT
-    }
-};
-var ssoService = encodeURIComponent("".concat(ORIGIN + PATHNAME + SERACH));
-// 开发环境权限总开关 false - 关闭权限菜单， true - 开启权限菜单
-var devAuthority = true;
-var OBJ = requestConfig_assign(requestConfig_assign(requestConfig_assign({ SUPER_ADMIN: ['wanghl@inke.cn', 'lin@inke.cn'], IS_DEV: requestConfig_IS_DEV, USER_INFO_MOCK: false, 
-    // 手机登录情况下，登录页面路由地址
-    PHONE_LOGGIN_PATH: 'login', SSO_PAGE_SERVICE: "http://sso.inkept.cn/?service=".concat(ssoService), SSO_PAGE_URL: 'http://sso.inkept.cn', SSO_LOGOUT_PAGE_SERVICE: "https://sso.inkept.cn/api/v1/user/logout/?service=".concat(ssoService), build: build }, build.ENV), requestConfig_IS_DEV ? DEV : PROD), { 
-    // 该系统权限标识，获取请联系 @李宁，2 为测试系统
-    // http://wiki.inkept.cn/pages/viewpage.action?pageId=50851740
-    AUTH_SYSTEM_ID: 2, 
-    // 系统中文名称
-    SYSTEM_CHINA_NAME: '固定资产管理系统 ', 
-    // 系统英文缩写
-    SYSTEM_US_NAME: 'Legal', 
-    // 系统地址
-    SYSTEM_URL: 'legal.inkept.cn', 
-    // 权限总开关 false - 关闭权限菜单， true - 开启权限菜单
-    authority: requestConfig_IS_DEV ? devAuthority : true, 
-    // 使用情况监控，获取请联系 @赵通，-1 则全局关闭监控
-    // http://wiki.inkept.cn/pages/viewpage.action?pageId=54597351
-    LOG_SYSTEM_SOURCE: -1 });
-/* harmony default export */ var requestConfig = (OBJ);
-
-;// CONCATENATED MODULE: ./src/apis.ts
-
-
-var root = requestConfig.APIS.root;
-var _a = (0,axios_service.getRequestsByRoot)({ root: root }), post = _a.post, apis_get = _a.get;
-/**
- * @overview 如果系统有统一的错误信息处理，请将 @errorMessageDecorator 注释
- */
-var Apis = /** @class */ (function () {
-    function Apis() {
-        /**
-         * 获取验证码
-         */
-        this.getVerifyCode = post('/api/mystery/user/register/phone/verifyCode');
-        /**
-         * 注册
-         */
-        this.registerFromPhone = post('/api/mystery/user/register/phone');
-        /**
-         * 登录
-         */
-        this.login = post('/api/mystery/user/login/phone');
-        /**
-         * 用户-找回密码
-         */
-        this.getBackPwd = post('/api/mystery/user/password/reset');
-        /**
-         * 用户-钥匙数量信息
-         */
-        this.getKeyMessage = apis_get('/api/mystery/user/keyInfo');
-        /**
-         * 用户-抖币信息
-         */
-        this.getDymoney = apis_get('/api/mystery/user/dymoney');
-        /**
-         * 【首页】飘屏
-         */
-        this.getFloatScreen = apis_get('/api/mystery/announce/floatScreen');
-        /**
-         * 【首页】公屏
-         */
-        this.getCommonScreen = apis_get('/api/mystery/announce/commonScreen');
-        /**
-         * 【首页】盲盒-开
-         */
-        this.lotteryDraw = post('/api/mystery/box/lottery/draw');
-        /**
-         * 获取钥匙数量
-         */
-        this.getKeys = apis_get('/api/mystery/user/keyInfo');
-    }
-    return Apis;
-}());
-var ServiceApis = (/* unused pure expression or super */ null && (Apis));
-/* harmony default export */ var apis = (new Apis());
-
-;// CONCATENATED MODULE: ./src/pages/Component/RollingList/index.tsx
-
-
-
-
-// const userInfo = JSON.parse(window.localStorage.getItem('user') || '{}')
-var RollingList = function () {
-    var _a = (0,react.useState)([]), dataSource = _a[0], setDataSource = _a[1];
-    // 获取公屏
-    var getCommonScreen = function () {
-        apis.getCommonScreen().then(function (res) {
-            var _a;
-            console.log(res.data);
-            var tempArr = [];
-            (_a = res.data) === null || _a === void 0 ? void 0 : _a.forEach(function (item) {
-                tempArr.push({
-                    userName: item.user.nickName,
-                    giftName: item.gift.giftName,
-                    dyMoneyAmount: item.gift.dyMoneyAmount
-                });
-            });
-            setDataSource(tempArr);
-        }, function (err) {
-            console.log(err);
-            toast.show({
-                icon: 'fail',
-                content: '错误'
-            });
-        });
-    };
-    (0,react.useEffect)(function () {
-        getCommonScreen();
-    }, []);
-    return react.createElement("div", { className: 'rolling-list-wrapper' },
-        react.createElement("div", { className: 'list-content' }, dataSource.map(function (item, i) {
-            return react.createElement("div", { className: 'list-item', key: i },
-                react.createElement("span", null,
-                    react.createElement("label", { className: 'list-item-name' }, item.userName),
-                    react.createElement("label", { className: 'list-item-prize-name' },
-                        "\u5F00\u51FA\u4E86", "\u201D".concat(item.giftName, "\u201C"))),
-                react.createElement("span", null,
-                    react.createElement("label", { className: 'list-item-value' }, "\u4EF7\u503C\u6296\u5E01"),
-                    react.createElement("label", { className: 'list-item-num' }, item.dyMoneyAmount)));
-        })),
-        dataSource.length && react.createElement(error_block, { className: 'err-block', title: null, image: 'https://cdn.tuanzhzh.com/doubi-image/home-empty.png', description: react.createElement("span", null, "\u6682\u65E0\u5F00\u5956\u4FE1\u606F") }));
-};
-/* harmony default export */ var Component_RollingList = (RollingList);
-
-;// CONCATENATED MODULE: ./src/pages/Component/TopRolling/index.tsx
-
-
-
-
-// const userInfo = JSON.parse(window.localStorage.getItem('user') || '{}')
-var TopRolling = function () {
-    var noticeDom = (0,react.useMemo)(function () {
-        return react.createElement("div", { className: 'notice-content-wrapper' },
-            "\u606D\u559C",
-            react.createElement("span", { className: 'notice-tip-concent' }, "\u4EFB\u6587\u5E86"),
-            "\u5F00\u51FA\u4E86 \u4EF7\u503C\u6296\u5E01\u4EF7\u503C\u6296\u5E01\u4EF7\u503C\u6296\u5E01\u4EF7\u503C\u6296\u5E01\u4EF7\u503C\u6296\u5E01",
-            react.createElement("span", { className: 'notice-tip-concent' }, "3000"));
-    }, []);
-    // 获取飘屏内容
-    var getFloatScreen = function () {
-        apis.getFloatScreen().then(function (res) {
-            console.log(res.data);
-        }, function (err) {
-            console.log(err);
-            toast.show({
-                icon: 'fail',
-                content: '错误'
-            });
-        });
-    };
-    (0,react.useEffect)(function () {
-        getFloatScreen();
-    }, []);
-    return react.createElement("div", { className: 'notice-wrapper' },
-        react.createElement(notice_bar, { content: noticeDom, delay: 800, icon: null, color: 'info' }));
-};
-/* harmony default export */ var Component_TopRolling = (TopRolling);
-
-;// CONCATENATED MODULE: ./src/pages/Component/UseEnhancedReducer/index.ts
-/**
- * 自定义增强型 useReducer
- * 在 react useReducer 基础上，增加 redux-thunk 和 redux-promise 功能
- * 即：
- * 1. 支持 function 类型的 action
- * 2. 支持 Promise 类型的 action.payload
- * 3. 支持 getState 方法，获取实时 state
- * 参考：
- * https://medium.com/@joseph.michael.sample/async-actions-with-usereducer-d75a2c5dc55c
- * https://medium.com/solute-labs/configuring-thunk-action-creators-and-redux-dev-tools-with-reacts-usereducer-hook-5a1608476812
- */
-
-var useEnhancedReducer = function (reducer, initialState) {
-    // 使用 useRef , 实现 getState 获取最新 state
-    var lastState = (0,react.useRef)(initialState);
-    // 将 handleActions 处理好的 reducer 包裹一层，将每次 reducer 计算出的最新 state 赋值给 ref 对象
-    var reducerWapper = (0,react.useCallback)(function (state, action) {
-        var result = reducer(state, action);
-        lastState.current = result;
-        return result;
-    }, [reducer]);
-    var _a = (0,react.useReducer)(reducerWapper, initialState), state = _a[0], dispatch = _a[1];
-    var getState = (0,react.useCallback)(function () { return lastState.current; }, []);
-    var enhancedDispatch = (0,react.useCallback)(function (action) {
-        // 支持 function 类型的 action
-        if (typeof action === 'function') {
-            return action(enhancedDispatch, getState);
-        }
-        else {
-            // 让 dispatch 支持 promise 类型的 action
-            if (action.payload instanceof Promise) {
-                return action.payload.then(function (result) {
-                    return dispatch({ type: action.type, payload: result });
-                });
-            }
-            else {
-                return dispatch(action);
-            }
-        }
-    }, [getState]);
-    return [state, enhancedDispatch, getState];
-};
-/* harmony default export */ var UseEnhancedReducer = (useEnhancedReducer);
-
 ;// CONCATENATED MODULE: ./node_modules/immer/dist/immer.esm.mjs
 function immer_esm_n(n){for(var r=arguments.length,t=Array(r>1?r-1:0),e=1;e<r;e++)t[e-1]=arguments[e];if(false){ var i, o; }throw Error("[Immer] minified error nr: "+n+(t.length?" "+t.map((function(n){return"'"+n+"'"})).join(","):"")+". Find the full error at: https://bit.ly/3cXEKWf")}function immer_esm_r(n){return!!n&&!!n[Q]}function immer_esm_t(n){var r;return!!n&&(function(n){if(!n||"object"!=typeof n)return!1;var r=Object.getPrototypeOf(n);if(null===r)return!0;var t=Object.hasOwnProperty.call(r,"constructor")&&r.constructor;return t===Object||"function"==typeof t&&Function.toString.call(t)===Z}(n)||Array.isArray(n)||!!n[immer_esm_L]||!!(null===(r=n.constructor)||void 0===r?void 0:r[immer_esm_L])||immer_esm_s(n)||immer_esm_v(n))}function immer_esm_e(t){return immer_esm_r(t)||immer_esm_n(23,t),t[Q].t}function immer_esm_i(n,r,t){void 0===t&&(t=!1),0===immer_esm_o(n)?(t?Object.keys:nn)(n).forEach((function(e){t&&"symbol"==typeof e||r(e,n[e],n)})):n.forEach((function(t,e){return r(e,t,n)}))}function immer_esm_o(n){var r=n[Q];return r?r.i>3?r.i-4:r.i:Array.isArray(n)?1:immer_esm_s(n)?2:immer_esm_v(n)?3:0}function immer_esm_u(n,r){return 2===immer_esm_o(n)?n.has(r):Object.prototype.hasOwnProperty.call(n,r)}function immer_esm_a(n,r){return 2===immer_esm_o(n)?n.get(r):n[r]}function immer_esm_f(n,r,t){var e=immer_esm_o(n);2===e?n.set(r,t):3===e?(n.delete(r),n.add(t)):n[r]=t}function immer_esm_c(n,r){return n===r?0!==n||1/n==1/r:n!=n&&r!=r}function immer_esm_s(n){return X&&n instanceof Map}function immer_esm_v(n){return q&&n instanceof Set}function immer_esm_p(n){return n.o||n.t}function immer_esm_l(n){if(Array.isArray(n))return Array.prototype.slice.call(n);var r=rn(n);delete r[Q];for(var t=nn(r),e=0;e<t.length;e++){var i=t[e],o=r[i];!1===o.writable&&(o.writable=!0,o.configurable=!0),(o.get||o.set)&&(r[i]={configurable:!0,writable:!0,enumerable:o.enumerable,value:n[i]})}return Object.create(Object.getPrototypeOf(n),r)}function immer_esm_d(n,e){return void 0===e&&(e=!1),immer_esm_y(n)||immer_esm_r(n)||!immer_esm_t(n)?n:(immer_esm_o(n)>1&&(n.set=n.add=n.clear=n.delete=immer_esm_h),Object.freeze(n),e&&immer_esm_i(n,(function(n,r){return immer_esm_d(r,!0)}),!0),n)}function immer_esm_h(){immer_esm_n(2)}function immer_esm_y(n){return null==n||"object"!=typeof n||Object.isFrozen(n)}function immer_esm_b(r){var t=tn[r];return t||immer_esm_n(18,r),t}function immer_esm_m(n,r){tn[n]||(tn[n]=r)}function _(){return true||0,U}function j(n,r){r&&(immer_esm_b("Patches"),n.u=[],n.s=[],n.v=r)}function immer_esm_O(n){immer_esm_g(n),n.p.forEach(immer_esm_S),n.p=null}function immer_esm_g(n){n===U&&(U=n.l)}function immer_esm_w(n){return U={p:[],l:U,h:n,m:!0,_:0}}function immer_esm_S(n){var r=n[Q];0===r.i||1===r.i?r.j():r.O=!0}function immer_esm_P(r,e){e._=e.p.length;var i=e.p[0],o=void 0!==r&&r!==i;return e.h.g||immer_esm_b("ES5").S(e,r,o),o?(i[Q].P&&(immer_esm_O(e),immer_esm_n(4)),immer_esm_t(r)&&(r=M(e,r),e.l||immer_esm_x(e,r)),e.u&&immer_esm_b("Patches").M(i[Q].t,r,e.u,e.s)):r=M(e,i,[]),immer_esm_O(e),e.u&&e.v(e.u,e.s),r!==immer_esm_H?r:void 0}function M(n,r,t){if(immer_esm_y(r))return r;var e=r[Q];if(!e)return immer_esm_i(r,(function(i,o){return immer_esm_A(n,e,r,i,o,t)}),!0),r;if(e.A!==n)return r;if(!e.P)return immer_esm_x(n,e.t,!0),e.t;if(!e.I){e.I=!0,e.A._--;var o=4===e.i||5===e.i?e.o=immer_esm_l(e.k):e.o;immer_esm_i(3===e.i?new Set(o):o,(function(r,i){return immer_esm_A(n,e,o,r,i,t)})),immer_esm_x(n,o,!1),t&&n.u&&immer_esm_b("Patches").R(e,t,n.u,n.s)}return e.o}function immer_esm_A(e,i,o,a,c,s){if( false&&0,immer_esm_r(c)){var v=M(e,c,s&&i&&3!==i.i&&!immer_esm_u(i.D,a)?s.concat(a):void 0);if(immer_esm_f(o,a,v),!immer_esm_r(v))return;e.m=!1}if(immer_esm_t(c)&&!immer_esm_y(c)){if(!e.h.F&&e._<1)return;M(e,c),i&&i.A.l||immer_esm_x(e,c)}}function immer_esm_x(n,r,t){void 0===t&&(t=!1),n.h.F&&n.m&&immer_esm_d(r,t)}function immer_esm_z(n,r){var t=n[Q];return(t?immer_esm_p(t):n)[r]}function I(n,r){if(r in n)for(var t=Object.getPrototypeOf(n);t;){var e=Object.getOwnPropertyDescriptor(t,r);if(e)return e;t=Object.getPrototypeOf(t)}}function immer_esm_k(n){n.P||(n.P=!0,n.l&&immer_esm_k(n.l))}function immer_esm_E(n){n.o||(n.o=immer_esm_l(n.t))}function immer_esm_R(n,r,t){var e=immer_esm_s(r)?immer_esm_b("MapSet").N(r,t):immer_esm_v(r)?immer_esm_b("MapSet").T(r,t):n.g?function(n,r){var t=Array.isArray(n),e={i:t?1:0,A:r?r.A:_(),P:!1,I:!1,D:{},l:r,t:n,k:null,o:null,j:null,C:!1},i=e,o=en;t&&(i=[e],o=on);var u=Proxy.revocable(i,o),a=u.revoke,f=u.proxy;return e.k=f,e.j=a,f}(r,t):immer_esm_b("ES5").J(r,t);return(t?t.A:_()).p.push(e),e}function immer_esm_D(e){return immer_esm_r(e)||immer_esm_n(22,e),function n(r){if(!immer_esm_t(r))return r;var e,u=r[Q],c=immer_esm_o(r);if(u){if(!u.P&&(u.i<4||!immer_esm_b("ES5").K(u)))return u.t;u.I=!0,e=immer_esm_F(r,c),u.I=!1}else e=immer_esm_F(r,c);return immer_esm_i(e,(function(r,t){u&&immer_esm_a(u.t,r)===t||immer_esm_f(e,r,n(t))})),3===c?new Set(e):e}(e)}function immer_esm_F(n,r){switch(r){case 2:return new Map(n);case 3:return Array.from(n)}return immer_esm_l(n)}function N(){function t(n,r){var t=s[n];return t?t.enumerable=r:s[n]=t={configurable:!0,enumerable:r,get:function(){var r=this[Q];return false&&0,en.get(r,n)},set:function(r){var t=this[Q]; false&&0,en.set(t,n,r)}},t}function e(n){for(var r=n.length-1;r>=0;r--){var t=n[r][Q];if(!t.P)switch(t.i){case 5:a(t)&&immer_esm_k(t);break;case 4:o(t)&&immer_esm_k(t)}}}function o(n){for(var r=n.t,t=n.k,e=nn(t),i=e.length-1;i>=0;i--){var o=e[i];if(o!==Q){var a=r[o];if(void 0===a&&!immer_esm_u(r,o))return!0;var f=t[o],s=f&&f[Q];if(s?s.t!==a:!immer_esm_c(f,a))return!0}}var v=!!r[Q];return e.length!==nn(r).length+(v?0:1)}function a(n){var r=n.k;if(r.length!==n.t.length)return!0;var t=Object.getOwnPropertyDescriptor(r,r.length-1);if(t&&!t.get)return!0;for(var e=0;e<r.length;e++)if(!r.hasOwnProperty(e))return!0;return!1}function f(r){r.O&&immer_esm_n(3,JSON.stringify(immer_esm_p(r)))}var s={};immer_esm_m("ES5",{J:function(n,r){var e=Array.isArray(n),i=function(n,r){if(n){for(var e=Array(r.length),i=0;i<r.length;i++)Object.defineProperty(e,""+i,t(i,!0));return e}var o=rn(r);delete o[Q];for(var u=nn(o),a=0;a<u.length;a++){var f=u[a];o[f]=t(f,n||!!o[f].enumerable)}return Object.create(Object.getPrototypeOf(r),o)}(e,n),o={i:e?5:4,A:r?r.A:_(),P:!1,I:!1,D:{},l:r,t:n,k:i,o:null,O:!1,C:!1};return Object.defineProperty(i,Q,{value:o,writable:!0}),i},S:function(n,t,o){o?immer_esm_r(t)&&t[Q].A===n&&e(n.p):(n.u&&function n(r){if(r&&"object"==typeof r){var t=r[Q];if(t){var e=t.t,o=t.k,f=t.D,c=t.i;if(4===c)immer_esm_i(o,(function(r){r!==Q&&(void 0!==e[r]||immer_esm_u(e,r)?f[r]||n(o[r]):(f[r]=!0,immer_esm_k(t)))})),immer_esm_i(e,(function(n){void 0!==o[n]||immer_esm_u(o,n)||(f[n]=!1,immer_esm_k(t))}));else if(5===c){if(a(t)&&(immer_esm_k(t),f.length=!0),o.length<e.length)for(var s=o.length;s<e.length;s++)f[s]=!1;else for(var v=e.length;v<o.length;v++)f[v]=!0;for(var p=Math.min(o.length,e.length),l=0;l<p;l++)o.hasOwnProperty(l)||(f[l]=!0),void 0===f[l]&&n(o[l])}}}}(n.p[0]),e(n.p))},K:function(n){return 4===n.i?o(n):a(n)}})}function immer_esm_T(){function e(n){if(!immer_esm_t(n))return n;if(Array.isArray(n))return n.map(e);if(immer_esm_s(n))return new Map(Array.from(n.entries()).map((function(n){return[n[0],e(n[1])]})));if(immer_esm_v(n))return new Set(Array.from(n).map(e));var r=Object.create(Object.getPrototypeOf(n));for(var i in n)r[i]=e(n[i]);return immer_esm_u(n,immer_esm_L)&&(r[immer_esm_L]=n[immer_esm_L]),r}function f(n){return immer_esm_r(n)?e(n):n}var c="add";immer_esm_m("Patches",{$:function(r,t){return t.forEach((function(t){for(var i=t.path,u=t.op,f=r,s=0;s<i.length-1;s++){var v=immer_esm_o(f),p=""+i[s];0!==v&&1!==v||"__proto__"!==p&&"constructor"!==p||immer_esm_n(24),"function"==typeof f&&"prototype"===p&&immer_esm_n(24),"object"!=typeof(f=immer_esm_a(f,p))&&immer_esm_n(15,i.join("/"))}var l=immer_esm_o(f),d=e(t.value),h=i[i.length-1];switch(u){case"replace":switch(l){case 2:return f.set(h,d);case 3:immer_esm_n(16);default:return f[h]=d}case c:switch(l){case 1:return"-"===h?f.push(d):f.splice(h,0,d);case 2:return f.set(h,d);case 3:return f.add(d);default:return f[h]=d}case"remove":switch(l){case 1:return f.splice(h,1);case 2:return f.delete(h);case 3:return f.delete(t.value);default:return delete f[h]}default:immer_esm_n(17,u)}})),r},R:function(n,r,t,e){switch(n.i){case 0:case 4:case 2:return function(n,r,t,e){var o=n.t,s=n.o;immer_esm_i(n.D,(function(n,i){var v=immer_esm_a(o,n),p=immer_esm_a(s,n),l=i?immer_esm_u(o,n)?"replace":c:"remove";if(v!==p||"replace"!==l){var d=r.concat(n);t.push("remove"===l?{op:l,path:d}:{op:l,path:d,value:p}),e.push(l===c?{op:"remove",path:d}:"remove"===l?{op:c,path:d,value:f(v)}:{op:"replace",path:d,value:f(v)})}}))}(n,r,t,e);case 5:case 1:return function(n,r,t,e){var i=n.t,o=n.D,u=n.o;if(u.length<i.length){var a=[u,i];i=a[0],u=a[1];var s=[e,t];t=s[0],e=s[1]}for(var v=0;v<i.length;v++)if(o[v]&&u[v]!==i[v]){var p=r.concat([v]);t.push({op:"replace",path:p,value:f(u[v])}),e.push({op:"replace",path:p,value:f(i[v])})}for(var l=i.length;l<u.length;l++){var d=r.concat([l]);t.push({op:c,path:d,value:f(u[l])})}i.length<u.length&&e.push({op:"replace",path:r.concat(["length"]),value:i.length})}(n,r,t,e);case 3:return function(n,r,t,e){var i=n.t,o=n.o,u=0;i.forEach((function(n){if(!o.has(n)){var i=r.concat([u]);t.push({op:"remove",path:i,value:n}),e.unshift({op:c,path:i,value:n})}u++})),u=0,o.forEach((function(n){if(!i.has(n)){var o=r.concat([u]);t.push({op:c,path:o,value:n}),e.unshift({op:"remove",path:o,value:n})}u++}))}(n,r,t,e)}},M:function(n,r,t,e){t.push({op:"replace",path:[],value:r===immer_esm_H?void 0:r}),e.push({op:"replace",path:[],value:n})}})}function immer_esm_C(){function r(n,r){function t(){this.constructor=n}a(n,r),n.prototype=(t.prototype=r.prototype,new t)}function e(n){n.o||(n.D=new Map,n.o=new Map(n.t))}function o(n){n.o||(n.o=new Set,n.t.forEach((function(r){if(immer_esm_t(r)){var e=immer_esm_R(n.A.h,r,n);n.p.set(r,e),n.o.add(e)}else n.o.add(r)})))}function u(r){r.O&&immer_esm_n(3,JSON.stringify(immer_esm_p(r)))}var a=function(n,r){return(a=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(n,r){n.__proto__=r}||function(n,r){for(var t in r)r.hasOwnProperty(t)&&(n[t]=r[t])})(n,r)},f=function(){function n(n,r){return this[Q]={i:2,l:r,A:r?r.A:_(),P:!1,I:!1,o:void 0,D:void 0,t:n,k:this,C:!1,O:!1},this}r(n,Map);var o=n.prototype;return Object.defineProperty(o,"size",{get:function(){return immer_esm_p(this[Q]).size}}),o.has=function(n){return immer_esm_p(this[Q]).has(n)},o.set=function(n,r){var t=this[Q];return u(t),immer_esm_p(t).has(n)&&immer_esm_p(t).get(n)===r||(e(t),immer_esm_k(t),t.D.set(n,!0),t.o.set(n,r),t.D.set(n,!0)),this},o.delete=function(n){if(!this.has(n))return!1;var r=this[Q];return u(r),e(r),immer_esm_k(r),r.t.has(n)?r.D.set(n,!1):r.D.delete(n),r.o.delete(n),!0},o.clear=function(){var n=this[Q];u(n),immer_esm_p(n).size&&(e(n),immer_esm_k(n),n.D=new Map,immer_esm_i(n.t,(function(r){n.D.set(r,!1)})),n.o.clear())},o.forEach=function(n,r){var t=this;immer_esm_p(this[Q]).forEach((function(e,i){n.call(r,t.get(i),i,t)}))},o.get=function(n){var r=this[Q];u(r);var i=immer_esm_p(r).get(n);if(r.I||!immer_esm_t(i))return i;if(i!==r.t.get(n))return i;var o=immer_esm_R(r.A.h,i,r);return e(r),r.o.set(n,o),o},o.keys=function(){return immer_esm_p(this[Q]).keys()},o.values=function(){var n,r=this,t=this.keys();return(n={})[immer_esm_V]=function(){return r.values()},n.next=function(){var n=t.next();return n.done?n:{done:!1,value:r.get(n.value)}},n},o.entries=function(){var n,r=this,t=this.keys();return(n={})[immer_esm_V]=function(){return r.entries()},n.next=function(){var n=t.next();if(n.done)return n;var e=r.get(n.value);return{done:!1,value:[n.value,e]}},n},o[immer_esm_V]=function(){return this.entries()},n}(),c=function(){function n(n,r){return this[Q]={i:3,l:r,A:r?r.A:_(),P:!1,I:!1,o:void 0,t:n,k:this,p:new Map,O:!1,C:!1},this}r(n,Set);var t=n.prototype;return Object.defineProperty(t,"size",{get:function(){return immer_esm_p(this[Q]).size}}),t.has=function(n){var r=this[Q];return u(r),r.o?!!r.o.has(n)||!(!r.p.has(n)||!r.o.has(r.p.get(n))):r.t.has(n)},t.add=function(n){var r=this[Q];return u(r),this.has(n)||(o(r),immer_esm_k(r),r.o.add(n)),this},t.delete=function(n){if(!this.has(n))return!1;var r=this[Q];return u(r),o(r),immer_esm_k(r),r.o.delete(n)||!!r.p.has(n)&&r.o.delete(r.p.get(n))},t.clear=function(){var n=this[Q];u(n),immer_esm_p(n).size&&(o(n),immer_esm_k(n),n.o.clear())},t.values=function(){var n=this[Q];return u(n),o(n),n.o.values()},t.entries=function(){var n=this[Q];return u(n),o(n),n.o.entries()},t.keys=function(){return this.values()},t[immer_esm_V]=function(){return this.values()},t.forEach=function(n,r){for(var t=this.values(),e=t.next();!e.done;)n.call(r,e.value,e.value,this),e=t.next()},n}();immer_esm_m("MapSet",{N:function(n,r){return new f(n,r)},T:function(n,r){return new c(n,r)}})}function J(){N(),immer_esm_C(),immer_esm_T()}function K(n){return n}function $(n){return n}var G,U,immer_esm_W="undefined"!=typeof Symbol&&"symbol"==typeof Symbol("x"),X="undefined"!=typeof Map,q="undefined"!=typeof Set,B="undefined"!=typeof Proxy&&void 0!==Proxy.revocable&&"undefined"!=typeof Reflect,immer_esm_H=immer_esm_W?Symbol.for("immer-nothing"):((G={})["immer-nothing"]=!0,G),immer_esm_L=immer_esm_W?Symbol.for("immer-draftable"):"__$immer_draftable",Q=immer_esm_W?Symbol.for("immer-state"):"__$immer_state",immer_esm_V="undefined"!=typeof Symbol&&Symbol.iterator||"@@iterator",Y={0:"Illegal state",1:"Immer drafts cannot have computed properties",2:"This object has been frozen and should not be mutated",3:function(n){return"Cannot use a proxy that has been revoked. Did you pass an object from inside an immer function to an async process? "+n},4:"An immer producer returned a new value *and* modified its draft. Either return a new value *or* modify the draft.",5:"Immer forbids circular references",6:"The first or second argument to `produce` must be a function",7:"The third argument to `produce` must be a function or undefined",8:"First argument to `createDraft` must be a plain object, an array, or an immerable object",9:"First argument to `finishDraft` must be a draft returned by `createDraft`",10:"The given draft is already finalized",11:"Object.defineProperty() cannot be used on an Immer draft",12:"Object.setPrototypeOf() cannot be used on an Immer draft",13:"Immer only supports deleting array indices",14:"Immer only supports setting array indices and the 'length' property",15:function(n){return"Cannot apply patch, path doesn't resolve: "+n},16:'Sets cannot have "replace" patches.',17:function(n){return"Unsupported patch operation: "+n},18:function(n){return"The plugin for '"+n+"' has not been loaded into Immer. To enable the plugin, import and call `enable"+n+"()` when initializing your application."},20:"Cannot use proxies if Proxy, Proxy.revocable or Reflect are not available",21:function(n){return"produce can only be called on things that are draftable: plain objects, arrays, Map, Set or classes that are marked with '[immerable]: true'. Got '"+n+"'"},22:function(n){return"'current' expects a draft, got: "+n},23:function(n){return"'original' expects a draft, got: "+n},24:"Patching reserved attributes like __proto__, prototype and constructor is not allowed"},Z=""+Object.prototype.constructor,nn="undefined"!=typeof Reflect&&Reflect.ownKeys?Reflect.ownKeys:void 0!==Object.getOwnPropertySymbols?function(n){return Object.getOwnPropertyNames(n).concat(Object.getOwnPropertySymbols(n))}:Object.getOwnPropertyNames,rn=Object.getOwnPropertyDescriptors||function(n){var r={};return nn(n).forEach((function(t){r[t]=Object.getOwnPropertyDescriptor(n,t)})),r},tn={},en={get:function(n,r){if(r===Q)return n;var e=immer_esm_p(n);if(!immer_esm_u(e,r))return function(n,r,t){var e,i=I(r,t);return i?"value"in i?i.value:null===(e=i.get)||void 0===e?void 0:e.call(n.k):void 0}(n,e,r);var i=e[r];return n.I||!immer_esm_t(i)?i:i===immer_esm_z(n.t,r)?(immer_esm_E(n),n.o[r]=immer_esm_R(n.A.h,i,n)):i},has:function(n,r){return r in immer_esm_p(n)},ownKeys:function(n){return Reflect.ownKeys(immer_esm_p(n))},set:function(n,r,t){var e=I(immer_esm_p(n),r);if(null==e?void 0:e.set)return e.set.call(n.k,t),!0;if(!n.P){var i=immer_esm_z(immer_esm_p(n),r),o=null==i?void 0:i[Q];if(o&&o.t===t)return n.o[r]=t,n.D[r]=!1,!0;if(immer_esm_c(t,i)&&(void 0!==t||immer_esm_u(n.t,r)))return!0;immer_esm_E(n),immer_esm_k(n)}return n.o[r]===t&&"number"!=typeof t&&(void 0!==t||r in n.o)||(n.o[r]=t,n.D[r]=!0,!0)},deleteProperty:function(n,r){return void 0!==immer_esm_z(n.t,r)||r in n.t?(n.D[r]=!1,immer_esm_E(n),immer_esm_k(n)):delete n.D[r],n.o&&delete n.o[r],!0},getOwnPropertyDescriptor:function(n,r){var t=immer_esm_p(n),e=Reflect.getOwnPropertyDescriptor(t,r);return e?{writable:!0,configurable:1!==n.i||"length"!==r,enumerable:e.enumerable,value:t[r]}:e},defineProperty:function(){immer_esm_n(11)},getPrototypeOf:function(n){return Object.getPrototypeOf(n.t)},setPrototypeOf:function(){immer_esm_n(12)}},on={};immer_esm_i(en,(function(n,r){on[n]=function(){return arguments[0]=arguments[0][0],r.apply(this,arguments)}})),on.deleteProperty=function(r,t){return false&&0,on.set.call(this,r,t,void 0)},on.set=function(r,t,e){return false&&0,en.set.call(this,r[0],t,e,r[0])};var un=function(){function e(r){var e=this;this.g=B,this.F=!0,this.produce=function(r,i,o){if("function"==typeof r&&"function"!=typeof i){var u=i;i=r;var a=e;return function(n){var r=this;void 0===n&&(n=u);for(var t=arguments.length,e=Array(t>1?t-1:0),o=1;o<t;o++)e[o-1]=arguments[o];return a.produce(n,(function(n){var t;return(t=i).call.apply(t,[r,n].concat(e))}))}}var f;if("function"!=typeof i&&immer_esm_n(6),void 0!==o&&"function"!=typeof o&&immer_esm_n(7),immer_esm_t(r)){var c=immer_esm_w(e),s=immer_esm_R(e,r,void 0),v=!0;try{f=i(s),v=!1}finally{v?immer_esm_O(c):immer_esm_g(c)}return"undefined"!=typeof Promise&&f instanceof Promise?f.then((function(n){return j(c,o),immer_esm_P(n,c)}),(function(n){throw immer_esm_O(c),n})):(j(c,o),immer_esm_P(f,c))}if(!r||"object"!=typeof r){if(void 0===(f=i(r))&&(f=r),f===immer_esm_H&&(f=void 0),e.F&&immer_esm_d(f,!0),o){var p=[],l=[];immer_esm_b("Patches").M(r,f,p,l),o(p,l)}return f}immer_esm_n(21,r)},this.produceWithPatches=function(n,r){if("function"==typeof n)return function(r){for(var t=arguments.length,i=Array(t>1?t-1:0),o=1;o<t;o++)i[o-1]=arguments[o];return e.produceWithPatches(r,(function(r){return n.apply(void 0,[r].concat(i))}))};var t,i,o=e.produce(n,r,(function(n,r){t=n,i=r}));return"undefined"!=typeof Promise&&o instanceof Promise?o.then((function(n){return[n,t,i]})):[o,t,i]},"boolean"==typeof(null==r?void 0:r.useProxies)&&this.setUseProxies(r.useProxies),"boolean"==typeof(null==r?void 0:r.autoFreeze)&&this.setAutoFreeze(r.autoFreeze)}var i=e.prototype;return i.createDraft=function(e){immer_esm_t(e)||immer_esm_n(8),immer_esm_r(e)&&(e=immer_esm_D(e));var i=immer_esm_w(this),o=immer_esm_R(this,e,void 0);return o[Q].C=!0,immer_esm_g(i),o},i.finishDraft=function(r,t){var e=r&&r[Q]; false&&(0);var i=e.A;return j(i,t),immer_esm_P(void 0,i)},i.setAutoFreeze=function(n){this.F=n},i.setUseProxies=function(r){r&&!B&&immer_esm_n(20),this.g=r},i.applyPatches=function(n,t){var e;for(e=t.length-1;e>=0;e--){var i=t[e];if(0===i.path.length&&"replace"===i.op){n=i.value;break}}e>-1&&(t=t.slice(e+1));var o=immer_esm_b("Patches").$;return immer_esm_r(n)?o(n,t):this.produce(n,(function(n){return o(n,t)}))},e}(),an=new un,fn=an.produce,cn=an.produceWithPatches.bind(an),sn=an.setAutoFreeze.bind(an),vn=an.setUseProxies.bind(an),pn=an.applyPatches.bind(an),ln=an.createDraft.bind(an),dn=an.finishDraft.bind(an);/* harmony default export */ var immer_esm = (fn);
 //# sourceMappingURL=immer.esm.js.map
@@ -35412,8 +35140,211 @@ var autoBatchEnhancer = function (options) {
 N();
 
 //# sourceMappingURL=redux-toolkit.esm.js.map
+;// CONCATENATED MODULE: ./requestConfig/build.ts
+/**
+ * build 层配置信息
+ * 注意: build层是基于node的, 不能用import等语法, 不能对讲exports出去的对象给pages进行计算, 不能有window等对象,
+ */
+// const process = require('process')
+var IS_DEV = false; // process && process.env.NODE_ENV === 'development';
+var PROD_CONF = {};
+var DEV_CONF = {};
+var CONFIG = {
+    IS_DEV: IS_DEV,
+    DEV: DEV_CONF,
+    PROD: PROD_CONF,
+    ENV: {
+        SSO_LOGIN: true,
+        PHONE_LOGIN: false
+    }
+};
+// module.exports = CONFIG;
+/* harmony default export */ var build = (CONFIG);
+
+;// CONCATENATED MODULE: ./requestConfig/index.ts
+var requestConfig_assign = (undefined && undefined.__assign) || function () {
+    requestConfig_assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return requestConfig_assign.apply(this, arguments);
+};
+
+var requestConfig_IS_DEV = build.IS_DEV;
+var HOST = window.location.host;
+var ORIGIN = window.location.origin;
+var PATHNAME = window.location.pathname;
+var SERACH = window.location.search;
+var prodRootMap = {
+    'mystery.tuanzhzh.com': {
+        root: 'https://mystery.tuanzhzh.com/'
+    }
+};
+var rootObj = prodRootMap[Object.keys(prodRootMap).find(function (key) { return HOST.indexOf(key) === 0; })] || {};
+var DEFAULT_ROOT = '/';
+var getRootStr = function (rootStr) {
+    return rootStr || DEFAULT_ROOT;
+};
+var PROD = {
+    APIS: {
+        uploadMediaRoot: getRootStr(rootObj.uploadMediaRoot),
+        uploadRoot: getRootStr(rootObj.uploadRoot),
+        flowRoot: getRootStr(rootObj.flowRoot),
+        root: getRootStr(rootObj.root),
+        authRoot: getRootStr(rootObj.authRoot)
+    }
+};
+var DEV = {
+    APIS: {
+        uploadMediaRoot: DEFAULT_ROOT,
+        uploadRoot: DEFAULT_ROOT,
+        flowRoot: DEFAULT_ROOT,
+        root: DEFAULT_ROOT,
+        authRoot: DEFAULT_ROOT
+    }
+};
+var ssoService = encodeURIComponent("".concat(ORIGIN + PATHNAME + SERACH));
+// 开发环境权限总开关 false - 关闭权限菜单， true - 开启权限菜单
+var devAuthority = true;
+var OBJ = requestConfig_assign(requestConfig_assign(requestConfig_assign({ SUPER_ADMIN: ['wanghl@inke.cn', 'lin@inke.cn'], IS_DEV: requestConfig_IS_DEV, USER_INFO_MOCK: false, 
+    // 手机登录情况下，登录页面路由地址
+    PHONE_LOGGIN_PATH: 'login', SSO_PAGE_SERVICE: "http://sso.inkept.cn/?service=".concat(ssoService), SSO_PAGE_URL: 'http://sso.inkept.cn', SSO_LOGOUT_PAGE_SERVICE: "https://sso.inkept.cn/api/v1/user/logout/?service=".concat(ssoService), build: build }, build.ENV), requestConfig_IS_DEV ? DEV : PROD), { 
+    // 该系统权限标识，获取请联系 @李宁，2 为测试系统
+    // http://wiki.inkept.cn/pages/viewpage.action?pageId=50851740
+    AUTH_SYSTEM_ID: 2, 
+    // 系统中文名称
+    SYSTEM_CHINA_NAME: '固定资产管理系统 ', 
+    // 系统英文缩写
+    SYSTEM_US_NAME: 'Legal', 
+    // 系统地址
+    SYSTEM_URL: 'legal.inkept.cn', 
+    // 权限总开关 false - 关闭权限菜单， true - 开启权限菜单
+    authority: requestConfig_IS_DEV ? devAuthority : true, 
+    // 使用情况监控，获取请联系 @赵通，-1 则全局关闭监控
+    // http://wiki.inkept.cn/pages/viewpage.action?pageId=54597351
+    LOG_SYSTEM_SOURCE: -1 });
+/* harmony default export */ var requestConfig = (OBJ);
+
+;// CONCATENATED MODULE: ./src/apis.ts
+
+
+var root = requestConfig.APIS.root;
+var _a = (0,axios_service.getRequestsByRoot)({ root: root }), post = _a.post, apis_get = _a.get;
+/**
+ * @overview 如果系统有统一的错误信息处理，请将 @errorMessageDecorator 注释
+ */
+var Apis = /** @class */ (function () {
+    function Apis() {
+        /**
+         * 获取验证码
+         */
+        this.getVerifyCode = post('/api/mystery/user/register/phone/verifyCode');
+        /**
+         * 注册
+         */
+        this.registerFromPhone = post('/api/mystery/user/register/phone');
+        /**
+         * 登录
+         */
+        this.login = post('/api/mystery/user/login/phone');
+        /**
+         * 用户-找回密码
+         */
+        this.getBackPwd = post('/api/mystery/user/password/reset');
+        /**
+         * 用户-钥匙数量信息
+         */
+        this.getKeyMessage = apis_get('/api/mystery/user/keyInfo');
+        /**
+         * 用户-抖币信息
+         */
+        this.getDymoney = apis_get('/api/mystery/user/dymoney');
+        /**
+         * 【首页】飘屏
+         */
+        this.getFloatScreen = apis_get('/api/mystery/announce/floatScreen');
+        /**
+         * 【首页】公屏
+         */
+        this.getCommonScreen = apis_get('/api/mystery/announce/commonScreen');
+        /**
+         * 【首页】盲盒-开
+         */
+        this.lotteryDraw = post('/api/mystery/box/lottery/draw');
+        /**
+         * 获取钥匙数量
+         */
+        this.getKeys = apis_get('/api/mystery/user/keyInfo');
+        /**
+         * 【抖币】抖币-提取记录
+         */
+        this.getCoinHostory = post('/api/mystery/dymoney/draw/history');
+        /**
+         * 【用户】用户-抖币信息
+         */
+        this.getCoinInfo = apis_get('/api/mystery/user/dymoney');
+        /**
+         * 【抖币】抖币-提取
+         */
+        this.coinExtract = post('/api/mystery/dymoney/draw');
+        /**
+         * 【首页】钥匙-充值-钥匙信息列表
+         */
+        this.rechargeKeysList = apis_get('/api/mystery/key/deposit/list');
+        /**
+         * 【首页】钥匙-充值-预支付-微信
+         */
+        this.prepareWx = post('/api/mystery/key/deposit/prepare/wx');
+    }
+    return Apis;
+}());
+var ServiceApis = (/* unused pure expression or super */ null && (Apis));
+/* harmony default export */ var apis = (new Apis());
+
 ;// CONCATENATED MODULE: ./src/pages/Home/store.ts
+var store_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var store_generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
 var store_a;
+
+
 
 
 var store_Context = react.createContext(null);
@@ -35427,8 +35358,20 @@ var initialState = {
     },
     lotteryModal: {
         visible: false,
-        num: 0
-    }
+        currentBoxType: 3,
+        lotteryDataSource: {}
+    },
+    keyInfo: [{
+            keyType: 3,
+            keyCount: 0
+        }, {
+            keyType: 4,
+            keyCount: 0
+        }, {
+            keyType: 5,
+            keyCount: 0
+        }],
+    commonScreenData: []
 };
 var reduxSlice = createSlice({
     name: 'reduxSlice',
@@ -35446,13 +35389,232 @@ var reduxSlice = createSlice({
         setLotteryModal: function (state, _a) {
             var payload = _a.payload;
             state.lotteryModal = payload;
+        },
+        setKeyInfo: function (state, _a) {
+            var payload = _a.payload;
+            state.keyInfo = payload;
+        },
+        setCommonScreenData: function (state, _a) {
+            var payload = _a.payload;
+            state.commonScreenData = payload;
         }
     }
 });
 // Action creators are generated for each case reducer function
-var setViewModal = (store_a = reduxSlice.actions, store_a.setViewModal), setDetailModal = store_a.setDetailModal, setLotteryModal = store_a.setLotteryModal;
+var setViewModal = (store_a = reduxSlice.actions, store_a.setViewModal), setDetailModal = store_a.setDetailModal, setLotteryModal = store_a.setLotteryModal, setKeyInfo = store_a.setKeyInfo, setCommonScreenData = store_a.setCommonScreenData;
+// 获取钥匙数量
+var store_getKeys = function (query) { return function (dispatch) { return store_awaiter(void 0, void 0, void 0, function () {
+    var res;
+    var _a;
+    return store_generator(this, function (_b) {
+        switch (_b.label) {
+            case 0: return [4 /*yield*/, apis.getKeys(query).catch(function (err) {
+                    toast.show({
+                        content: err.msg
+                    });
+                })];
+            case 1:
+                res = _b.sent();
+                dispatch(setKeyInfo((_a = res.data.keyCountInfoList) !== null && _a !== void 0 ? _a : []));
+                return [2 /*return*/];
+        }
+    });
+}); }; };
+// 获取公屏信息
+var getCommonScreen = function () { return function (dispatch) { return store_awaiter(void 0, void 0, void 0, function () {
+    var res, tempArr;
+    var _a;
+    return store_generator(this, function (_b) {
+        switch (_b.label) {
+            case 0: return [4 /*yield*/, apis.getCommonScreen().catch(function () {
+                    toast.show({
+                        content: '错误'
+                    });
+                })];
+            case 1:
+                res = _b.sent();
+                tempArr = [];
+                (_a = res.data) === null || _a === void 0 ? void 0 : _a.forEach(function (item) {
+                    tempArr.push({
+                        userName: item.user.nickName,
+                        giftName: item.gift.giftName,
+                        dyMoneyAmount: item.gift.dyMoneyAmount
+                    });
+                });
+                dispatch(setCommonScreenData(tempArr));
+                return [2 /*return*/];
+        }
+    });
+}); }; };
+// 开盲盒
+var lotteryDraw = function (query) {
+    return function (dispatch) { return store_awaiter(void 0, void 0, void 0, function () {
+        var res;
+        var _a, _b;
+        return store_generator(this, function (_c) {
+            switch (_c.label) {
+                case 0:
+                    toast.show({
+                        icon: 'loading',
+                        content: '加载中…'
+                    });
+                    return [4 /*yield*/, apis.lotteryDraw(query)];
+                case 1:
+                    res = _c.sent();
+                    if (res.data.drawSuccess) {
+                        toast.clear();
+                        dispatch(setLotteryModal({
+                            visible: true,
+                            currentBoxType: (_a = query.keyInfo) === null || _a === void 0 ? void 0 : _a.keyType,
+                            lotteryDataSource: (_b = res.data.lottery) !== null && _b !== void 0 ? _b : {}
+                        }));
+                        dispatch(store_getKeys({
+                            userId: query.userId
+                        }));
+                        dispatch(getCommonScreen());
+                    }
+                    else {
+                        toast.show({
+                            content: res.data.drawFailedMsg
+                        });
+                        setTimeout(function () {
+                            toast.clear();
+                        }, 1000);
+                    }
+                    return [2 /*return*/];
+            }
+        });
+    }); };
+};
 // Reducer
 /* harmony default export */ var store = (reduxSlice.reducer);
+
+;// CONCATENATED MODULE: ./src/pages/Component/RollingList/index.tsx
+
+
+
+
+// const userInfo = JSON.parse(window.localStorage.getItem('user') || '{}')
+var RollingList = function () {
+    var _a = (0,react.useContext)(store_Context), state = _a.state, dispatch = _a.dispatch;
+    var commonScreenData = state.commonScreenData;
+    // // 获取公屏
+    // const getCommonScreen = () => {
+    //   Apis.getCommonScreen().then(res => {
+    //     console.log(res.data)
+    //     const tempArr = []
+    //     res.data?.forEach(item => {
+    //       tempArr.push({
+    //         userName: item.user.nickName,
+    //         giftName: item.gift.giftName,
+    //         dyMoneyAmount: item.gift.dyMoneyAmount
+    //       })
+    //     })
+    //     setDataSource(tempArr)
+    //   }, err => {
+    //     console.log(err)
+    //     Toast.show({
+    //       icon: 'fail',
+    //       content: '错误'
+    //     })
+    //   })
+    // }
+    (0,react.useEffect)(function () {
+        dispatch(getCommonScreen());
+    }, []);
+    return react.createElement("div", { className: 'rolling-list-wrapper' },
+        react.createElement("div", { className: 'list-content' }, commonScreenData.map(function (item, i) {
+            return react.createElement("div", { className: 'list-item', key: i },
+                react.createElement("span", null,
+                    react.createElement("label", { className: 'list-item-name' }, item.userName),
+                    react.createElement("label", { className: 'list-item-prize-name' },
+                        "\u5F00\u51FA\u4E86", "\u201D".concat(item.giftName, "\u201C"))),
+                react.createElement("span", null,
+                    react.createElement("label", { className: 'list-item-value' }, "\u4EF7\u503C\u6296\u5E01"),
+                    react.createElement("label", { className: 'list-item-num' }, item.dyMoneyAmount)));
+        })),
+        !commonScreenData.length && react.createElement(error_block, { className: 'err-block', title: null, image: 'https://cdn.tuanzhzh.com/doubi-image/home-empty.png', description: react.createElement("span", null, "\u6682\u65E0\u5F00\u5956\u4FE1\u606F") }));
+};
+/* harmony default export */ var Component_RollingList = (RollingList);
+
+;// CONCATENATED MODULE: ./src/pages/Component/TopRolling/index.tsx
+
+
+
+
+// const userInfo = JSON.parse(window.localStorage.getItem('user') || '{}')
+var TopRolling = function () {
+    var noticeDom = (0,react.useMemo)(function () {
+        return react.createElement("div", { className: 'notice-content-wrapper' },
+            "\u606D\u559C",
+            react.createElement("span", { className: 'notice-tip-concent' }, "\u4EFB\u6587\u5E86"),
+            "\u5F00\u51FA\u4E86 \u4EF7\u503C\u6296\u5E01\u4EF7\u503C\u6296\u5E01\u4EF7\u503C\u6296\u5E01\u4EF7\u503C\u6296\u5E01\u4EF7\u503C\u6296\u5E01",
+            react.createElement("span", { className: 'notice-tip-concent' }, "3000"));
+    }, []);
+    // 获取飘屏内容
+    var getFloatScreen = function () {
+        apis.getFloatScreen().then(function (res) {
+            console.log(res.data);
+        }, function (err) {
+            console.log(err);
+            toast.show({
+                icon: 'fail',
+                content: '错误'
+            });
+        });
+    };
+    (0,react.useEffect)(function () {
+        getFloatScreen();
+    }, []);
+    return react.createElement("div", { className: 'notice-wrapper' },
+        react.createElement(notice_bar, { content: noticeDom, delay: 800, icon: null, color: 'info' }));
+};
+/* harmony default export */ var Component_TopRolling = (TopRolling);
+
+;// CONCATENATED MODULE: ./src/pages/Component/UseEnhancedReducer/index.ts
+/**
+ * 自定义增强型 useReducer
+ * 在 react useReducer 基础上，增加 redux-thunk 和 redux-promise 功能
+ * 即：
+ * 1. 支持 function 类型的 action
+ * 2. 支持 Promise 类型的 action.payload
+ * 3. 支持 getState 方法，获取实时 state
+ * 参考：
+ * https://medium.com/@joseph.michael.sample/async-actions-with-usereducer-d75a2c5dc55c
+ * https://medium.com/solute-labs/configuring-thunk-action-creators-and-redux-dev-tools-with-reacts-usereducer-hook-5a1608476812
+ */
+
+var useEnhancedReducer = function (reducer, initialState) {
+    // 使用 useRef , 实现 getState 获取最新 state
+    var lastState = (0,react.useRef)(initialState);
+    // 将 handleActions 处理好的 reducer 包裹一层，将每次 reducer 计算出的最新 state 赋值给 ref 对象
+    var reducerWapper = (0,react.useCallback)(function (state, action) {
+        var result = reducer(state, action);
+        lastState.current = result;
+        return result;
+    }, [reducer]);
+    var _a = (0,react.useReducer)(reducerWapper, initialState), state = _a[0], dispatch = _a[1];
+    var getState = (0,react.useCallback)(function () { return lastState.current; }, []);
+    var enhancedDispatch = (0,react.useCallback)(function (action) {
+        // 支持 function 类型的 action
+        if (typeof action === 'function') {
+            return action(enhancedDispatch, getState);
+        }
+        else {
+            // 让 dispatch 支持 promise 类型的 action
+            if (action.payload instanceof Promise) {
+                return action.payload.then(function (result) {
+                    return dispatch({ type: action.type, payload: result });
+                });
+            }
+            else {
+                return dispatch(action);
+            }
+        }
+    }, [getState]);
+    return [state, enhancedDispatch, getState];
+};
+/* harmony default export */ var UseEnhancedReducer = (useEnhancedReducer);
 
 ;// CONCATENATED MODULE: ./src/pages/Home/component/RechargeKey/index.tsx
 var RechargeKey_assign = (undefined && undefined.__assign) || function () {
@@ -35471,15 +35633,18 @@ var _this = undefined;
 
 
 
+
 var keyMap = {
-    tong: 'https://cdn.tuanzhzh.com/doubi-image/tong-yaoshi.png',
-    yin: 'https://cdn.tuanzhzh.com/doubi-image/yin-yaoshi.png',
-    gold: 'https://cdn.tuanzhzh.com/doubi-image/jin-yaoshi.png'
+    3: 'https://cdn.tuanzhzh.com/doubi-image/tong-yaoshi.png',
+    4: 'https://cdn.tuanzhzh.com/doubi-image/yin-yaoshi.png',
+    5: 'https://cdn.tuanzhzh.com/doubi-image/jin-yaoshi.png'
 };
 var RechargeKey = function () {
-    var _a = (0,react.useState)(-1), active = _a[0], setActive = _a[1];
-    var _b = (0,react.useState)(false), payVisible = _b[0], setPayVisible = _b[1];
-    var _c = (0,react.useContext)(store_Context), state = _c.state, dispatch = _c.dispatch;
+    var _a, _b;
+    var _c = (0,react.useState)(-1), active = _c[0], setActive = _c[1];
+    var _d = (0,react.useState)(false), payVisible = _d[0], setPayVisible = _d[1];
+    var _e = (0,react.useState)({}), keysListInfo = _e[0], setKeysListInfo = _e[1];
+    var _f = (0,react.useContext)(store_Context), state = _f.state, dispatch = _f.dispatch;
     var viewModal = state.viewModal;
     var closeModal = function () {
         dispatch(setViewModal(RechargeKey_assign(RechargeKey_assign({}, viewModal), { visible: false })));
@@ -35491,24 +35656,46 @@ var RechargeKey = function () {
         setActive(index);
         setPayVisible(true);
     };
+    // 获取钥匙列表
+    var rechargeKeysList = function () {
+        apis.rechargeKeysList({
+            keyType: viewModal.type
+        }).then(function (res) {
+            var _a, _b;
+            var tempArr = ((_a = res.data) === null || _a === void 0 ? void 0 : _a.filter(function (item) { return item.keyType === viewModal.type; })) || [];
+            setKeysListInfo((_b = tempArr[0]) !== null && _b !== void 0 ? _b : {});
+        });
+    };
+    (0,react.useEffect)(function () {
+        if (viewModal.visible) {
+            setActive(-1);
+            rechargeKeysList();
+        }
+    }, [viewModal.visible]);
     return react.createElement("div", { className: 'recharge-key-wrapper' },
         react.createElement(mask, { visible: viewModal.visible, opacity: 0.8 },
             react.createElement("div", { className: 'recharge-key-content' },
                 react.createElement("img", { onClick: closeModal, className: 'recharge-key-close-icon', src: 'https://cdn.tuanzhzh.com/doubi-image/close-modal-icon.png' }),
                 react.createElement("div", { className: 'recharge-key-title' },
                     react.createElement("span", { className: 'recharge-name' }, "\u6700\u9AD8\u53EF\u591A\u8D60"),
-                    react.createElement("span", { className: 'recharge-key-gift-num' }, "40"),
+                    react.createElement("span", { className: 'recharge-key-gift-num' }, (_a = keysListInfo.extraKeyMaxAllCount) !== null && _a !== void 0 ? _a : 0),
                     react.createElement("img", { className: 'recharge-key-icon', src: keyMap[viewModal.type] })),
-                react.createElement("div", { className: 'recharge-key-item-content' }, [1, 1, 1, 1, 1, 1].map(function (item, i) {
+                react.createElement("div", { className: 'recharge-key-item-content' }, (_b = keysListInfo.extraKeyInfoList) === null || _b === void 0 ? void 0 : _b.map(function (item, i) {
                     console.log(item);
                     return react.createElement("div", { key: i, className: 'key-item-wrapper' },
                         react.createElement("div", { onClick: selectItem.bind(_this, i), className: active === i ? 'key-item active' : 'key-item' },
                             react.createElement("img", { className: 'key-item-icon', src: keyMap[viewModal.type] }),
-                            react.createElement("span", { className: 'key-item-num' }, "23\u628A")),
+                            react.createElement("span", { className: 'key-item-num' },
+                                item.allKeyCount,
+                                "\u628A")),
                         react.createElement("div", { className: 'key-item-gift-text' },
                             react.createElement("span", null, "\u5DF2\u8D60\u9001"),
-                            react.createElement("span", null, "4%")),
-                        react.createElement("div", { className: 'key-item-gift-money' }, "8\u5143"));
+                            react.createElement("span", null,
+                                item.extraRatio,
+                                "%")),
+                        react.createElement("div", { className: 'key-item-gift-money' },
+                            (item.price / 100).toFixed(2),
+                            "\u5143"));
                 })))),
         react.createElement(mask, { visible: payVisible, opacity: 0.8 },
             react.createElement("div", { className: 'pay-content' },
@@ -35559,22 +35746,58 @@ var DetailDescription = function () {
 /* harmony default export */ var component_DetailDescription = (DetailDescription);
 
 ;// CONCATENATED MODULE: ./src/pages/Home/component/LotteryModal/index.tsx
+var LotteryModal_this = undefined;
 
 
 
 
 var Lottery = function () {
-    var _a = (0,react.useContext)(store_Context), state = _a.state, dispatch = _a.dispatch;
+    var _a = (0,react.useState)({}), maxValue = _a[0], setMaxValue = _a[1];
+    var _b = (0,react.useState)([]), list = _b[0], setList = _b[1];
+    var _c = (0,react.useContext)(store_Context), state = _c.state, dispatch = _c.dispatch;
     var lotteryModal = state.lotteryModal;
+    var userInfo = JSON.parse(window.localStorage.getItem('user') || '{}');
+    // const userInfo = JSON.parse(window.localStorage.getItem('user') || '{}')
     var closeModal = function () {
         dispatch(setLotteryModal({
             visible: false
         }));
     };
+    var showLotteryModal = function (num) {
+        dispatch(lotteryDraw({
+            userId: userInfo.userId,
+            keyInfo: {
+                keyType: lotteryModal.currentBoxType,
+                keyCount: num
+            }
+        }));
+    };
+    (0,react.useEffect)(function () {
+        var _a, _b, _c, _d, _e;
+        var index = (_b = (_a = lotteryModal.lotteryDataSource) === null || _a === void 0 ? void 0 : _a.giftList) === null || _b === void 0 ? void 0 : _b.findIndex(function (item) { var _a; return item.giftId === ((_a = lotteryModal.lotteryDataSource) === null || _a === void 0 ? void 0 : _a.maxValueGiftId); });
+        var findObj = ((_d = (_c = lotteryModal.lotteryDataSource) === null || _c === void 0 ? void 0 : _c.giftList) === null || _d === void 0 ? void 0 : _d.find(function (item) { var _a; return item.giftId === ((_a = lotteryModal.lotteryDataSource) === null || _a === void 0 ? void 0 : _a.maxValueGiftId); })) || {};
+        setMaxValue(findObj);
+        var tempArr = JSON.parse(JSON.stringify(((_e = lotteryModal.lotteryDataSource) === null || _e === void 0 ? void 0 : _e.giftList) || []));
+        tempArr.splice(index, 1);
+        setList(tempArr);
+    }, [lotteryModal]);
     return react.createElement("div", { className: 'lottery-wrapper' },
         react.createElement(mask, { visible: lotteryModal.visible },
             react.createElement("div", { className: 'lottery-content' },
-                react.createElement("img", { onClick: closeModal, className: 'lottery-close-icon', src: 'https://cdn.tuanzhzh.com/doubi-image/close-modal-icon.png' }))));
+                react.createElement("img", { onClick: closeModal, className: 'lottery-close-icon', src: 'https://cdn.tuanzhzh.com/doubi-image/close-modal-icon.png' }),
+                react.createElement("div", { className: 'max-value-lottery' },
+                    react.createElement("img", { src: maxValue.bigPicUrl })),
+                react.createElement("ul", { className: 'lottery-list-ul' }, list.map(function (item, i) {
+                    return react.createElement("li", { className: 'lottery-list-item', key: i },
+                        react.createElement("img", { src: item.smallPicUrl }));
+                })),
+                react.createElement("div", { className: 'lottery-box-xiang-btn-wrapper' },
+                    react.createElement(components_button, { shape: 'rounded', className: 'one-key-btn', onClick: showLotteryModal.bind(LotteryModal_this, 1) },
+                        react.createElement("span", { className: 'one-key-bg-icon' }),
+                        react.createElement("span", null, "X 1")),
+                    react.createElement(components_button, { shape: 'rounded', className: 'ten-key-btn', onClick: showLotteryModal.bind(LotteryModal_this, 10) },
+                        react.createElement("span", { className: 'ten-key-bg-icon' }),
+                        react.createElement("span", null, "X 10"))))));
 };
 /* harmony default export */ var LotteryModal = (Lottery);
 
@@ -35602,7 +35825,7 @@ var Home_this = undefined;
 
 
 
-
+// import Apis from 'src/apis'
 
 var boxMap = {
     3: 'https://cdn.tuanzhzh.com/doubi-image/tong-box.png',
@@ -35611,20 +35834,19 @@ var boxMap = {
 };
 var keyIcon = {
     3: 'https://cdn.tuanzhzh.com/doubi-image/tong-yaoshi.png',
-    4: 'https://cdn.tuanzhzh.com/doubi-image/tong-yaoshi.png',
+    4: 'https://cdn.tuanzhzh.com/doubi-image/yin-yaoshi.png',
     5: 'https://cdn.tuanzhzh.com/doubi-image/jin-yaoshi.png'
 };
-var Home_userInfo = JSON.parse(window.localStorage.getItem('user') || '{}');
 var Home = function () {
     var _a = (0,react.useState)(3), currentBox = _a[0], setCurrentBox = _a[1];
     var _b = (0,react.useState)({
         nickName: '请登录',
         avatarUrl: 'https://cdn.tuanzhzh.com/doubi-image/no-login-icon.png'
     }), loginInfo = _b[0], setLoginInfo = _b[1];
-    var _c = (0,react.useState)([]), keyData = _c[0], setKeyData = _c[1];
-    var _d = (0,react.useState)(false), payVisible = _d[0], setPayVisible = _d[1];
-    var _e = UseEnhancedReducer(store, initialState), state = _e[0], dispatch = _e[1];
+    var userInfo = JSON.parse(window.localStorage.getItem('user') || '{}');
+    var _c = UseEnhancedReducer(store, initialState), state = _c[0], dispatch = _c[1];
     var navigate = dist_useNavigate();
+    var keyInfo = state.keyInfo;
     var skipLoginPage = function () {
         navigate({
             pathname: '/login'
@@ -35636,7 +35858,6 @@ var Home = function () {
         });
     };
     var addRechargeKey = function (type) {
-        debugger;
         dispatch(setViewModal({
             visible: true,
             type: type
@@ -35650,59 +35871,22 @@ var Home = function () {
             visible: true
         }));
     };
-    var weichatPay = function () {
-        setPayVisible(true);
-    };
     var showLotteryModal = function (num) {
         lotteryDraw(num);
-    };
-    // 获取钥匙数量
-    var getKeys = function () {
-        apis.getKeys({
-            userId: Home_userInfo.userId
-        }).then(function (res) {
-            var _a;
-            setKeyData((_a = res.data.keyCountInfoList) !== null && _a !== void 0 ? _a : []);
-        }, function (err) {
-            console.log(err);
-            toast.show({
-                icon: 'fail',
-                content: '错误'
-            });
-        });
-    };
-    // 开奖
-    var lotteryDraw = function (num) {
-        apis.lotteryDraw({
-            userId: Home_userInfo.userId,
+        dispatch(lotteryDraw({
+            userId: userInfo.userId,
             keyInfo: {
                 keyType: currentBox * 1,
                 keyCount: num
             }
-        }).then(function (res) {
-            if (res.data.drawSuccess) {
-                dispatch(setLotteryModal({
-                    visible: true,
-                    num: num
-                }));
-            }
-            else {
-                toast.show({
-                    icon: 'fail',
-                    content: res.data.drawFailedMsg
-                });
-            }
-        });
+        }));
     };
-    // const getUserKeyInfo = () => {
-    //   Apis.getKeyMessage().then(res => {
-    //     res.data.keyCountInfoList?.length
-    //   })
-    // }
     (0,react.useEffect)(function () {
-        if (Object.keys(Home_userInfo).length) {
-            getKeys();
-            setLoginInfo(Home_assign({}, Home_userInfo));
+        if (Object.keys(userInfo).length) {
+            dispatch(store_getKeys({
+                userId: userInfo.userId
+            }));
+            setLoginInfo(Home_assign({}, userInfo));
         }
     }, []);
     return react.createElement(react.Fragment, null,
@@ -35711,9 +35895,9 @@ var Home = function () {
                 react.createElement(Component_TopRolling, null),
                 react.createElement("div", { className: 'home-user-wrapper' },
                     react.createElement("span", { className: 'user-portrait' },
-                        react.createElement("img", { className: 'portrait-icon', src: loginInfo.avatarUrl })),
-                    react.createElement("span", { className: 'user-name', onClick: skipLoginPage }, loginInfo.nickName)),
-                react.createElement("div", { className: 'home-keys-wrapper' }, keyData.map(function (item, i) {
+                        react.createElement("img", { className: 'portrait-icon', src: loginInfo.avatarUrl || 'https://cdn.tuanzhzh.com/doubi-image/no-login-icon.png' })),
+                    react.createElement("span", { className: 'user-name', onClick: skipLoginPage }, loginInfo.nickName || '游客')),
+                react.createElement("div", { className: 'home-keys-wrapper' }, keyInfo.map(function (item, i) {
                     return react.createElement("div", { className: 'key-item', key: i },
                         react.createElement("img", { className: 'key-type', src: keyIcon[item.keyType] }),
                         react.createElement("span", { className: 'key-num' }, item.keyCount),
@@ -35728,8 +35912,6 @@ var Home = function () {
                 react.createElement("div", { className: 'home-box-xiang-wrapper' },
                     react.createElement("img", { className: 'box-xiang-icon', src: boxMap[currentBox] }),
                     react.createElement("span", { className: 'box-xiang-instructions', onClick: showDetailDescription }, "\u8BE6\u7EC6\u8BF4\u660E")),
-                react.createElement("div", { className: 'home-box-xiang-wrapper2' },
-                    react.createElement("span", { className: 'box-xiang-instructions2', onClick: weichatPay }, "\u5FAE\u4FE1\u652F\u4ED8")),
                 react.createElement("div", { className: 'home-box-xiang-btn-wrapper' },
                     react.createElement(components_button, { shape: 'rounded', className: 'one-key-btn', onClick: showLotteryModal.bind(Home_this, 1) },
                         react.createElement("span", { className: 'one-key-bg-icon' }),
@@ -35743,9 +35925,7 @@ var Home = function () {
                 react.createElement(Component_RollingList, null)),
             react.createElement(component_RechargeKey, null),
             react.createElement(component_DetailDescription, null),
-            react.createElement(LotteryModal, null),
-            react.createElement(mask, { visible: payVisible, opacity: 0.8, onMaskClick: function () { return setPayVisible(false); } },
-                react.createElement("img", { className: 'box-xiang-icon', style: { width: '100%' }, src: 'https://cdn.tuanzhzh.com/doubi-image/11.jpeg' }))));
+            react.createElement(LotteryModal, null)));
 };
 /* harmony default export */ var pages_Home = (Home);
 
@@ -36362,8 +36542,6 @@ var ForgetPassword = function () {
 };
 /* harmony default export */ var pages_ForgetPassword = (ForgetPassword);
 
-;// CONCATENATED MODULE: ./node_modules/antd-mobile/es/utils/sleep.js
-const sleep = time => new Promise(resolve => setTimeout(resolve, time));
 ;// CONCATENATED MODULE: ./src/pages/DoubiExtract/index.tsx
 var DoubiExtract_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -36414,6 +36592,7 @@ var DoubiExtract_spreadArray = (undefined && undefined.__spreadArray) || functio
 
 
 
+// import { sleep } from 'antd-mobile/es/utils/sleep'
 
 
 var DoubiExtract_number = 1;
@@ -36421,6 +36600,10 @@ var DoubiExtract = function () {
     var _a = (0,react.useState)(false), visible = _a[0], setVisible = _a[1];
     var _b = (0,react.useState)(['1', '1', '1', '1', '1', '1']), data = _b[0], setData = _b[1];
     var _c = (0,react.useState)(true), hasMore = _c[0], setHasMore = _c[1];
+    var _d = (0,react.useState)(0), coinNum = _d[0], setCoinNum = _d[1];
+    var _e = (0,react.useState)(0), extractNum = _e[0], setEextractNum = _e[1];
+    var _f = (0,react.useState)(''), douyin = _f[0], setDouyin = _f[1];
+    var userInfo = JSON.parse(window.localStorage.getItem('user') || '{}');
     var navigate = dist_useNavigate();
     var closeModal = function () {
         setVisible(false);
@@ -36430,32 +36613,43 @@ var DoubiExtract = function () {
             pathname: '/home'
         });
     }, []);
-    function mockRequest() {
-        return DoubiExtract_awaiter(this, void 0, void 0, function () {
-            return DoubiExtract_generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, sleep(2000)];
-                    case 1:
-                        _a.sent();
-                        if (DoubiExtract_number > 3) {
-                            return [2 /*return*/, []];
-                        }
-                        return [2 /*return*/, ['1', '1', '1', '1']];
+    // 抖币提取
+    var getCoinHistory = function () { return DoubiExtract_awaiter(void 0, void 0, void 0, function () {
+        return DoubiExtract_generator(this, function (_a) {
+            apis.getCoinHostory({
+                page: DoubiExtract_number,
+                pageSize: 10,
+                userId: userInfo.userId
+            }).then(function (res) {
+                var _a, _b;
+                console.log(res.data);
+                setData(function (val) { return DoubiExtract_spreadArray(DoubiExtract_spreadArray([], val, true), res.data, true); });
+                setHasMore(((_a = res.data) === null || _a === void 0 ? void 0 : _a.length) > 0);
+                if ((_b = res.data) === null || _b === void 0 ? void 0 : _b.length) {
+                    DoubiExtract_number += 1;
                 }
+            }, function (err) {
+                toast.show({
+                    content: err.err_msg
+                });
             });
+            return [2 /*return*/];
         });
-    }
+    }); };
+    // async function mockRequest() {
+    //   await sleep(2000)
+    //   if (number > 3) {
+    //     return []
+    //   }
+    //   return ['1', '1', '1', '1']
+    // }
     function loadMore() {
         return DoubiExtract_awaiter(this, void 0, void 0, function () {
-            var append;
             return DoubiExtract_generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, mockRequest()];
+                    case 0: return [4 /*yield*/, getCoinHistory()];
                     case 1:
-                        append = _a.sent();
-                        DoubiExtract_number += 1;
-                        setData(function (val) { return DoubiExtract_spreadArray(DoubiExtract_spreadArray([], val, true), append, true); });
-                        setHasMore(append.length > 0);
+                        _a.sent();
                         return [2 /*return*/];
                 }
             });
@@ -36466,6 +36660,61 @@ var DoubiExtract = function () {
             pathname: '/home'
         });
     };
+    var extractHandle = function () {
+        // if (!coinNum) {
+        //   return Toast.show({
+        //     content: <span>当前抖币数量为 <label style={{ color: 'red' }}>0</label></span>
+        //   })
+        // }
+        setVisible(true);
+    };
+    var coinChangeHandle = function (val) {
+        setEextractNum(val);
+    };
+    var douYinChangeHandle = function (val) {
+        setDouyin(val);
+    };
+    // 抖币提取
+    var coinExtract = function () {
+        apis.coinExtract({
+            userId: userInfo.userId,
+            drawDyMoneyAmount: extractNum,
+            dyId: douyin
+        }).then(function (res) {
+            if (!res.data.isDrawEnable) {
+                toast.show({
+                    content: res.data.drawFailedMsg
+                });
+            }
+            else {
+                toast.show({
+                    content: '提取成功'
+                });
+                setVisible(false);
+            }
+        }, function (err) {
+            toast.show({
+                content: err.drawFailedMsg
+            });
+        });
+    };
+    // 获取抖币信息
+    var getCoinInfo = function () {
+        apis.getCoinInfo({
+            userId: userInfo.userId
+        }).then((function (res) {
+            var _a;
+            setCoinNum((_a = res.data.dyMoneyAmount) !== null && _a !== void 0 ? _a : 0);
+        }), function (err) {
+            console.log(err);
+            toast.show({
+                content: '错误'
+            });
+        });
+    };
+    (0,react.useEffect)(function () {
+        getCoinInfo();
+    }, []);
     return react.createElement("div", { className: 'extract-wrapper' },
         react.createElement(nav_bar, { onBack: back, back: '\u8FD4\u56DE' }, "\u6296\u5E01\u63D0\u53D6"),
         react.createElement(Component_TopRolling, null),
@@ -36473,12 +36722,12 @@ var DoubiExtract = function () {
             react.createElement("div", { className: 'extract-header' },
                 react.createElement("div", { className: 'extract-header-top' },
                     react.createElement("span", { className: 'user-portrait' },
-                        react.createElement("img", { className: 'portrait-icon', src: 'https://cdn.tuanzhzh.com/doubi-image/no-login-icon.png' })),
-                    react.createElement("span", { className: 'user-name' }, "\u5218\u5FB7\u534E")),
+                        react.createElement("img", { className: 'portrait-icon', src: userInfo.avatarUrl || 'https://cdn.tuanzhzh.com/doubi-image/no-login-icon.png' })),
+                    react.createElement("span", { className: 'user-name' }, userInfo.nickName || '游客')),
                 react.createElement("div", { className: 'extract-header-bottom' },
                     react.createElement("span", null, "\u53EF\u63D0\u53D6\u6296\u5E01"),
-                    react.createElement("span", null, "9999999"))),
-            react.createElement("div", { className: 'extract-btn', onClick: function () { return setVisible(true); } },
+                    react.createElement("span", null, coinNum))),
+            react.createElement("div", { className: 'extract-btn', onClick: extractHandle },
                 react.createElement("span", null, "\u63D0\u53D6"))),
         react.createElement("div", { className: 'home-back', onClick: homeBack },
             react.createElement("img", { className: 'doubi-tiqu', src: 'https://cdn.tuanzhzh.com/doubi-image/home-icon.png' }),
@@ -36508,16 +36757,16 @@ var DoubiExtract = function () {
         react.createElement(modal, { bodyClassName: 'extract-modal-wrapper', visible: visible, title: react.createElement("div", { className: 'extract-modal-title' },
                 react.createElement("span", null, "\u53EF\u63D0\u53D6\u6296\u5E01"),
                 react.createElement("img", { className: 'icon-close', onClick: closeModal, src: 'https://cdn.tuanzhzh.com/doubi-image/close-modal-icon.png' })), content: react.createElement("div", { className: 'extract-modal-content' },
-                react.createElement("div", { className: 'extract-modal-doubi-num' }, "99999"),
+                react.createElement("div", { className: 'extract-modal-doubi-num' }, coinNum),
                 react.createElement("div", { className: 'extract-modal-form' },
                     react.createElement("div", { className: 'form-item' },
                         react.createElement("span", { className: 'form-item-name' }, "\u63D0\u53D6\u6296\u5E01"),
-                        react.createElement(input, { placeholder: '\u8BF7\u8F93\u516510~50000\u6574\u6570', className: 'form-input-style' })),
+                        react.createElement(input, { placeholder: '\u8BF7\u8F93\u516510~50000\u6574\u6570', className: 'form-input-style', onChange: coinChangeHandle, type: 'number', clearable: true })),
                     react.createElement("div", { className: 'form-item' },
                         react.createElement("span", { className: 'form-item-name' }, "\u9009\u62E9\u6296\u97F3\u53F7"),
-                        react.createElement(input, { placeholder: '\u8BF7\u8F93\u5165\u6296\u97F3\u53F7', className: 'form-input-style' }))),
+                        react.createElement(input, { placeholder: '\u8BF7\u8F93\u5165\u6296\u97F3\u53F7', className: 'form-input-style', clearable: true, onChange: douYinChangeHandle }))),
                 react.createElement("div", { className: 'extract-bottom-wrapper' },
-                    react.createElement("div", { className: 'extract-bottom-btn' },
+                    react.createElement("div", { className: 'extract-bottom-btn', onClick: coinExtract },
                         react.createElement("span", null, "\u786E\u5B9A")),
                     react.createElement("div", { className: 'extract-bottom-text' }, "\u7CFB\u7EDF\u4F1A\u6309\u7167\u60A8\u9009\u62E9\u6216\u8F93\u5165\u7684\u6296\u97F3\u53F7\u8FDB\u884C\u5145\u503C"))), closeOnAction: true, onClose: function () {
                 setVisible(false);

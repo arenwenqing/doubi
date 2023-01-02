@@ -15,7 +15,7 @@ export const Context = React.createContext(null)
 export const initialState = {
   viewModal: {
     visible: false,
-    type: 'tong'
+    type: 3
   },
   detailModal: {
     visible: false

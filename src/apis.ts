@@ -83,6 +83,21 @@ class Apis {
    * 【首页】钥匙-充值-预支付-微信
    */
   prepareWx = post('/api/mystery/key/deposit/prepare/wx')
+
+  /**
+   * 【支付】钥匙-充值-预支付-支付宝
+   */
+  prepareAliPay = post('/api/mystery/key/deposit/prePay/ali')
+
+  /**
+   * 【抖币】抖币提取-抖音号记录
+   */
+  getDyIds = get('/api/mystery/dymoney/draw/history/dyId')
+
+  /**
+   * 【盲盒】盲盒-记录
+   */
+  getLotteryHistory = post('/api/mystery/box/lottery/history')
 }
 
 export const ServiceApis = Apis;
