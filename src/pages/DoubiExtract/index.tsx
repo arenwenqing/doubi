@@ -132,7 +132,7 @@ const DoubiExtract:React.FC = () => {
     }), err => {
       console.log(err)
       Toast.show({
-        content: '错误'
+        content: err.msg
       })
     })
   }

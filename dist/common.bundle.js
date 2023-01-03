@@ -35299,6 +35299,18 @@ var Apis = /** @class */ (function () {
          * 【首页】钥匙-充值-预支付-微信
          */
         this.prepareWx = post('/api/mystery/key/deposit/prepare/wx');
+        /**
+         * 【支付】钥匙-充值-预支付-支付宝
+         */
+        this.prepareAliPay = post('/api/mystery/key/deposit/prePay/ali');
+        /**
+         * 【抖币】抖币提取-抖音号记录
+         */
+        this.getDyIds = apis_get('/api/mystery/dymoney/draw/history/dyId');
+        /**
+         * 【盲盒】盲盒-记录
+         */
+        this.getLotteryHistory = post('/api/mystery/box/lottery/history');
     }
     return Apis;
 }());
@@ -35351,7 +35363,7 @@ var store_Context = react.createContext(null);
 var initialState = {
     viewModal: {
         visible: false,
-        type: 'tong'
+        type: 3
     },
     detailModal: {
         visible: false
@@ -35544,17 +35556,25 @@ var RollingList = function () {
 
 // const userInfo = JSON.parse(window.localStorage.getItem('user') || '{}')
 var TopRolling = function () {
+    var _a = (0,react.useState)([]), dataList = _a[0], setDataList = _a[1];
     var noticeDom = (0,react.useMemo)(function () {
-        return react.createElement("div", { className: 'notice-content-wrapper' },
-            "\u606D\u559C",
-            react.createElement("span", { className: 'notice-tip-concent' }, "\u4EFB\u6587\u5E86"),
-            "\u5F00\u51FA\u4E86 \u4EF7\u503C\u6296\u5E01\u4EF7\u503C\u6296\u5E01\u4EF7\u503C\u6296\u5E01\u4EF7\u503C\u6296\u5E01\u4EF7\u503C\u6296\u5E01",
-            react.createElement("span", { className: 'notice-tip-concent' }, "3000"));
-    }, []);
+        return react.createElement("div", { className: 'notice-content-wrapper' }, dataList.map(function (item, i) {
+            return react.createElement("span", { key: i },
+                "\u606D\u559C",
+                react.createElement("span", { className: 'notice-tip-concent' }, item.user.nickName || '游客'),
+                "\u5F00\u51FA\u4E86 ",
+                react.createElement("span", { className: 'notice-tip-concent' }, item.gift.giftName),
+                react.createElement("img", { src: item.gift.smallPicUrl, className: 'notice-content-lottery' }),
+                "\u4EF7\u503C\u6296\u5E01",
+                react.createElement("span", { className: 'notice-tip-concent' }, item.dyMoneyAmount));
+        }));
+    }, [dataList]);
     // 获取飘屏内容
     var getFloatScreen = function () {
         apis.getFloatScreen().then(function (res) {
+            var _a;
             console.log(res.data);
+            setDataList((_a = res.data) !== null && _a !== void 0 ? _a : []);
         }, function (err) {
             console.log(err);
             toast.show({
@@ -35644,17 +35664,46 @@ var RechargeKey = function () {
     var _c = (0,react.useState)(-1), active = _c[0], setActive = _c[1];
     var _d = (0,react.useState)(false), payVisible = _d[0], setPayVisible = _d[1];
     var _e = (0,react.useState)({}), keysListInfo = _e[0], setKeysListInfo = _e[1];
-    var _f = (0,react.useContext)(store_Context), state = _f.state, dispatch = _f.dispatch;
+    var _f = (0,react.useState)({}), rechargeKeyInfo = _f[0], setRechargeKeyInfo = _f[1];
+    var _g = (0,react.useState)(''), htmlText = _g[0], setHtmlText = _g[1];
+    var _h = (0,react.useContext)(store_Context), state = _h.state, dispatch = _h.dispatch;
     var viewModal = state.viewModal;
+    var userInfo = JSON.parse(window.localStorage.getItem('user') || '{}');
     var closeModal = function () {
         dispatch(setViewModal(RechargeKey_assign(RechargeKey_assign({}, viewModal), { visible: false })));
     };
     var closePay = function () {
         setPayVisible(false);
     };
-    var selectItem = function (index) {
+    var selectItem = function (index, num) {
         setActive(index);
         setPayVisible(true);
+        setRechargeKeyInfo({
+            keyInfo: {
+                keyType: viewModal.type,
+                keyCount: num * 1
+            }
+        });
+    };
+    var aliPay = function () {
+        // setHtmlText('')
+        // console.log(document.forms[0].submit())
+        toast.show({
+            icon: 'loading',
+            content: '加载中…'
+        });
+        apis.prepareAliPay(RechargeKey_assign({ userId: userInfo.userId }, rechargeKeyInfo)).then(function (res) {
+            var _a;
+            console.log(res.data);
+            setHtmlText((_a = res.data.payForm) !== null && _a !== void 0 ? _a : '');
+            document.forms[0].submit();
+        }, function () {
+            toast.show({
+                content: '支付异常，稍后重试'
+            });
+        }).finally(function () {
+            toast.clear();
+        });
     };
     // 获取钥匙列表
     var rechargeKeysList = function () {
@@ -35681,9 +35730,8 @@ var RechargeKey = function () {
                     react.createElement("span", { className: 'recharge-key-gift-num' }, (_a = keysListInfo.extraKeyMaxAllCount) !== null && _a !== void 0 ? _a : 0),
                     react.createElement("img", { className: 'recharge-key-icon', src: keyMap[viewModal.type] })),
                 react.createElement("div", { className: 'recharge-key-item-content' }, (_b = keysListInfo.extraKeyInfoList) === null || _b === void 0 ? void 0 : _b.map(function (item, i) {
-                    console.log(item);
                     return react.createElement("div", { key: i, className: 'key-item-wrapper' },
-                        react.createElement("div", { onClick: selectItem.bind(_this, i), className: active === i ? 'key-item active' : 'key-item' },
+                        react.createElement("div", { onClick: selectItem.bind(_this, i, item.allKeyCount), className: active === i ? 'key-item active' : 'key-item' },
                             react.createElement("img", { className: 'key-item-icon', src: keyMap[viewModal.type] }),
                             react.createElement("span", { className: 'key-item-num' },
                                 item.allKeyCount,
@@ -35705,9 +35753,10 @@ var RechargeKey = function () {
                     react.createElement("div", { className: 'pay-way-item pay-way-item-wechat' },
                         react.createElement("img", { src: 'https://cdn.tuanzhzh.com/doubi-image/wechat.png' }),
                         react.createElement("span", { className: 'pay-item-text' }, "\u5FAE\u4FE1\u652F\u4ED8")),
-                    react.createElement("div", { className: 'pay-way-item' },
+                    react.createElement("div", { className: 'pay-way-item', onClick: aliPay },
                         react.createElement("img", { src: 'https://cdn.tuanzhzh.com/doubi-image/alipay.png' }),
-                        react.createElement("span", { className: 'pay-item-text' }, "\u652F\u4ED8\u5B9D\u652F\u4ED8"))))));
+                        react.createElement("span", { className: 'pay-item-text' }, "\u652F\u4ED8\u5B9D\u652F\u4ED8")))),
+            react.createElement("div", { dangerouslySetInnerHTML: { __html: htmlText } })));
 };
 /* harmony default export */ var component_RechargeKey = (RechargeKey);
 
@@ -36588,6 +36637,7 @@ var DoubiExtract_spreadArray = (undefined && undefined.__spreadArray) || functio
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
+var DoubiExtract_this = undefined;
 
 
 
@@ -36596,13 +36646,21 @@ var DoubiExtract_spreadArray = (undefined && undefined.__spreadArray) || functio
 
 
 var DoubiExtract_number = 1;
+var showText = {
+    1: '提取中',
+    2: '已完成',
+    3: '已退回'
+};
+var cacheDyIds = [];
 var DoubiExtract = function () {
     var _a = (0,react.useState)(false), visible = _a[0], setVisible = _a[1];
-    var _b = (0,react.useState)(['1', '1', '1', '1', '1', '1']), data = _b[0], setData = _b[1];
+    var _b = (0,react.useState)([]), data = _b[0], setData = _b[1];
     var _c = (0,react.useState)(true), hasMore = _c[0], setHasMore = _c[1];
     var _d = (0,react.useState)(0), coinNum = _d[0], setCoinNum = _d[1];
     var _e = (0,react.useState)(0), extractNum = _e[0], setEextractNum = _e[1];
     var _f = (0,react.useState)(''), douyin = _f[0], setDouyin = _f[1];
+    var _g = (0,react.useState)([]), dyIds = _g[0], setDyIds = _g[1];
+    var _h = (0,react.useState)(false), showDyIds = _h[0], setShowDyIds = _h[1];
     var userInfo = JSON.parse(window.localStorage.getItem('user') || '{}');
     var navigate = dist_useNavigate();
     var closeModal = function () {
@@ -36622,7 +36680,6 @@ var DoubiExtract = function () {
                 userId: userInfo.userId
             }).then(function (res) {
                 var _a, _b;
-                console.log(res.data);
                 setData(function (val) { return DoubiExtract_spreadArray(DoubiExtract_spreadArray([], val, true), res.data, true); });
                 setHasMore(((_a = res.data) === null || _a === void 0 ? void 0 : _a.length) > 0);
                 if ((_b = res.data) === null || _b === void 0 ? void 0 : _b.length) {
@@ -36673,9 +36730,15 @@ var DoubiExtract = function () {
     };
     var douYinChangeHandle = function (val) {
         setDouyin(val);
+        var tempArr = cacheDyIds.filter(function (item) { return item.indexOf(val) !== -1; });
+        setDyIds(tempArr);
     };
     // 抖币提取
     var coinExtract = function () {
+        toast.show({
+            icon: 'loading',
+            content: '加载中…'
+        });
         apis.coinExtract({
             userId: userInfo.userId,
             drawDyMoneyAmount: extractNum,
@@ -36687,15 +36750,22 @@ var DoubiExtract = function () {
                 });
             }
             else {
+                toast.clear();
                 toast.show({
                     content: '提取成功'
                 });
+                DoubiExtract_number = 1;
+                getCoinInfo();
+                getCoinHistory();
                 setVisible(false);
             }
         }, function (err) {
             toast.show({
                 content: err.drawFailedMsg
             });
+            setTimeout(function () {
+                toast.clear();
+            }, 2000);
         });
     };
     // 获取抖币信息
@@ -36712,9 +36782,44 @@ var DoubiExtract = function () {
             });
         });
     };
+    // 抖音号记录
+    var getDyIds = function () {
+        apis.getDyIds({
+            userId: userInfo.userId
+        }).then(function (res) {
+            var _a, _b;
+            setDyIds((_a = res.data) !== null && _a !== void 0 ? _a : []);
+            cacheDyIds = (_b = res.data) !== null && _b !== void 0 ? _b : [];
+        }, function () {
+            toast.show({
+                content: '获取抖音号失败，请输入'
+            });
+        });
+    };
+    // 获取焦点
+    var dyFocus = function () {
+        setTimeout(function () {
+            setShowDyIds(true);
+        }, 100);
+    };
+    // 失去焦点
+    var dyBlur = function () {
+        setTimeout(function () {
+            setShowDyIds(false);
+        }, 0);
+    };
+    // 选择抖音号
+    var choiceDyIds = function (val) {
+        setDouyin(val);
+    };
     (0,react.useEffect)(function () {
         getCoinInfo();
     }, []);
+    (0,react.useEffect)(function () {
+        if (visible) {
+            getDyIds();
+        }
+    }, [visible]);
     return react.createElement("div", { className: 'extract-wrapper' },
         react.createElement(nav_bar, { onBack: back, back: '\u8FD4\u56DE' }, "\u6296\u5E01\u63D0\u53D6"),
         react.createElement(Component_TopRolling, null),
@@ -36734,24 +36839,23 @@ var DoubiExtract = function () {
             react.createElement("span", { className: 'doubi-tiqu-text' }, "\u8FD4\u56DE\u9996\u9875")),
         react.createElement("div", { className: 'extract-list-wrapper' },
             react.createElement(list, null, data.map(function (item, i) {
-                console.log(item);
                 return react.createElement(list.Item, { key: i },
-                    react.createElement("div", { className: i % 2 === 0 ? 'extract-list-item' : 'extract-list-item extract-list-item2' },
+                    react.createElement("div", { className: item.status === 3 ? 'extract-list-item extract-list-item2' : 'extract-list-item' },
                         react.createElement("div", { className: 'extract-list-content' },
                             react.createElement("div", { className: 'list-item-top' },
-                                react.createElement("span", { className: 'list-item-user' }, "\u5783\u573E***\u5440"),
+                                react.createElement("span", { className: 'list-item-user' }, item.name || '--'),
                                 react.createElement("span", null,
                                     react.createElement("label", null, "\u63D0\u53D6\u6296\u5E01"),
-                                    react.createElement("label", { className: 'list-item-num' }, "1243")),
+                                    react.createElement("label", { className: 'list-item-num' }, item.drawDyMoneyAmount || 0)),
                                 react.createElement("span", { className: 'list-item-zhi' }, "\u81F3"),
-                                i % 2 !== 0 ? react.createElement("span", { className: 'list-item-error' }, "\u6296\u97F3\u8D26\u53F7\u5F02\u5E38") : ''),
+                                item.status === 3 ? react.createElement("span", { className: 'list-item-error' }, "\u6296\u97F3\u8D26\u53F7\u5F02\u5E38") : ''),
                             react.createElement("div", { className: 'list-item-bottom' },
-                                react.createElement("span", { className: 'list-item-time' }, "2022-03-24 23:34:12"),
+                                react.createElement("span", { className: 'list-item-time' }, item.drawTime || '--'),
                                 react.createElement("span", null,
                                     react.createElement("label", null, "\u6296\u97F3"),
-                                    react.createElement("label", { className: 'list-item-douyin-number' }, "34223KJKAQ")),
-                                react.createElement("span", { className: i % 2 === 0 ? 'list-item-operation-btn' : 'list-item-operation-btn list-item-operation-btn2' },
-                                    react.createElement("label", null, i % 2 === 0 ? '已完成' : '已退回'))))));
+                                    react.createElement("label", { className: 'list-item-douyin-number' }, item.dyId || '--')),
+                                react.createElement("span", { className: item.status === 3 ? 'list-item-operation-btn list-item-operation-btn2' : 'list-item-operation-btn' },
+                                    react.createElement("label", null, showText[item.status]))))));
             })),
             react.createElement(infinite_scroll, { loadMore: loadMore, hasMore: hasMore })),
         react.createElement(modal, { bodyClassName: 'extract-modal-wrapper', visible: visible, title: react.createElement("div", { className: 'extract-modal-title' },
@@ -36764,7 +36868,10 @@ var DoubiExtract = function () {
                         react.createElement(input, { placeholder: '\u8BF7\u8F93\u516510~50000\u6574\u6570', className: 'form-input-style', onChange: coinChangeHandle, type: 'number', clearable: true })),
                     react.createElement("div", { className: 'form-item' },
                         react.createElement("span", { className: 'form-item-name' }, "\u9009\u62E9\u6296\u97F3\u53F7"),
-                        react.createElement(input, { placeholder: '\u8BF7\u8F93\u5165\u6296\u97F3\u53F7', className: 'form-input-style', clearable: true, onChange: douYinChangeHandle }))),
+                        react.createElement(input, { placeholder: '\u8BF7\u8F93\u5165\u6296\u97F3\u53F7', className: 'form-input-style', clearable: true, onChange: douYinChangeHandle, onFocus: dyFocus, value: douyin, onBlur: dyBlur }),
+                        react.createElement("ul", { className: showDyIds ? 'form-douyin-id-ul' : 'form-douyin-id-ul hide' }, dyIds.map(function (list, k) {
+                            return react.createElement("li", { key: k, onClick: choiceDyIds.bind(DoubiExtract_this, list) }, list);
+                        })))),
                 react.createElement("div", { className: 'extract-bottom-wrapper' },
                     react.createElement("div", { className: 'extract-bottom-btn', onClick: coinExtract },
                         react.createElement("span", null, "\u786E\u5B9A")),
@@ -36780,8 +36887,10 @@ var DoubiExtract = function () {
 
 
 
+
 var History = function () {
-    var data = ['1', '1', '1', '1', '1', '1'];
+    var _a = (0,react.useState)([]), data = _a[0], setData = _a[1];
+    var userInfo = JSON.parse(window.localStorage.getItem('user') || '{}');
     var navigate = dist_useNavigate();
     var back = (0,react.useCallback)(function () {
         navigate({
@@ -36793,6 +36902,30 @@ var History = function () {
             pathname: '/home'
         });
     };
+    // 获取历史记录
+    var getLotteryHistory = function () {
+        apis.getLotteryHistory({
+            userId: userInfo.userId,
+            page: 1,
+            pageSize: 15
+        }).then(function (res) {
+            var _a;
+            // let arr =[]
+            (_a = res.data) === null || _a === void 0 ? void 0 : _a.forEach(function (item, i) {
+                var _a;
+                var tempArr = ((_a = item.giftList) === null || _a === void 0 ? void 0 : _a.filter(function (list) { return list.giftId === item.maxValueGiftId; })) || [];
+                res.data[i].giftList = tempArr;
+            });
+            setData(res.data);
+        }, function () {
+            toast.show({
+                content: '获取历史记录出错'
+            });
+        });
+    };
+    (0,react.useEffect)(function () {
+        getLotteryHistory();
+    }, []);
     return react.createElement("div", { className: 'history-wrapper' },
         react.createElement(nav_bar, { onBack: back }, "\u5386\u53F2\u8BB0\u5F55"),
         react.createElement(Component_TopRolling, null),
@@ -36801,20 +36934,19 @@ var History = function () {
             react.createElement("span", { className: 'doubi-tiqu-text' }, "\u8FD4\u56DE\u9996\u9875")),
         react.createElement("div", { className: 'extract-list-wrapper' },
             react.createElement(list, null, data.map(function (item, i) {
-                console.log(item);
+                var _a, _b, _c, _d, _e;
                 return react.createElement(list.Item, { key: i },
                     react.createElement("div", { className: i % 2 === 0 ? 'extract-list-item' : 'extract-list-item extract-list-item2' },
                         react.createElement("div", { className: 'extract-list-content' },
                             react.createElement("div", { className: 'list-item-top' },
                                 react.createElement("span", null,
-                                    react.createElement("span", { className: 'list-item-user' }, "202210170098"),
-                                    react.createElement("span", null, "\u6D77***")),
-                                i % 2 !== 0 ? react.createElement("span", { className: 'list-item-prize-name' }, "\u5C0F\u5FC3\u5FC3") : ''),
+                                    react.createElement("span", { className: 'list-item-user' }, (_a = item.LotteryId) !== null && _a !== void 0 ? _a : '--')),
+                                i % 2 !== 0 ? react.createElement("span", { className: 'list-item-prize-name' }, ((_b = item.giftList[0]) === null || _b === void 0 ? void 0 : _b.giftName) || '--') : ''),
                             react.createElement("div", { className: 'list-item-bottom' },
-                                react.createElement("span", { className: 'list-item-time' }, "2022-03-24 23:34:12"),
+                                react.createElement("span", { className: 'list-item-time' }, (_c = item.lotteryTime) !== null && _c !== void 0 ? _c : '--'),
                                 react.createElement("span", { className: 'list-item-bottom-right' },
                                     react.createElement("label", null, "\u6296\u97F3\u4EF7\u503C"),
-                                    react.createElement("label", { className: 'list-item-douyin-number' }, "99999"))))));
+                                    react.createElement("label", { className: 'list-item-douyin-number' }, (_e = (_d = item.giftList[0]) === null || _d === void 0 ? void 0 : _d.dyMoneyAmount) !== null && _e !== void 0 ? _e : 0))))));
             }))));
 };
 /* harmony default export */ var pages_History = (History);

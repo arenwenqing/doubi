@@ -10,7 +10,7 @@ export declare const Context: React.Context<any>;
 export declare const initialState: {
     viewModal: {
         visible: boolean;
-        type: string;
+        type: number;
     };
     detailModal: {
         visible: boolean;
@@ -29,7 +29,7 @@ export declare const initialState: {
 export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
     viewModal: {
         visible: boolean;
-        type: string;
+        type: number;
     };
     detailModal: {
         visible: boolean;
@@ -48,7 +48,7 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
     setViewModal: (state: import("immer/dist/internal").WritableDraft<{
         viewModal: {
             visible: boolean;
-            type: string;
+            type: number;
         };
         detailModal: {
             visible: boolean;
@@ -70,7 +70,7 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
     setDetailModal: (state: import("immer/dist/internal").WritableDraft<{
         viewModal: {
             visible: boolean;
-            type: string;
+            type: number;
         };
         detailModal: {
             visible: boolean;
@@ -92,7 +92,7 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
     setLotteryModal: (state: import("immer/dist/internal").WritableDraft<{
         viewModal: {
             visible: boolean;
-            type: string;
+            type: number;
         };
         detailModal: {
             visible: boolean;
@@ -114,7 +114,7 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
     setKeyInfo: (state: import("immer/dist/internal").WritableDraft<{
         viewModal: {
             visible: boolean;
-            type: string;
+            type: number;
         };
         detailModal: {
             visible: boolean;
@@ -136,7 +136,7 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
     setCommonScreenData: (state: import("immer/dist/internal").WritableDraft<{
         viewModal: {
             visible: boolean;
-            type: string;
+            type: number;
         };
         detailModal: {
             visible: boolean;
@@ -163,7 +163,7 @@ export declare const lotteryDraw: (query: LotteryType) => (dispatch: any) => Pro
 declare const _default: import("redux").Reducer<{
     viewModal: {
         visible: boolean;
-        type: string;
+        type: number;
     };
     detailModal: {
         visible: boolean;

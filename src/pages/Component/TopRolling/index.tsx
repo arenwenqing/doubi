@@ -32,7 +32,7 @@ const TopRolling:React.FC = () => {
       console.log(err)
       Toast.show({
         icon: 'fail',
-        content: '错误'
+        content: err.msg
       })
     })
   }

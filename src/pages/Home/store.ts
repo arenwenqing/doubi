@@ -82,9 +82,9 @@ export const getKeys = (query) => async (dispatch) => {
 
 // 获取公屏信息
 export const getCommonScreen = () => async (dispatch) => {
-  const res = await Apis.getCommonScreen().catch(() => {
+  const res = await Apis.getCommonScreen().catch((err) => {
     Toast.show({
-      content: '错误'
+      content: err.msg
     })
   })
   const tempArr = []

@@ -63,6 +63,18 @@ declare class Apis {
      * 【首页】钥匙-充值-预支付-微信
      */
     prepareWx: import("axios-service").IAxiosFun;
+    /**
+     * 【支付】钥匙-充值-预支付-支付宝
+     */
+    prepareAliPay: import("axios-service").IAxiosFun;
+    /**
+     * 【抖币】抖币提取-抖音号记录
+     */
+    getDyIds: import("axios-service").IAxiosFun;
+    /**
+     * 【盲盒】盲盒-记录
+     */
+    getLotteryHistory: import("axios-service").IAxiosFun;
 }
 export declare const ServiceApis: typeof Apis;
 declare const _default: Apis;
