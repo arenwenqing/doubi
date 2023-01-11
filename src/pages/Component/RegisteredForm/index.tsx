@@ -88,7 +88,7 @@ const RegisteredForm:React.FC = () => {
       <div className='login-item'>
         <span className='login-item-title'>邀请码</span>
         <div className='login-item-component'>
-          <Form.Item name='invitationCode' rules={[{ required: true, message: '请输入邀请码'}]}>
+          <Form.Item name='invitationCode' rules={[{ required: false, message: '请输入邀请码'}]}>
             <Input placeholder='请输入邀请码' clearable className='input-style' />
           </Form.Item>
         </div>

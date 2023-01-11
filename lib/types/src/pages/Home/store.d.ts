@@ -11,6 +11,7 @@ export declare const initialState: {
     viewModal: {
         visible: boolean;
         type: number;
+        num: number;
     };
     detailModal: {
         visible: boolean;
@@ -30,6 +31,7 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
     viewModal: {
         visible: boolean;
         type: number;
+        num: number;
     };
     detailModal: {
         visible: boolean;
@@ -49,6 +51,7 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
         viewModal: {
             visible: boolean;
             type: number;
+            num: number;
         };
         detailModal: {
             visible: boolean;
@@ -71,6 +74,7 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
         viewModal: {
             visible: boolean;
             type: number;
+            num: number;
         };
         detailModal: {
             visible: boolean;
@@ -93,6 +97,7 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
         viewModal: {
             visible: boolean;
             type: number;
+            num: number;
         };
         detailModal: {
             visible: boolean;
@@ -115,6 +120,7 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
         viewModal: {
             visible: boolean;
             type: number;
+            num: number;
         };
         detailModal: {
             visible: boolean;
@@ -137,6 +143,7 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
         viewModal: {
             visible: boolean;
             type: number;
+            num: number;
         };
         detailModal: {
             visible: boolean;
@@ -164,6 +171,7 @@ declare const _default: import("redux").Reducer<{
     viewModal: {
         visible: boolean;
         type: number;
+        num: number;
     };
     detailModal: {
         visible: boolean;

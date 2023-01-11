@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { Divider, CapsuleTabs, Button } from 'antd-mobile'
 import RollingList from '@pages/Component/RollingList'
 import { useNavigate } from 'react-router-dom'
-import TopRolling from '@pages/Component/TopRolling'
+// import TopRolling from '@pages/Component/TopRolling'
+import TopRolling2 from '@pages/Component/TopRolling/index'
 import useEnhancedReducerv from '../Component/UseEnhancedReducer'
 import reducer, { Context, setViewModal, initialState, setDetailModal, lotteryDraw, getKeys } from './store'
 import RechargeKey from './component/RechargeKey'
@@ -38,9 +39,11 @@ const Home: React.FC = () => {
   } = state
 
   const skipLoginPage = () => {
-    navigate({
-      pathname: '/login'
-    })
+    if (!userInfo.userId) {
+      navigate({
+        pathname: '/login'
+      })
+    }
   }
 
   const extractHandle = () => {
@@ -49,9 +52,10 @@ const Home: React.FC = () => {
     })
   }
 
-  const addRechargeKey = (type) => {
+  const addRechargeKey = (type, num) => {
     dispatch(setViewModal({
       visible: true,
+      num,
       type
     }))
   }
@@ -91,7 +95,8 @@ const Home: React.FC = () => {
   return <>
     <Context.Provider value={{ state, dispatch }}>
       <div className='home-page'>
-        <TopRolling />
+        {/* <TopRolling /> */}
+        <TopRolling2 height={48} speed={3} />
         <div className='home-user-wrapper'>
           <span className='user-portrait'>
             <img className='portrait-icon' src={loginInfo.avatarUrl || 'https://cdn.tuanzhzh.com/doubi-image/no-login-icon.png'}></img>
@@ -104,7 +109,7 @@ const Home: React.FC = () => {
               return <div className='key-item' key={i}>
                 <img className='key-type' src={keyIcon[item.keyType]} />
                 <span className='key-num'>{item.keyCount}</span>
-                <span className='key-add-btn' onClick={addRechargeKey.bind(this, item.keyType)}>
+                <span className='key-add-btn' onClick={addRechargeKey.bind(this, item.keyType, item.keyCount)}>
                   <img className='add-plus-icon' src='https://cdn.tuanzhzh.com/doubi-image/plus.png' />
                 </span>
               </div>

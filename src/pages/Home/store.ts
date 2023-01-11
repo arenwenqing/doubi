@@ -15,7 +15,8 @@ export const Context = React.createContext(null)
 export const initialState = {
   viewModal: {
     visible: false,
-    type: 3
+    type: 3,
+    num: 0
   },
   detailModal: {
     visible: false
@@ -87,7 +88,7 @@ export const getCommonScreen = () => async (dispatch) => {
       content: err.msg
     })
   })
-  const tempArr = []
+  let tempArr = []
   res.data?.forEach(item => {
     tempArr.push({
       userName: item.user.nickName,
@@ -95,6 +96,7 @@ export const getCommonScreen = () => async (dispatch) => {
       dyMoneyAmount: item.gift.dyMoneyAmount
     })
   })
+  tempArr = tempArr.concat(tempArr)
   dispatch(setCommonScreenData(tempArr))
 }
 

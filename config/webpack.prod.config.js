@@ -37,29 +37,37 @@ const prodConfig = {
     splitChunks: {
       cacheGroups: {
         common: {
-          name: 'common', // 指定包名，不指定时使用上层key作为包名
-          chunks: 'all',
-          minSize: 10,
-          priority: 0
+          // name: 'common', // 指定包名，不指定时使用上层key作为包名
+          // chunks: 'all',
+          // minSize: 10,
+          // priority: 0
+          //产生一个Chunk
+          chunks: 'initial',
+          minChunks: 2,
+          maxInitialRequests: 5, // The default limit is too small to showcase the effect
+          minSize: 10 // This is example is too small to create commons chunks
         },
         // vendor: 打包node_modules中的文件（上面的 lodash）
         vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          chunks: 'all',
-          name(module) {
-            // 匹配包名
-            const packageName = module.context.match(
-              /[\\/]node_modules[\\/](.*?)([\\/]|$)/,
-            )[1]
-            // npm package 是 URL 安全的，但有些服务不喜欢 @ 符号
-            return `chunk-vendor.${packageName.replace('@', '')}`
-          }
-          // name: 'vendor',
-          // test: /node_modules/,
+          test: /node_modules/,
+          chunks: 'initial',
+          name: 'vendor',
+          priority: -10,
+          enforce: true
+          // test: /[\\/]node_modules[\\/]/,
           // chunks: 'all',
-          // priority: 10
+          // name(module) {
+          //   // 匹配包名
+          //   const packageName = module.context.match(
+          //     /[\\/]node_modules[\\/](.*?)([\\/]|$)/,
+          //   )[1]
+          //   // npm package 是 URL 安全的，但有些服务不喜欢 @ 符号
+          //   return `chunk-vendor.${packageName.replace('@', '')}`
+          // },
+          // priority: -10
         }
       }
+
     },
     minimizer: [
       // For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
@@ -93,15 +101,14 @@ const prodConfig = {
   ].filter(item => item),
   externals: { // 定义外部依赖，不打包react/react-dom/antd/axios
     // react: {
-    //   root: 'React',
-    //   commonjs2: 'react',
+    //   root: 'react',
     //   commonjs: 'react',
     //   amd: 'react'
     // },
     // 'react-dom': {
     //   root: 'ReactDOM',
-    //   commonjs2: 'react-dom',
     //   commonjs: 'react-dom',
+    //   commonjs2: 'react-dom',
     //   amd: 'react-dom'
     // },
     // 'antd-mobile': 'antd-mobile'

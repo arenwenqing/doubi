@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useState} from 'react'
+import React, { useCallback, useEffect, useRef, useState} from 'react'
 import TopRolling from '@pages/Component/TopRolling'
 import { useNavigate } from 'react-router-dom'
 import { NavBar, Modal, Input, List, InfiniteScroll, Toast } from 'antd-mobile'
 // import { sleep } from 'antd-mobile/es/utils/sleep'
 import Api from 'src/apis'
+import moment from 'moment'
 import './index.less'
 
-let number = 1
 const showText = {
   1: '提取中',
   2: '已完成',
@@ -23,8 +23,12 @@ const DoubiExtract:React.FC = () => {
   const [dyIds, setDyIds] = useState([])
   const [showDyIds, setShowDyIds] = useState(false)
 
+  const numRef = useRef(1)
+  const isLoad = useRef(true)
+
   const userInfo = JSON.parse(window.localStorage.getItem('user') || '{}')
   const navigate = useNavigate()
+  // let number = 1
   const closeModal = () => {
     setVisible(false)
   }
@@ -36,30 +40,33 @@ const DoubiExtract:React.FC = () => {
 
   // 抖币提取
   const getCoinHistory = async () => {
+    if (!isLoad.current) return
+    isLoad.current = false
     Api.getCoinHostory({
-      page: number,
+      page: numRef.current,
       pageSize: 10,
       userId: userInfo.userId
     }).then(res => {
-      setData(val => [...val, ...res.data])
+      setData(val => {
+        const temArr = [...val, ...res.data]
+        temArr.forEach(item => {
+          item.drawTime = moment(item.lotteryTime).format('YYYY-MM-DD HH:mm:ss')
+        })
+        return [...val, ...res.data]
+      })
       setHasMore(res.data?.length > 0)
       if (res.data?.length) {
-        number += 1
+        numRef.current += 1
       }
     }, err => {
       Toast.show({
         content: err.err_msg
       })
+    }).finally(() =>{
+      isLoad.current = true
     })
   }
 
-  // async function mockRequest() {
-  //   await sleep(2000)
-  //   if (number > 3) {
-  //     return []
-  //   }
-  //   return ['1', '1', '1', '1']
-  // }
   async function loadMore() {
     await getCoinHistory()
   }
@@ -90,6 +97,13 @@ const DoubiExtract:React.FC = () => {
 
   // 抖币提取
   const coinExtract = () => {
+    if (extractNum % 10 !== 0) {
+      Toast.show({
+        content: '请输入10的整数倍,最大50000',
+        duration: 2000
+      })
+      return
+    }
     Toast.show({
       icon: 'loading',
       content: '加载中…'
@@ -106,9 +120,11 @@ const DoubiExtract:React.FC = () => {
       } else {
         Toast.clear()
         Toast.show({
-          content: '提取成功'
+          content: '提取申请将在1小时内完成',
+          duration: 2000
         })
-        number = 1
+        // number = 1
+        numRef.current = 1
         getCoinInfo()
         getCoinHistory()
         setVisible(false)
@@ -119,7 +135,7 @@ const DoubiExtract:React.FC = () => {
       })
       setTimeout(() => {
         Toast.clear()
-      }, 2000)
+      }, 3000)
     })
   }
 
@@ -177,6 +193,8 @@ const DoubiExtract:React.FC = () => {
   useEffect(() => {
     if (visible) {
       getDyIds()
+      setEextractNum(0)
+      setDouyin('')
     }
   }, [visible])
 
@@ -187,7 +205,7 @@ const DoubiExtract:React.FC = () => {
     >
       抖币提取
     </NavBar>
-    <TopRolling />
+    <TopRolling height={48} speed={3} />
     <div className='extract-header-wrapper'>
       <div className='extract-header'>
         <div className='extract-header-top'>
@@ -214,17 +232,17 @@ const DoubiExtract:React.FC = () => {
         {
           data.map((item, i) => {
             return <List.Item key={i}>
-              <div className={ item.status === 3 ? 'extract-list-item extract-list-item2' : 'extract-list-item'}>
+              <div className={ item.status.code === 3 ? 'extract-list-item extract-list-item2' : 'extract-list-item'}>
                 <div className='extract-list-content'>
                   <div className='list-item-top'>
-                    <span className='list-item-user'>{item.name || '--'}</span>
+                    <span className='list-item-user'>{userInfo.nickName || '--'}</span>
                     <span>
                       <label>提取抖币</label>
                       <label className='list-item-num'>{item.drawDyMoneyAmount || 0}</label>
                     </span>
                     <span className='list-item-zhi'>至</span>
                     {
-                      item.status === 3 ? <span className='list-item-error'>抖音账号异常</span> : ''
+                      item.status.code === 3 ? <span className='list-item-error'>抖音账号异常</span> : ''
                     }
                   </div>
                   <div className='list-item-bottom'>
@@ -233,8 +251,8 @@ const DoubiExtract:React.FC = () => {
                       <label>抖音</label>
                       <label className='list-item-douyin-number'>{item.dyId || '--'}</label>
                     </span>
-                    <span className={ item.status === 3 ? 'list-item-operation-btn list-item-operation-btn2' : 'list-item-operation-btn'}>
-                      <label>{showText[item.status]}</label>
+                    <span className={ item.status.code === 3 ? 'list-item-operation-btn list-item-operation-btn2' : 'list-item-operation-btn'}>
+                      <label>{showText[item.status.code]}</label>
                     </span>
                   </div>
                 </div>
@@ -258,7 +276,7 @@ const DoubiExtract:React.FC = () => {
           <div className='form-item'>
             <span className='form-item-name'>提取抖币</span>
             <Input
-              placeholder='请输入10~50000整数'
+              placeholder='10的整数倍,最大50000'
               className='form-input-style'
               onChange={coinChangeHandle}
               type='number'

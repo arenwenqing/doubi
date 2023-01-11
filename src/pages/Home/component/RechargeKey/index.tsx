@@ -5,6 +5,7 @@ import Api from 'src/apis'
 import './index.less'
 
 interface ListObjectType {
+  keyCount: number
   extraKeyCount: number
   allKeyCount: number
   keyType: number
@@ -113,7 +114,7 @@ const RechargeKey: React.FC = () => {
           {
             keysListInfo.extraKeyInfoList?.map((item, i) => {
               return <div key={i} className='key-item-wrapper'>
-                <div onClick={selectItem.bind(this, i, item.allKeyCount)} className={ active === i ? 'key-item active' : 'key-item'}>
+                <div onClick={selectItem.bind(this, i, item.keyCount)} className={ active === i ? 'key-item active' : 'key-item'}>
                   <img className='key-item-icon' src={keyMap[viewModal.type]} />
                   <span className='key-item-num'>{item.allKeyCount}把</span>
                 </div>
@@ -125,6 +126,10 @@ const RechargeKey: React.FC = () => {
               </div>
             })
           }
+        </div>
+        <div className='recharge-key-bottom-show'>
+          您当前有<span>{viewModal.num}</span>把
+          <img className='recharge-key-icon bottom-show-key' src={keyMap[viewModal.type]} />
         </div>
       </div>
     </Mask>

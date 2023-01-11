@@ -10,6 +10,14 @@
       --border-top: none;
       --border-bottom: none;
     }
+
+    .border-color-list(@color) {
+      background: #262A34;
+      box-shadow: inset 0px 0px 32px 0px @color;
+      border-radius: 32px;
+      border: 2px solid @color;
+    }
+
     .extract-list-item {
       width: 656px;
       background: #262A34;
@@ -20,11 +28,17 @@
       font-weight: 400;
       color: #5E6272;
     }
-    .extract-list-item2 {
-      background: #262A34;
-      box-shadow: inset 0px 0px 32px 0px #FD3636;
-      border-radius: 32px;
-      border: 2px solid #FD3636;
+    .red-border {
+      .border-color-list(#FD3636)
+    }
+    .yellow-border {
+      .border-color-list(#FFAD5E)
+    }
+    .purple-border {
+      .border-color-list(#D651FF)
+    }
+    .blue-border {
+      .border-color-list(#2FBFFF)
     }
     .extract-list-content {
       padding: 28px 32px;

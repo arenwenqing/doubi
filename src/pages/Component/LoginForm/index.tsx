@@ -42,20 +42,20 @@ const LoginForm: React.FC = () => {
     })
   }
 
-  const wechatLogin = () => {
-    // 小程序appid
-    // redirect_uri重定向至当前页面
-    // snsapi_userinfo 用户手动授权
+  // const wechatLogin = () => {
+  //   // 小程序appid
+  //   // redirect_uri重定向至当前页面
+  //   // snsapi_userinfo 用户手动授权
 
-    // window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb48e40dbe585c7f2&redirect_uri=http://192.168.3.143:12345/login&response_type=code&scope=snsapi_userinfo&state=#wechat_redirect'
-    window.location.href = 'weixin://wap/pay'
-    // window.ap.chooseImage()
-    // window.ap.tradePay({
-    //   tradeNO: '201802282100100427058809844'
-    // }, function(res){
-    //   window.ap.alert(res.resultCode);
-    // });
-  }
+  //   // window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb48e40dbe585c7f2&redirect_uri=http://192.168.3.143:12345/login&response_type=code&scope=snsapi_userinfo&state=#wechat_redirect'
+  //   window.location.href = 'weixin://wap/pay'
+  //   // window.ap.chooseImage()
+  //   // window.ap.tradePay({
+  //   //   tradeNO: '201802282100100427058809844'
+  //   // }, function(res){
+  //   //   window.ap.alert(res.resultCode);
+  //   // });
+  // }
 
   return <div className='login-form-wrapper'>
     <Form layout='horizontal' form={form}>
@@ -92,10 +92,10 @@ const LoginForm: React.FC = () => {
       <span>登录</span>
     </div>
     <div className='forget-password' onClick={forgetPasswordHandle}>忘记密码</div>
-    <div className='wechat-login-wrapper'>
+    {/* <div className='wechat-login-wrapper'>
       <span className='login-way-text'>其他方式登录</span>
       <img onClick={wechatLogin} className='wechat-login-icon' src='https://cdn.tuanzhzh.com/doubi-image/wecaht-login-icon.png' />
-    </div>
+    </div> */}
   </div>
 }
 export default LoginForm

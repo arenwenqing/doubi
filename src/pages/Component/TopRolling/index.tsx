@@ -1,32 +1,20 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { NoticeBar, Toast } from 'antd-mobile'
+import React, { useEffect, useState } from 'react'
+import { Toast } from 'antd-mobile'
 import Apis from 'src/apis'
 import './index.less'
 
-// const userInfo = JSON.parse(window.localStorage.getItem('user') || '{}')
-const TopRolling:React.FC = () => {
+interface ScrollProps {
+  height: number; // 容器的高度
+  speed: number; // 滚动的速度，越大则滚动的越快，反之越慢
+  [key: string]: any
+}
+
+const TopRolling: React.FC<ScrollProps> = () => {
   const [dataList, setDataList] = useState<any[]>([])
-  const noticeDom = useMemo(() => {
-    return <div className='notice-content-wrapper'>
-      {
-        dataList.map((item, i) => {
-          return <span key={i}>
-            恭喜
-            <span className='notice-tip-concent'>{item.user.nickName || '游客'}</span>
-            开出了 <span className='notice-tip-concent'>{ item.gift.giftName }</span>
-            <img src={item.gift.smallPicUrl} className='notice-content-lottery' />
-            价值抖币
-            <span className='notice-tip-concent'>{item.dyMoneyAmount}</span>
-          </span>
-        })
-      }
-    </div>
-  }, [dataList])
 
   // 获取飘屏内容
   const getFloatScreen = () => {
     Apis.getFloatScreen().then(res => {
-      console.log(res.data)
       setDataList(res.data??[])
     }, err => {
       console.log(err)
@@ -40,8 +28,28 @@ const TopRolling:React.FC = () => {
   useEffect(() => {
     getFloatScreen()
   }, [])
-  return <div className='notice-wrapper'>
-    <NoticeBar content={noticeDom} delay={800} icon={null} color='info' />
+  return <div className='top-rolling-wrapper'>
+    <div className='top-rolling-content'>
+      {
+        [1, 2].map((list) => {
+          return <ul className='top-rolling-ul' key={list}>
+            {
+              dataList.map((item, i) => {
+                return <li key={i} className='item-list-li'>
+                  <span className='float-title'>恭喜</span>
+                  <span className='float-user-name'>{item.user.nickName.replace(/^(\d{3})\d{4}(\d+)/, '$1****$2') || '游客'}</span>
+                  <span className='float-open-title'>开出了</span>
+                  <span className='float-open-gift-name'>{ item.gift.giftName }</span>
+                  <img src={item.gift.bigPicUrl} className='notice-content-lottery' />
+                  <span className='doubi-value'>价值抖币</span>
+                  <span className='doubi-number'>{item.gift.dyMoneyAmount}</span>
+                </li>
+              })
+            }
+          </ul>
+        })
+      }
+    </div>
   </div>
 }
 export default TopRolling

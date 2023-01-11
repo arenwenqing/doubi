@@ -35,8 +35,8 @@ const Login: React.FC = () => {
       back='返回'
     >
     </NavBar>
-    <TopRolling />
-    <CapsuleTabs className='login-btn-wrapper' onChange={tabChangeHandle}>
+    <TopRolling height={48} speed={3} />
+    <CapsuleTabs className='login-btn-wrapper' onChange={tabChangeHandle} activeKey={loginCurrentKey}>
       <CapsuleTabs.Tab title='登录' key='login' />
       <CapsuleTabs.Tab title='注册' key='registered' />
     </CapsuleTabs>

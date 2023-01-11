@@ -3,45 +3,36 @@ import { ErrorBlock } from 'antd-mobile'
 import { Context, getCommonScreen } from 'src/pages/Home/store'
 import './index.less'
 
-// const userInfo = JSON.parse(window.localStorage.getItem('user') || '{}')
 const RollingList:React.FC = () => {
   const { state, dispatch } = useContext(Context)
 
   const {
     commonScreenData
   } = state
-  // // 获取公屏
-  // const getCommonScreen = () => {
-  //   Apis.getCommonScreen().then(res => {
-  //     console.log(res.data)
-  //     const tempArr = []
-  //     res.data?.forEach(item => {
-  //       tempArr.push({
-  //         userName: item.user.nickName,
-  //         giftName: item.gift.giftName,
-  //         dyMoneyAmount: item.gift.dyMoneyAmount
-  //       })
-  //     })
-  //     setDataSource(tempArr)
-  //   }, err => {
-  //     console.log(err)
-  //     Toast.show({
-  //       icon: 'fail',
-  //       content: '错误'
-  //     })
-  //   })
-  // }
+
   useEffect(() => {
     dispatch(getCommonScreen())
   }, [])
+
+  useEffect(() => {
+    if (commonScreenData.length) {
+      // const a = document.getElementById('listItem0')
+      // a.style.transform = 'translate3d(0,' + (- index * clientHeight) + 'px,0)'
+      // const arr = document.getElementsByClassName('list-item')
+      // const tempArr = Array.from(arr)
+      // tempArr.forEach((item: any, i) => {
+      //   item.style.transform = 'translate3d(0,' + (- (i + 1) * item.getBoundingClientRect().height) + 'px, 0)'
+      // })
+    }
+  }, [commonScreenData])
 
   return <div className='rolling-list-wrapper'>
     <div className='list-content'>
       {
         commonScreenData.map((item, i) => {
-          return <div className='list-item' key={i}>
+          return <div className='list-item' id={`listItem${i}`} key={i}>
             <span>
-              <label className='list-item-name'>{item.userName}</label>
+              <label className='list-item-name'>{item.userName.replace(/^(\d{3})\d{4}(\d+)/, '$1****$2')}</label>
               <label className='list-item-prize-name'>开出了{`”${item.giftName}“`}</label>
             </span>
             <span>

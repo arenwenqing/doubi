@@ -1,24 +1,181 @@
-.notice-wrapper {
-  .notice-content-wrapper {
-    position: relative;
-    font-size: 32px;
+// .notice-wrapper {
+//   .notice-content-wrapper {
+//     position: relative;
+//     font-size: 32px;
+//     font-weight: 400;
+//     color: #181A20;
+//     .notice-tip-concent {
+//       font-family: PingFang-SC-Bold, PingFang-SC;
+//       font-weight: bold;
+//       color: #FD3636;
+//       padding: 0 12px;
+//     }
+//     .notice-content-lottery {
+//       position: absolute;
+//       width: 96px;
+//       height: 96px;
+//     }
+//   }
+//   .adm-notice-bar {
+//     background: linear-gradient(326deg, #FFB8E0 0%, #BE9EFF 39%, #88C0FC 67%, #86FF99 100%);
+//     padding: 0;
+//   }
+
+// }
+// .notice-content-lottery {
+//   display: inline-block;
+//   width: 96px;
+//   height: 96px;
+// }
+// .scroll-bar-wrapper {
+//   background: linear-gradient(326deg, #FFB8E0 0%, #BE9EFF 39%, #88C0FC 67%, #86FF99 100%);
+//   padding: 0;
+//   overflow: hidden;
+
+//   .scroll-content {
+//     display: flex;
+//     align-items: center;
+//   }
+ 
+//   .item-list-wrapper{
+//     display: flex;
+//     align-items: center;
+//     width: 750px;
+//     margin-right: 20px;
+//   }
+//   .float-title {
+//     display: inline-block;
+//     width: 90px;
+//     font-size: 32px;
+//     font-family: PingFangSC-Regular, PingFang SC;
+//     font-weight: 400;
+//     color: #181A20;
+//   }
+//   .doubi-number {
+//     display: inline-block;
+//     width: 180px;
+//     font-size: 32px;
+//     font-family: PingFangSC-Regular, PingFang SC;
+//     font-weight: 400;
+//     color: #181A20;
+//   }
+//   .doubi-number2 {
+//     display: inline-block;
+//     width: 180px;
+//     font-size: 32px;
+//     font-family: PingFangSC-Regular, PingFang SC;
+//     font-weight: 400;
+//     color: #FD3636;
+//   }
+//   .float-open-title {
+//     display: inline-block;
+//     width: 140px;
+//     font-size: 32px;
+//     font-family: PingFangSC-Regular, PingFang SC;
+//     font-weight: 400;
+//     color: #181A20;
+//   }
+//   .float-open-gift-name {
+//     display: inline-block;
+//     width: 120px;
+//     font-size: 32px;
+//     font-family: PingFangSC-Regular, PingFang SC;
+//     font-weight: 400;
+//     color: #FD3636;
+//   }
+//   .float-user-name {
+//     display: inline-block;
+//     width: 180px;
+//     font-size: 32px;
+//     font-family: Helvetica;
+//     color: #FD3636;
+//     margin: 0 12px;
+//   }
+// }
+
+ul, li {
+  list-style: none;
+}
+
+@keyframes imagesLoop {
+  0% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(-1500px);
+  }
+}
+
+.top-rolling-wrapper {
+  width: 750px;
+  height: 48px;
+  overflow: hidden;
+  background: linear-gradient(326deg, #FFB8E0 0%, #BE9EFF 39%, #88C0FC 67%, #86FF99 100%);
+
+  .top-rolling-content {
+    width: 1500px;
+    height: 48px;
+    overflow: hidden;
+    // font-size: 0;
+    display: flex;
+  }
+  .top-rolling-ul {
+    display: flex;
+    width: 1500px;
+    // overflow: hidden;
+    // font-size: 32px;
+    animation: imagesLoop 15s linear 1s infinite normal;
+    font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: #181A20;
-    .notice-tip-concent {
-      font-family: PingFang-SC-Bold, PingFang-SC;
-      font-weight: bold;
-      color: #FD3636;
-      padding: 0 12px;
-    }
-    .notice-content-lottery {
-      position: absolute;
-      width: 96px;
-      height: 96px;
-    }
-  }
-  .adm-notice-bar {
-    background: linear-gradient(326deg, #FFB8E0 0%, #BE9EFF 39%, #88C0FC 67%, #86FF99 100%);
-    padding: 0;
   }
 
+  .item-list-li {
+    display: inline-block;
+    margin-right: 10px;
+    height: 48px;
+    line-height: 48px;
+    width: 750px;
+  }
+
+  .notice-content-lottery {
+    display: inline-block;
+    height: 48px;
+    width: 48px;
+    vertical-align: middle;
+    // margin: 0 12px;
+  }
+
+  .float-user-name {
+    font-family: Helvetica;
+    color: #FD3636;
+    padding: 0 12px;
+    font-size: 32px;
+  }
+  .float-open-title {
+    font-size: 32px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #181A20;
+  }
+  .float-open-gift-name {
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #FD3636;
+    font-size: 32px;
+    padding-right: 12px;
+  }
+  .doubi-value {
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #181A20;
+    padding-left: 12px;
+    font-size: 32px;
+  }
+  .doubi-number {
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #FD3636;
+    font-size: 32px;
+  }
 }
