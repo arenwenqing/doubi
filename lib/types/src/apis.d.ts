@@ -36,7 +36,7 @@ declare class Apis {
      */
     getCommonScreen: import("axios-service").IAxiosFun;
     /**
-     * 【首页】盲盒-开
+     * 【首页】盒子-开
      */
     lotteryDraw: import("axios-service").IAxiosFun;
     /**
@@ -72,7 +72,7 @@ declare class Apis {
      */
     getDyIds: import("axios-service").IAxiosFun;
     /**
-     * 【盲盒】盲盒-记录
+     * 【盒子】盒子-记录
      */
     getLotteryHistory: import("axios-service").IAxiosFun;
 }

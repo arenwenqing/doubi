@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 // import Api from './apis'
-import { Divider, CapsuleTabs, Button } from 'antd-mobile'
+import { Divider, CapsuleTabs, Button, Modal, Toast } from 'antd-mobile'
 import RollingList from '@pages/Component/RollingList'
 import { useNavigate } from 'react-router-dom'
 // import TopRolling from '@pages/Component/TopRolling'
@@ -10,6 +10,7 @@ import reducer, { Context, setViewModal, initialState, setDetailModal, lotteryDr
 import RechargeKey from './component/RechargeKey'
 import DetailDescription from './component/DetailDescription'
 import Lottery from './component/LotteryModal'
+import { getUrlParams } from 'src/utils'
 // import Apis from 'src/apis'
 import './index.less'
 
@@ -71,7 +72,23 @@ const Home: React.FC = () => {
   }
 
   const showLotteryModal = (num) => {
-    lotteryDraw(num)
+    // lotteryDraw(num)
+    const currentKeyInfo = keyInfo.find(item => item.keyType === currentBox * 1)
+    if (currentKeyInfo.keyCount < num) {
+      Toast.show({
+        content: '请点击上方+按钮购买钥匙',
+        duration: 2000
+      })
+      return
+    }
+    if (currentKeyInfo.keyCount === 0) {
+      dispatch(setViewModal({
+        visible: true,
+        num: currentKeyInfo.keyCount,
+        type: currentBox * 1
+      }))
+      return
+    }
     dispatch(lotteryDraw({
       userId: userInfo.userId,
       keyInfo: {
@@ -88,6 +105,24 @@ const Home: React.FC = () => {
       }))
       setLoginInfo({
         ...userInfo
+      })
+    }
+    const tempObj:any = getUrlParams()
+    if (Object.keys(tempObj).length && tempObj.origin === 'finishPay') {
+      Modal.show({
+        content: <div className='modal-echarge-wrapper'>
+          <span className='modal-echarge-title'>您已购成功充值<span className='modal-echarge-success'>{tempObj.keyCount}</span>把</span>
+          <img className='modal-echarge-success-key' src={keyIcon[tempObj.keyType]} />
+        </div>,
+        actions: [{
+          key: 'online',
+          text: '确认',
+          className: 'modal-echarge-success-btn',
+          onClick: () => {
+            window.location.replace(window.location.origin + window.location.pathname)
+            Modal.clear()
+          }
+        }]
       })
     }
   }, [])
@@ -116,11 +151,12 @@ const Home: React.FC = () => {
             })
           }
         </div>
+        <img style={{ display: 'none' }} src='https://cdn.tuanzhzh.com/doubi-image/open-dh.png' />
         <Divider className='home-keys-divider' />
         <CapsuleTabs className='blind-box-btn-wrapper' onChange={capsuleTabChange}>
-          <CapsuleTabs.Tab title='铜质盲盒' key={3} />
-          <CapsuleTabs.Tab title='银光盲盒' key={4} />
-          <CapsuleTabs.Tab title='金闪盲盒' key={5} />
+          <CapsuleTabs.Tab title='铜质盒子' key={3} />
+          <CapsuleTabs.Tab title='银光盒子' key={4} />
+          <CapsuleTabs.Tab title='金闪盒子' key={5} />
         </CapsuleTabs>
         <div className='home-box-xiang-wrapper'>
           <img className='box-xiang-icon' src={boxMap[currentBox]} />
@@ -132,8 +168,8 @@ const Home: React.FC = () => {
             <span>X 1</span>
           </Button>
           <Button shape='rounded' className='ten-key-btn' onClick={showLotteryModal.bind(this, 10)}>
-            <span className='ten-key-bg-icon'></span>
-            <span>X 10</span>
+            {/* <span className='ten-key-bg-icon'></span> */}
+            <span>10连抽</span>
           </Button>
         </div>
         <div className='home-doubi-extract' onClick={extractHandle}>

@@ -204,6 +204,9 @@
       bottom: -45px;
     }
   }
+  .adm-modal-content {
+    overflow-y: hidden;
+  }
 }
 .extract-modal-wrapper {
   position: fixed;
@@ -248,7 +251,7 @@
     }
     .form-item-name {
       width: 180px;
-      font-size: 28px;
+      font-size: 27px;
       font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: #FFFFFF;
@@ -267,11 +270,13 @@
     .form-douyin-id-ul {
       position: absolute;
       height: 150px;
-      width: 300px;
+      width: 390px;
       overflow: auto;
       top: 90px;
-      left: 220px;
+      left: 130px;
       list-style: none;
+      z-index: 100;
+      background: #262A34;
 
       li {
         list-style: none;
@@ -280,6 +285,7 @@
         font-weight: 400;
         color: #FFFFFF;
         margin-bottom: 10px;
+        margin-left: 70px;
       }
     }
   }

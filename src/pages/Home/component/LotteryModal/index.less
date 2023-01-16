@@ -1,5 +1,14 @@
 .lottery-wrapper {
   ul,li{list-style:none;}
+
+  @keyframes mymove {
+    from {
+      transform: scale(0);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
   .lottery-content {
     position: absolute;
     left: 50%;
@@ -18,6 +27,7 @@
       height: 48px;
       right: 32px;
       top: 32px;
+      z-index: 100;
     }
 
     .max-value-lottery {
@@ -26,6 +36,7 @@
       margin: 84px auto 46px;
       img {
         width: 100%;
+        animation: mymove 0.5s linear;
       }
     }
     .lottery-list-ul {
@@ -41,6 +52,7 @@
       }
       img {
         width: 100%;
+        animation: mymove 0.5s linear;
       }
     }
     .lottery-box-xiang-btn-wrapper {
@@ -95,6 +107,15 @@
           background-size: contain;
           vertical-align: middle;
         }
+      }
+    }
+
+    .load-draw-dh {
+      position: absolute;
+      .load-draw-img {
+        display: inline-block;
+        width: 656px;
+        height: 1156px;
       }
     }
   }

@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { Toast } from 'antd-mobile'
 import Apis from 'src/apis'
 
+let flag = true
 interface LotteryType {
   userId: string
   keyInfo: {
@@ -100,34 +101,53 @@ export const getCommonScreen = () => async (dispatch) => {
   dispatch(setCommonScreenData(tempArr))
 }
 
-// 开盲盒
+// 开盒子
+let timerId
+let timerId2
 export const lotteryDraw =
   (query: LotteryType) =>
     async (dispatch) => {
+      if (!flag) return
+      flag = false
+      dispatch(setLotteryModal({
+        visible: true,
+        currentBoxType: query.keyInfo?.keyType,
+        lotteryDataSource: {}
+      }))
+      if (timerId) {
+        clearTimeout(timerId)
+      }
       Toast.show({
         icon: 'loading',
-        content: '加载中…'
+        content: '加载中…',
+        duration: 1300
       })
-      const res = await Apis.lotteryDraw(query)
-      if (res.data.drawSuccess) {
-        Toast.clear()
-        dispatch(setLotteryModal({
-          visible: true,
-          currentBoxType: query.keyInfo?.keyType,
-          lotteryDataSource: res.data.lottery??{}
-        }))
-        dispatch(getKeys({
-          userId: query.userId
-        }))
-        dispatch(getCommonScreen())
-      } else {
-        Toast.show({
-          content: res.data.drawFailedMsg
-        })
-        setTimeout(() => {
+      timerId = setTimeout( async () => {
+        const res = await Apis.lotteryDraw(query)
+        if (res.data.drawSuccess) {
           Toast.clear()
-        }, 1000)
-      }
+          dispatch(setLotteryModal({
+            visible: true,
+            currentBoxType: query.keyInfo?.keyType,
+            lotteryDataSource: res.data.lottery??{}
+          }))
+          dispatch(getKeys({
+            userId: query.userId
+          }))
+          dispatch(getCommonScreen())
+        } else {
+          Toast.show({
+            content: res.data.drawFailedMsg,
+            duration: 2000
+          })
+        }
+        if (timerId2) {
+          clearTimeout(timerId2)
+        }
+        timerId2 = setTimeout(() => {
+          flag = true
+        }, 1000);
+      }, 3000);
     }
 
 // Reducer

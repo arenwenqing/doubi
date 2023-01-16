@@ -50,7 +50,7 @@ class Apis {
   getCommonScreen = get('/api/mystery/announce/commonScreen')
 
   /**
-   * 【首页】盲盒-开
+   * 【首页】盒子-开
    */
   lotteryDraw = post('/api/mystery/box/lottery/draw')
 
@@ -95,7 +95,7 @@ class Apis {
   getDyIds = get('/api/mystery/dymoney/draw/history/dyId')
 
   /**
-   * 【盲盒】盲盒-记录
+   * 【盒子】盒子-记录
    */
   getLotteryHistory = post('/api/mystery/box/lottery/history')
 }

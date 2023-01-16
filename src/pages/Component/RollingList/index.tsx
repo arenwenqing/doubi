@@ -14,18 +14,6 @@ const RollingList:React.FC = () => {
     dispatch(getCommonScreen())
   }, [])
 
-  useEffect(() => {
-    if (commonScreenData.length) {
-      // const a = document.getElementById('listItem0')
-      // a.style.transform = 'translate3d(0,' + (- index * clientHeight) + 'px,0)'
-      // const arr = document.getElementsByClassName('list-item')
-      // const tempArr = Array.from(arr)
-      // tempArr.forEach((item: any, i) => {
-      //   item.style.transform = 'translate3d(0,' + (- (i + 1) * item.getBoundingClientRect().height) + 'px, 0)'
-      // })
-    }
-  }, [commonScreenData])
-
   return <div className='rolling-list-wrapper'>
     <div className='list-content'>
       {

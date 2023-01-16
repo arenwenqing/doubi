@@ -18,7 +18,7 @@ const DoubiExtract:React.FC = () => {
   const [data, setData] = useState<any[]>([])
   const [hasMore, setHasMore] = useState(true)
   const [coinNum, setCoinNum] = useState(0)
-  const [extractNum, setEextractNum] = useState(0)
+  const [extractNum, setEextractNum] = useState<any>('')
   const [douyin, setDouyin] = useState('')
   const [dyIds, setDyIds] = useState([])
   const [showDyIds, setShowDyIds] = useState(false)
@@ -97,9 +97,16 @@ const DoubiExtract:React.FC = () => {
 
   // 抖币提取
   const coinExtract = () => {
-    if (extractNum % 10 !== 0) {
+    if ((extractNum * 1) % 10 !== 0) {
       Toast.show({
         content: '请输入10的整数倍,最大50000',
+        duration: 2000
+      })
+      return
+    }
+    if (!extractNum || !douyin) {
+      Toast.show({
+        content: '抖币数量或抖音号为空',
         duration: 2000
       })
       return
@@ -110,7 +117,7 @@ const DoubiExtract:React.FC = () => {
     })
     Api.coinExtract({
       userId: userInfo.userId,
-      drawDyMoneyAmount: extractNum,
+      drawDyMoneyAmount: extractNum * 1,
       dyId: douyin
     }).then(res => {
       if (!res.data.isDrawEnable) {
@@ -125,6 +132,7 @@ const DoubiExtract:React.FC = () => {
         })
         // number = 1
         numRef.current = 1
+        setData([])
         getCoinInfo()
         getCoinHistory()
         setVisible(false)
@@ -146,7 +154,6 @@ const DoubiExtract:React.FC = () => {
     }).then((res => {
       setCoinNum(res.data.dyMoneyAmount??0)
     }), err => {
-      console.log(err)
       Toast.show({
         content: err.msg
       })
@@ -158,6 +165,7 @@ const DoubiExtract:React.FC = () => {
     Api.getDyIds({
       userId: userInfo.userId
     }).then(res => {
+      res.data = res.data.concat(res.data,res.data,res.data,res.data,res.data,res.data,res.data,res.data,res.data)
       setDyIds(res.data??[])
       cacheDyIds = res.data??[]
     }, () => {
@@ -193,7 +201,7 @@ const DoubiExtract:React.FC = () => {
   useEffect(() => {
     if (visible) {
       getDyIds()
-      setEextractNum(0)
+      setEextractNum('')
       setDouyin('')
     }
   }, [visible])
@@ -279,6 +287,7 @@ const DoubiExtract:React.FC = () => {
               placeholder='10的整数倍,最大50000'
               className='form-input-style'
               onChange={coinChangeHandle}
+              value={extractNum}
               type='number'
               clearable
             />
@@ -295,7 +304,7 @@ const DoubiExtract:React.FC = () => {
               onBlur={dyBlur}
             />
             {
-              <ul className={ showDyIds ? 'form-douyin-id-ul' : 'form-douyin-id-ul hide'}>
+              dyIds.length && <ul className={ showDyIds ? 'form-douyin-id-ul' : 'form-douyin-id-ul hide'}>
                 {
                   dyIds.map((list, k) => {
                     return <li key={k} onClick={choiceDyIds.bind(this, list)}>{list}</li>

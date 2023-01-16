@@ -299,7 +299,7 @@ webpackContext.id = 6700;
 
 /***/ }),
 
-/***/ 764:
+/***/ 3490:
 /***/ (function(__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -538,7 +538,7 @@ var Apis = /** @class */ (function () {
          */
         this.getCommonScreen = get('/api/mystery/announce/commonScreen');
         /**
-         * 【首页】盲盒-开
+         * 【首页】盒子-开
          */
         this.lotteryDraw = post('/api/mystery/box/lottery/draw');
         /**
@@ -574,7 +574,7 @@ var Apis = /** @class */ (function () {
          */
         this.getDyIds = get('/api/mystery/dymoney/draw/history/dyId');
         /**
-         * 【盲盒】盲盒-记录
+         * 【盒子】盒子-记录
          */
         this.getLotteryHistory = post('/api/mystery/box/lottery/history');
     }
@@ -625,6 +625,7 @@ var store_a;
 
 
 
+var flag = true;
 var Context = react.createContext(null);
 var initialState = {
     viewModal: {
@@ -726,43 +727,66 @@ var getCommonScreen = function () { return function (dispatch) { return __awaite
         }
     });
 }); }; };
-// 开盲盒
+// 开盒子
+var timerId;
+var timerId2;
 var lotteryDraw = function (query) {
     return function (dispatch) { return __awaiter(void 0, void 0, void 0, function () {
-        var res;
-        var _a, _b;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
-                case 0:
-                    es/* Toast.show */.FN.show({
-                        icon: 'loading',
-                        content: '加载中…'
-                    });
-                    return [4 /*yield*/, apis.lotteryDraw(query)];
-                case 1:
-                    res = _c.sent();
-                    if (res.data.drawSuccess) {
-                        es/* Toast.clear */.FN.clear();
-                        dispatch(setLotteryModal({
-                            visible: true,
-                            currentBoxType: (_a = query.keyInfo) === null || _a === void 0 ? void 0 : _a.keyType,
-                            lotteryDataSource: (_b = res.data.lottery) !== null && _b !== void 0 ? _b : {}
-                        }));
-                        dispatch(getKeys({
-                            userId: query.userId
-                        }));
-                        dispatch(getCommonScreen());
-                    }
-                    else {
-                        es/* Toast.show */.FN.show({
-                            content: res.data.drawFailedMsg
-                        });
-                        setTimeout(function () {
-                            es/* Toast.clear */.FN.clear();
-                        }, 1000);
-                    }
-                    return [2 /*return*/];
+        var _a;
+        return __generator(this, function (_b) {
+            if (!flag)
+                return [2 /*return*/];
+            flag = false;
+            dispatch(setLotteryModal({
+                visible: true,
+                currentBoxType: (_a = query.keyInfo) === null || _a === void 0 ? void 0 : _a.keyType,
+                lotteryDataSource: {}
+            }));
+            if (timerId) {
+                clearTimeout(timerId);
             }
+            es/* Toast.show */.FN.show({
+                icon: 'loading',
+                content: '加载中…',
+                duration: 1300
+            });
+            timerId = setTimeout(function () { return __awaiter(void 0, void 0, void 0, function () {
+                var res;
+                var _a, _b;
+                return __generator(this, function (_c) {
+                    switch (_c.label) {
+                        case 0: return [4 /*yield*/, apis.lotteryDraw(query)];
+                        case 1:
+                            res = _c.sent();
+                            if (res.data.drawSuccess) {
+                                es/* Toast.clear */.FN.clear();
+                                dispatch(setLotteryModal({
+                                    visible: true,
+                                    currentBoxType: (_a = query.keyInfo) === null || _a === void 0 ? void 0 : _a.keyType,
+                                    lotteryDataSource: (_b = res.data.lottery) !== null && _b !== void 0 ? _b : {}
+                                }));
+                                dispatch(getKeys({
+                                    userId: query.userId
+                                }));
+                                dispatch(getCommonScreen());
+                            }
+                            else {
+                                es/* Toast.show */.FN.show({
+                                    content: res.data.drawFailedMsg,
+                                    duration: 2000
+                                });
+                            }
+                            if (timerId2) {
+                                clearTimeout(timerId2);
+                            }
+                            timerId2 = setTimeout(function () {
+                                flag = true;
+                            }, 1000);
+                            return [2 /*return*/];
+                    }
+                });
+            }); }, 3000);
+            return [2 /*return*/];
         });
     }); };
 };
@@ -780,17 +804,6 @@ var RollingList = function () {
     (0,react.useEffect)(function () {
         dispatch(getCommonScreen());
     }, []);
-    (0,react.useEffect)(function () {
-        if (commonScreenData.length) {
-            // const a = document.getElementById('listItem0')
-            // a.style.transform = 'translate3d(0,' + (- index * clientHeight) + 'px,0)'
-            // const arr = document.getElementsByClassName('list-item')
-            // const tempArr = Array.from(arr)
-            // tempArr.forEach((item: any, i) => {
-            //   item.style.transform = 'translate3d(0,' + (- (i + 1) * item.getBoundingClientRect().height) + 'px, 0)'
-            // })
-        }
-    }, [commonScreenData]);
     return react.createElement("div", { className: 'rolling-list-wrapper' },
         react.createElement("div", { className: 'list-content' }, commonScreenData.map(function (item, i) {
             return react.createElement("div", { className: 'list-item', id: "listItem".concat(i), key: i },
@@ -817,7 +830,8 @@ var TopRolling = function () {
     var getFloatScreen = function () {
         apis.getFloatScreen().then(function (res) {
             var _a;
-            setDataList((_a = res.data) !== null && _a !== void 0 ? _a : []);
+            var tempArr = (_a = res.data) === null || _a === void 0 ? void 0 : _a.splice(0, 3);
+            setDataList(tempArr);
         }, function (err) {
             console.log(err);
             es/* Toast.show */.FN.show({
@@ -833,9 +847,8 @@ var TopRolling = function () {
         react.createElement("div", { className: 'top-rolling-content' }, [1, 2].map(function (list) {
             return react.createElement("ul", { className: 'top-rolling-ul', key: list }, dataList.map(function (item, i) {
                 return react.createElement("li", { key: i, className: 'item-list-li' },
-                    react.createElement("span", { className: 'float-title' }, "\u606D\u559C"),
                     react.createElement("span", { className: 'float-user-name' }, item.user.nickName.replace(/^(\d{3})\d{4}(\d+)/, '$1****$2') || '游客'),
-                    react.createElement("span", { className: 'float-open-title' }, "\u5F00\u51FA\u4E86"),
+                    react.createElement("span", { className: 'float-open-title' }, "\u5F00\u51FA"),
                     react.createElement("span", { className: 'float-open-gift-name' }, item.gift.giftName),
                     react.createElement("img", { src: item.gift.bigPicUrl, className: 'notice-content-lottery' }),
                     react.createElement("span", { className: 'doubi-value' }, "\u4EF7\u503C\u6296\u5E01"),
@@ -1008,10 +1021,9 @@ var RechargeKey = function () {
             react.createElement("div", { className: 'pay-content' },
                 react.createElement("img", { onClick: closePay, className: 'pay-close-icon', src: 'https://cdn.tuanzhzh.com/doubi-image/close-modal-icon.png' }),
                 react.createElement("div", { className: 'pay-title' }, "\u8BF7\u9009\u62E9\u652F\u4ED8\u65B9\u5F0F"),
+                react.createElement("div", { className: 'pay-sub-title' },
+                    react.createElement("span", null, "\u652F\u4ED8\u5B8C\u6210\u540E\u82E5\u672A\u81EA\u52A8\u8DF3\u8F6C, \u8BF7\u624B\u52A8\u8FD4\u56DE")),
                 react.createElement("div", { className: 'pay-way-content' },
-                    react.createElement("div", { className: 'pay-way-item pay-way-item-wechat' },
-                        react.createElement("img", { src: 'https://cdn.tuanzhzh.com/doubi-image/wechat.png' }),
-                        react.createElement("span", { className: 'pay-item-text' }, "\u5FAE\u4FE1\u652F\u4ED8")),
                     react.createElement("div", { className: 'pay-way-item', onClick: aliPay },
                         react.createElement("img", { src: 'https://cdn.tuanzhzh.com/doubi-image/alipay.png' }),
                         react.createElement("span", { className: 'pay-item-text' }, "\u652F\u4ED8\u5B9D\u652F\u4ED8")))),
@@ -1053,8 +1065,114 @@ var DetailDescription = function () {
 };
 /* harmony default export */ var component_DetailDescription = (DetailDescription);
 
+// EXTERNAL MODULE: ./node_modules/classnames/index.js
+var node_modules_classnames = __webpack_require__(4184);
+;// CONCATENATED MODULE: ./src/utils/index.ts
+
+// 是否本地环境
+var isLocal = /^localhost|127.0|192.168/.test(window.location.host);
+// 开发环境 or 线上环境
+var isDev = /^test/.test(window.location.host) || isLocal;
+// classnames
+function classNames(prefix, styles) {
+    var cx = classnames;
+    if (arguments.length === 0) {
+        return cx;
+    }
+    else if (arguments.length === 1) {
+        // eslint-disable-next-line prefer-rest-params
+        if (typeof (arguments[0]) === 'string') {
+            // Just add prefix whithout bind css module.
+        }
+        else {
+            // Just bind css moudle whitout add prefix.
+            return classnames.bind(styles);
+        }
+    }
+    else {
+        cx = classnames.bind(styles);
+    }
+    return function () {
+        var classnames = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            classnames[_i] = arguments[_i];
+        }
+        return cx(classnames).split(' ').filter(function (i) { return i; }).map(function (classname) { return "".concat(prefix, "-").concat(classname); }).join(' ') || prefix;
+    };
+}
+/**
+ * 将url中? 后面的参数, 变成一个json
+ * @return {Object}
+ * @example 'a=1&b=3' => {a: 1, b: 3}
+ */
+function getUrlParams(sourceStr) {
+    // 防止hash值, 影响参数名称
+    var search;
+    if (sourceStr) {
+        search = sourceStr.indexOf('?') > -1 ? sourceStr.split('?').slice(-1).toString() : sourceStr;
+    }
+    else {
+        // 链接中的最后一个
+        search = window.location.href.indexOf('?') > -1 && window.location.href.split('?').slice(-1).toString().replace(/#!\/.+/, '');
+    }
+    // 如果没有, 则返回空对象
+    if (!search)
+        return {};
+    var searchArr = decodeURIComponent(search).split('&');
+    var urlParams = {};
+    /* eslint-disable-next-line array-callback-return */
+    searchArr.map(function (str) {
+        var paramArr = str.split('=');
+        // 如果已经有该参数就不添加进去了
+        if (urlParams[paramArr[0]])
+            return false;
+        urlParams[paramArr[0]] = unescape(paramArr[1]);
+    });
+    return urlParams;
+}
+function genId() {
+    /* eslint-disable no-bitwise */
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = Math.random() * 16 | 0;
+        var v = c === 'x' ? r : ((r & 0x3) | 0x8);
+        return v.toString(16);
+    }).toUpperCase();
+    /* eslint-enable no-bitwise */
+}
+/**
+ * 得到url中某个参数
+ */
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)".concat(name, "=([^&]*)(&|$)"), 'i');
+    var search = window.location.search.substring(1) || (window.location.href.split('?')[1] && window.location.href.split('?')[1].replace(/#!\/.+/, ''));
+    if (!search)
+        return false;
+    var r = search.replace('#', '').match(reg);
+    if (r != null) {
+        // 对编码的字符串进行解码
+        var decodeStr = decodeURI(r[2]);
+        switch (decodeStr) {
+            case 'true':
+                return true;
+            case 'null':
+                return null;
+            case 'false':
+                return false;
+            case 'undefined':
+                return undefined;
+            default:
+                return decodeStr;
+        }
+    }
+    else {
+        return null;
+    }
+}
+
 ;// CONCATENATED MODULE: ./src/pages/Home/component/LotteryModal/index.tsx
 var LotteryModal_this = undefined;
+
+
 
 
 
@@ -1063,7 +1181,7 @@ var Lottery = function () {
     var _a = (0,react.useState)({}), maxValue = _a[0], setMaxValue = _a[1];
     var _b = (0,react.useState)([]), list = _b[0], setList = _b[1];
     var _c = (0,react.useContext)(Context), state = _c.state, dispatch = _c.dispatch;
-    var lotteryModal = state.lotteryModal;
+    var lotteryModal = state.lotteryModal, keyInfo = state.keyInfo;
     var userInfo = JSON.parse(window.localStorage.getItem('user') || '{}');
     // const userInfo = JSON.parse(window.localStorage.getItem('user') || '{}')
     var closeModal = function () {
@@ -1072,6 +1190,15 @@ var Lottery = function () {
         }));
     };
     var showLotteryModal = function (num) {
+        var currentKeyInfo = keyInfo.find(function (item) { return item.keyType === lotteryModal.currentBoxType; });
+        if (currentKeyInfo.keyCount === 0) {
+            dispatch(setViewModal({
+                visible: true,
+                num: currentKeyInfo.keyCount,
+                type: lotteryModal.currentBoxType
+            }));
+            return;
+        }
         dispatch(lotteryDraw({
             userId: userInfo.userId,
             keyInfo: {
@@ -1080,32 +1207,40 @@ var Lottery = function () {
             }
         }));
     };
+    var renderDom = (0,react.useMemo)(function () {
+        if (!maxValue.bigPicUrl) {
+            var randomId = genId();
+            return react.createElement("img", { className: 'load-draw-img', src: "https://cdn.tuanzhzh.com/doubi-image/open-dh.png?id=".concat(randomId) });
+        }
+        return '';
+    }, [maxValue]);
     (0,react.useEffect)(function () {
         var _a, _b, _c, _d, _e;
         var index = (_b = (_a = lotteryModal.lotteryDataSource) === null || _a === void 0 ? void 0 : _a.giftList) === null || _b === void 0 ? void 0 : _b.findIndex(function (item) { var _a; return item.giftId === ((_a = lotteryModal.lotteryDataSource) === null || _a === void 0 ? void 0 : _a.maxValueGiftId); });
         var findObj = ((_d = (_c = lotteryModal.lotteryDataSource) === null || _c === void 0 ? void 0 : _c.giftList) === null || _d === void 0 ? void 0 : _d.find(function (item) { var _a; return item.giftId === ((_a = lotteryModal.lotteryDataSource) === null || _a === void 0 ? void 0 : _a.maxValueGiftId); })) || {};
-        setMaxValue(findObj);
         var tempArr = JSON.parse(JSON.stringify(((_e = lotteryModal.lotteryDataSource) === null || _e === void 0 ? void 0 : _e.giftList) || []));
         tempArr.splice(index, 1);
+        setMaxValue(findObj);
         setList(tempArr);
     }, [lotteryModal]);
     return react.createElement("div", { className: 'lottery-wrapper' },
         react.createElement(es/* Mask */.zd, { visible: lotteryModal.visible },
             react.createElement("div", { className: 'lottery-content' },
                 react.createElement("img", { onClick: closeModal, className: 'lottery-close-icon', src: 'https://cdn.tuanzhzh.com/doubi-image/close-modal-icon.png' }),
-                react.createElement("div", { className: 'max-value-lottery' },
-                    react.createElement("img", { src: maxValue.bigPicUrl })),
-                react.createElement("ul", { className: 'lottery-list-ul' }, list.map(function (item, i) {
-                    return react.createElement("li", { className: 'lottery-list-item', key: i },
-                        react.createElement("img", { src: item.smallPicUrl }));
-                })),
+                react.createElement("div", { className: 'load-draw-dh' }, renderDom),
+                react.createElement("div", null,
+                    react.createElement("div", { className: 'max-value-lottery' }, maxValue.bigPicUrl && react.createElement("img", { src: maxValue.bigPicUrl })),
+                    react.createElement("ul", { className: 'lottery-list-ul' }, list.map(function (item, i) {
+                        return react.createElement("li", { className: 'lottery-list-item', key: i },
+                            react.createElement("img", { src: item.smallPicUrl }));
+                    }))),
                 react.createElement("div", { className: 'lottery-box-xiang-btn-wrapper' },
                     react.createElement(es/* Button */.zx, { shape: 'rounded', className: 'one-key-btn', onClick: showLotteryModal.bind(LotteryModal_this, 1) },
                         react.createElement("span", { className: 'one-key-bg-icon' }),
                         react.createElement("span", null, "X 1")),
                     react.createElement(es/* Button */.zx, { shape: 'rounded', className: 'ten-key-btn', onClick: showLotteryModal.bind(LotteryModal_this, 10) },
-                        react.createElement("span", { className: 'ten-key-bg-icon' }),
-                        react.createElement("span", null, "X 10"))))));
+                        react.createElement("span", null, "10\u8FDE\u62BD"))))),
+        react.createElement(component_RechargeKey, null));
 };
 /* harmony default export */ var LotteryModal = (Lottery);
 
@@ -1128,6 +1263,7 @@ var Home_this = undefined;
 
 
 // import TopRolling from '@pages/Component/TopRolling'
+
 
 
 
@@ -1184,7 +1320,23 @@ var Home = function () {
         }));
     };
     var showLotteryModal = function (num) {
-        lotteryDraw(num);
+        // lotteryDraw(num)
+        var currentKeyInfo = keyInfo.find(function (item) { return item.keyType === currentBox * 1; });
+        if (currentKeyInfo.keyCount < num) {
+            es/* Toast.show */.FN.show({
+                content: '请点击上方+按钮购买钥匙',
+                duration: 2000
+            });
+            return;
+        }
+        if (currentKeyInfo.keyCount === 0) {
+            dispatch(setViewModal({
+                visible: true,
+                num: currentKeyInfo.keyCount,
+                type: currentBox * 1
+            }));
+            return;
+        }
         dispatch(lotteryDraw({
             userId: userInfo.userId,
             keyInfo: {
@@ -1199,6 +1351,26 @@ var Home = function () {
                 userId: userInfo.userId
             }));
             setLoginInfo(Home_assign({}, userInfo));
+        }
+        var tempObj = getUrlParams();
+        if (Object.keys(tempObj).length && tempObj.origin === 'finishPay') {
+            es/* Modal.show */.u_.show({
+                content: react.createElement("div", { className: 'modal-echarge-wrapper' },
+                    react.createElement("span", { className: 'modal-echarge-title' },
+                        "\u60A8\u5DF2\u8D2D\u6210\u529F\u5145\u503C",
+                        react.createElement("span", { className: 'modal-echarge-success' }, tempObj.keyCount),
+                        "\u628A"),
+                    react.createElement("img", { className: 'modal-echarge-success-key', src: keyIcon[tempObj.keyType] })),
+                actions: [{
+                        key: 'online',
+                        text: '确认',
+                        className: 'modal-echarge-success-btn',
+                        onClick: function () {
+                            window.location.replace(window.location.origin + window.location.pathname);
+                            es/* Modal.clear */.u_.clear();
+                        }
+                    }]
+            });
         }
     }, []);
     return react.createElement(react.Fragment, null,
@@ -1216,11 +1388,12 @@ var Home = function () {
                         react.createElement("span", { className: 'key-add-btn', onClick: addRechargeKey.bind(Home_this, item.keyType, item.keyCount) },
                             react.createElement("img", { className: 'add-plus-icon', src: 'https://cdn.tuanzhzh.com/doubi-image/plus.png' })));
                 })),
+                react.createElement("img", { style: { display: 'none' }, src: 'https://cdn.tuanzhzh.com/doubi-image/open-dh.png' }),
                 react.createElement(es/* Divider */.iz, { className: 'home-keys-divider' }),
                 react.createElement(es/* CapsuleTabs */.GC, { className: 'blind-box-btn-wrapper', onChange: capsuleTabChange },
-                    react.createElement(es/* CapsuleTabs.Tab */.GC.Tab, { title: '\u94DC\u8D28\u76F2\u76D2', key: 3 }),
-                    react.createElement(es/* CapsuleTabs.Tab */.GC.Tab, { title: '\u94F6\u5149\u76F2\u76D2', key: 4 }),
-                    react.createElement(es/* CapsuleTabs.Tab */.GC.Tab, { title: '\u91D1\u95EA\u76F2\u76D2', key: 5 })),
+                    react.createElement(es/* CapsuleTabs.Tab */.GC.Tab, { title: '\u94DC\u8D28\u76D2\u5B50', key: 3 }),
+                    react.createElement(es/* CapsuleTabs.Tab */.GC.Tab, { title: '\u94F6\u5149\u76D2\u5B50', key: 4 }),
+                    react.createElement(es/* CapsuleTabs.Tab */.GC.Tab, { title: '\u91D1\u95EA\u76D2\u5B50', key: 5 })),
                 react.createElement("div", { className: 'home-box-xiang-wrapper' },
                     react.createElement("img", { className: 'box-xiang-icon', src: boxMap[currentBox] }),
                     react.createElement("span", { className: 'box-xiang-instructions', onClick: showDetailDescription }, "\u8BE6\u7EC6\u8BF4\u660E")),
@@ -1229,8 +1402,7 @@ var Home = function () {
                         react.createElement("span", { className: 'one-key-bg-icon' }),
                         react.createElement("span", null, "X 1")),
                     react.createElement(es/* Button */.zx, { shape: 'rounded', className: 'ten-key-btn', onClick: showLotteryModal.bind(Home_this, 10) },
-                        react.createElement("span", { className: 'ten-key-bg-icon' }),
-                        react.createElement("span", null, "X 10"))),
+                        react.createElement("span", null, "10\u8FDE\u62BD"))),
                 react.createElement("div", { className: 'home-doubi-extract', onClick: extractHandle },
                     react.createElement("img", { className: 'doubi-tiqu', src: 'https://cdn.tuanzhzh.com/doubi-image/doubi-tiqu-icon.png' }),
                     react.createElement("span", { className: 'doubi-tiqu-text' }, "\u6296\u5E01\u63D0\u53D6")),
@@ -1846,7 +2018,7 @@ var DoubiExtract = function () {
     var _b = (0,react.useState)([]), data = _b[0], setData = _b[1];
     var _c = (0,react.useState)(true), hasMore = _c[0], setHasMore = _c[1];
     var _d = (0,react.useState)(0), coinNum = _d[0], setCoinNum = _d[1];
-    var _e = (0,react.useState)(0), extractNum = _e[0], setEextractNum = _e[1];
+    var _e = (0,react.useState)(''), extractNum = _e[0], setEextractNum = _e[1];
     var _f = (0,react.useState)(''), douyin = _f[0], setDouyin = _f[1];
     var _g = (0,react.useState)([]), dyIds = _g[0], setDyIds = _g[1];
     var _h = (0,react.useState)(false), showDyIds = _h[0], setShowDyIds = _h[1];
@@ -1931,9 +2103,16 @@ var DoubiExtract = function () {
     };
     // 抖币提取
     var coinExtract = function () {
-        if (extractNum % 10 !== 0) {
+        if ((extractNum * 1) % 10 !== 0) {
             es/* Toast.show */.FN.show({
                 content: '请输入10的整数倍,最大50000',
+                duration: 2000
+            });
+            return;
+        }
+        if (!extractNum || !douyin) {
+            es/* Toast.show */.FN.show({
+                content: '抖币数量或抖音号为空',
                 duration: 2000
             });
             return;
@@ -1944,7 +2123,7 @@ var DoubiExtract = function () {
         });
         apis.coinExtract({
             userId: userInfo.userId,
-            drawDyMoneyAmount: extractNum,
+            drawDyMoneyAmount: extractNum * 1,
             dyId: douyin
         }).then(function (res) {
             if (!res.data.isDrawEnable) {
@@ -1960,6 +2139,7 @@ var DoubiExtract = function () {
                 });
                 // number = 1
                 numRef.current = 1;
+                setData([]);
                 getCoinInfo();
                 getCoinHistory();
                 setVisible(false);
@@ -1981,7 +2161,6 @@ var DoubiExtract = function () {
             var _a;
             setCoinNum((_a = res.data.dyMoneyAmount) !== null && _a !== void 0 ? _a : 0);
         }), function (err) {
-            console.log(err);
             es/* Toast.show */.FN.show({
                 content: err.msg
             });
@@ -1993,6 +2172,7 @@ var DoubiExtract = function () {
             userId: userInfo.userId
         }).then(function (res) {
             var _a, _b;
+            res.data = res.data.concat(res.data, res.data, res.data, res.data, res.data, res.data, res.data, res.data, res.data);
             setDyIds((_a = res.data) !== null && _a !== void 0 ? _a : []);
             cacheDyIds = (_b = res.data) !== null && _b !== void 0 ? _b : [];
         }, function () {
@@ -2023,7 +2203,7 @@ var DoubiExtract = function () {
     (0,react.useEffect)(function () {
         if (visible) {
             getDyIds();
-            setEextractNum(0);
+            setEextractNum('');
             setDouyin('');
         }
     }, [visible]);
@@ -2072,11 +2252,11 @@ var DoubiExtract = function () {
                 react.createElement("div", { className: 'extract-modal-form' },
                     react.createElement("div", { className: 'form-item' },
                         react.createElement("span", { className: 'form-item-name' }, "\u63D0\u53D6\u6296\u5E01"),
-                        react.createElement(es/* Input */.II, { placeholder: '10\u7684\u6574\u6570\u500D,\u6700\u592750000', className: 'form-input-style', onChange: coinChangeHandle, type: 'number', clearable: true })),
+                        react.createElement(es/* Input */.II, { placeholder: '10\u7684\u6574\u6570\u500D,\u6700\u592750000', className: 'form-input-style', onChange: coinChangeHandle, value: extractNum, type: 'number', clearable: true })),
                     react.createElement("div", { className: 'form-item' },
                         react.createElement("span", { className: 'form-item-name' }, "\u9009\u62E9\u6296\u97F3\u53F7"),
                         react.createElement(es/* Input */.II, { placeholder: '\u8BF7\u8F93\u5165\u6296\u97F3\u53F7', className: 'form-input-style', clearable: true, onChange: douYinChangeHandle, onFocus: dyFocus, value: douyin, onBlur: dyBlur }),
-                        react.createElement("ul", { className: showDyIds ? 'form-douyin-id-ul' : 'form-douyin-id-ul hide' }, dyIds.map(function (list, k) {
+                        dyIds.length && react.createElement("ul", { className: showDyIds ? 'form-douyin-id-ul' : 'form-douyin-id-ul hide' }, dyIds.map(function (list, k) {
                             return react.createElement("li", { key: k, onClick: choiceDyIds.bind(DoubiExtract_this, list) }, list);
                         })))),
                 react.createElement("div", { className: 'extract-bottom-wrapper' },
@@ -2537,7 +2717,7 @@ react_dom.render(react.createElement(dist/* BrowserRouter */.VK, null,
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [736], function() { return __webpack_require__(764); })
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [736], function() { return __webpack_require__(3490); })
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

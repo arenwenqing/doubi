@@ -15,7 +15,8 @@ const TopRolling: React.FC<ScrollProps> = () => {
   // 获取飘屏内容
   const getFloatScreen = () => {
     Apis.getFloatScreen().then(res => {
-      setDataList(res.data??[])
+      const tempArr = res.data?.splice(0, 3)
+      setDataList(tempArr)
     }, err => {
       console.log(err)
       Toast.show({
@@ -36,9 +37,9 @@ const TopRolling: React.FC<ScrollProps> = () => {
             {
               dataList.map((item, i) => {
                 return <li key={i} className='item-list-li'>
-                  <span className='float-title'>恭喜</span>
+                  {/* <span className='float-title'>恭喜</span> */}
                   <span className='float-user-name'>{item.user.nickName.replace(/^(\d{3})\d{4}(\d+)/, '$1****$2') || '游客'}</span>
-                  <span className='float-open-title'>开出了</span>
+                  <span className='float-open-title'>开出</span>
                   <span className='float-open-gift-name'>{ item.gift.giftName }</span>
                   <img src={item.gift.bigPicUrl} className='notice-content-lottery' />
                   <span className='doubi-value'>价值抖币</span>

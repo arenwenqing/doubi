@@ -140,11 +140,14 @@ const RechargeKey: React.FC = () => {
       <div className='pay-content'>
         <img onClick={closePay} className='pay-close-icon' src='https://cdn.tuanzhzh.com/doubi-image/close-modal-icon.png' />
         <div className='pay-title'>请选择支付方式</div>
+        <div className='pay-sub-title'>
+          <span>支付完成后若未自动跳转, 请手动返回</span>
+        </div>
         <div className='pay-way-content'>
-          <div className='pay-way-item pay-way-item-wechat'>
+          {/* <div className='pay-way-item pay-way-item-wechat'>
             <img src='https://cdn.tuanzhzh.com/doubi-image/wechat.png' />
             <span className='pay-item-text'>微信支付</span>
-          </div>
+          </div> */}
           <div className='pay-way-item' onClick={aliPay}>
             <img src='https://cdn.tuanzhzh.com/doubi-image/alipay.png' />
             <span className='pay-item-text'>支付宝支付</span>
