@@ -164,8 +164,8 @@ const Home: React.FC = () => {
         </div>
         <div className='home-box-xiang-btn-wrapper'>
           <Button shape='rounded' className='one-key-btn' onClick={showLotteryModal.bind(this, 1)}>
-            <span className='one-key-bg-icon'></span>
-            <span>X 1</span>
+            {/* <span className='one-key-bg-icon'></span> */}
+            <span>抽1次</span>
           </Button>
           <Button shape='rounded' className='ten-key-btn' onClick={showLotteryModal.bind(this, 10)}>
             {/* <span className='ten-key-bg-icon'></span> */}

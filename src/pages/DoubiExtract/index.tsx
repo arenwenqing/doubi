@@ -165,7 +165,6 @@ const DoubiExtract:React.FC = () => {
     Api.getDyIds({
       userId: userInfo.userId
     }).then(res => {
-      res.data = res.data.concat(res.data,res.data,res.data,res.data,res.data,res.data,res.data,res.data,res.data)
       setDyIds(res.data??[])
       cacheDyIds = res.data??[]
     }, () => {
