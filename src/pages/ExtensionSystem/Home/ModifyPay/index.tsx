@@ -23,7 +23,7 @@ const ModifyPay = () => {
       if (res.data.modifySuccess) {
         Toast.show({
           icon: 'success',
-          content: '复制成功'
+          content: '修改成功'
         })
         dispatch(setModifyPayData({
           visible: false

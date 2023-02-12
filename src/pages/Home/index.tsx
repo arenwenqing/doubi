@@ -15,9 +15,9 @@ import { getUrlParams } from 'src/utils'
 import './index.less'
 
 const boxMap = {
-  3: 'https://cdn.tuanzhzh.com/doubi-image/tong-box.png',
-  4: 'https://cdn.tuanzhzh.com/doubi-image/yin-box.png',
-  5: 'https://cdn.tuanzhzh.com/doubi-image/gold-box.png'
+  3: 'https://cdn.tuanzhzh.com/doubi-image/tong-box2.png',
+  4: 'https://cdn.tuanzhzh.com/doubi-image/yin-box2.png',
+  5: 'https://cdn.tuanzhzh.com/doubi-image/jin-box.png'
 }
 const keyIcon = {
   3: 'https://cdn.tuanzhzh.com/doubi-image/tong-yaoshi.png',

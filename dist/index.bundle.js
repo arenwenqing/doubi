@@ -299,7 +299,7 @@ webpackContext.id = 6700;
 
 /***/ }),
 
-/***/ 3490:
+/***/ 2870:
 /***/ (function(__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -402,8 +402,8 @@ axios/* default.interceptors.response.use */.Z.interceptors.response.use(functio
 
 // EXTERNAL MODULE: ./node_modules/react-router/dist/index.js
 var react_router_dist = __webpack_require__(9250);
-// EXTERNAL MODULE: ./node_modules/antd-mobile/es/index.js + 209 modules
-var es = __webpack_require__(2614);
+// EXTERNAL MODULE: ./node_modules/antd-mobile/es/index.js + 238 modules
+var es = __webpack_require__(1825);
 // EXTERNAL MODULE: ./node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js + 2 modules
 var redux_toolkit_esm = __webpack_require__(9639);
 ;// CONCATENATED MODULE: ./requestConfig/build.ts
@@ -577,6 +577,22 @@ var Apis = /** @class */ (function () {
          * 【盒子】盒子-记录
          */
         this.getLotteryHistory = post('/api/mystery/box/lottery/history');
+        /**
+         * 【用户代理】推广员个人信息
+         */
+        this.getProxyUser = get('/api/mystery/proxyUser/detail');
+        /**
+         * 【用户代理】续期
+         */
+        this.userRenewal = post('/api/mystery/proxyUser/renewal');
+        /**
+         * 【用户代理】修改支付宝
+         */
+        this.modifyAlipay = post('/api/mystery/proxyUser/alipay/modify');
+        /**
+         * 【用户代理】注册新的推广员
+         */
+        this.proxyUserRegister = post('/api/mystery/proxyUser/register');
     }
     return Apis;
 }());
@@ -1477,7 +1493,18 @@ var src_store_a;
 var store_Context = react.createContext(null);
 var store_initialState = {
     loginCurrentKey: 'login',
-    userId: ''
+    userId: '',
+    renewModalData: {
+        visible: false,
+        level: 0
+    },
+    upgradeModalData: {
+        visible: false
+    },
+    modifyPayData: {
+        visible: false,
+        aliPayId: ''
+    }
 };
 var store_reduxSlice = (0,redux_toolkit_esm/* createSlice */.oM)({
     name: 'reduxSlice',
@@ -1490,11 +1517,23 @@ var store_reduxSlice = (0,redux_toolkit_esm/* createSlice */.oM)({
         setUserId: function (state, _a) {
             var payload = _a.payload;
             state.userId = payload;
+        },
+        setRenewModalData: function (state, _a) {
+            var payload = _a.payload;
+            state.renewModalData = payload;
+        },
+        setUpgradeModalData: function (state, _a) {
+            var payload = _a.payload;
+            state.upgradeModalData = payload;
+        },
+        setModifyPayData: function (state, _a) {
+            var payload = _a.payload;
+            state.modifyPayData = payload;
         }
     }
 });
 // Action creators are generated for each case reducer function
-var setLoginCurrentKey = (src_store_a = store_reduxSlice.actions, src_store_a.setLoginCurrentKey), setUserId = src_store_a.setUserId;
+var setLoginCurrentKey = (src_store_a = store_reduxSlice.actions, src_store_a.setLoginCurrentKey), setUserId = src_store_a.setUserId, setRenewModalData = src_store_a.setRenewModalData, setUpgradeModalData = src_store_a.setUpgradeModalData, setModifyPayData = src_store_a.setModifyPayData;
 // redux-thunk actions
 // 拉取是否开通接口
 // export const getIsOpen =
@@ -1642,6 +1681,17 @@ var Toast = function (props) {
 /* harmony default export */ var Component_Toast = (Toast);
 
 ;// CONCATENATED MODULE: ./src/pages/Component/RegisteredForm/index.tsx
+var RegisteredForm_assign = (undefined && undefined.__assign) || function () {
+    RegisteredForm_assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return RegisteredForm_assign.apply(this, arguments);
+};
 var RegisteredForm_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -1684,6 +1734,7 @@ var RegisteredForm_generator = (undefined && undefined.__generator) || function 
 
 
 
+
 var count = 60;
 var RegisteredForm = function () {
     var _a = (0,react.useState)('获取验证码'), verificaationText = _a[0], setVerificaationText = _a[1];
@@ -1698,7 +1749,7 @@ var RegisteredForm = function () {
                 case 0: return [4 /*yield*/, form.validateFields()];
                 case 1:
                     obj = _a.sent();
-                    apis.registerFromPhone(obj).then(function (res) {
+                    apis.registerFromPhone(RegisteredForm_assign(RegisteredForm_assign({}, obj), { proxyUserId: getUrlParam('proxyUserId') })).then(function (res) {
                         // 注册成功，跳转到登录
                         if (res.data.registerResult) {
                             es/* Toast.show */.FN.show({
@@ -2463,7 +2514,513 @@ var History = function () {
 };
 /* harmony default export */ var pages_History = (History);
 
+;// CONCATENATED MODULE: ./src/pages/ExtensionSystem/Login/index.tsx
+var Login_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var Login_generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
+
+
+var ExtensionLogin = function () {
+    var form = es/* Form.useForm */.l0.useForm()[0];
+    var navigate = (0,react_router_dist/* useNavigate */.s0)();
+    var loginHandle = (0,react.useCallback)(function () { return Login_awaiter(void 0, void 0, void 0, function () {
+        var obj;
+        return Login_generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, form.validateFields()];
+                case 1:
+                    obj = _a.sent();
+                    apis.login(obj).then(function (res) {
+                        if (res.data.loginResult) {
+                            window.localStorage.setItem('system-user', JSON.stringify(res.data.user || {}));
+                            // dispatch(setUserId(res.data.user.userId))
+                            navigate({
+                                pathname: '/extension-home'
+                            });
+                        }
+                        else {
+                            es/* Toast.show */.FN.show({
+                                icon: 'fail',
+                                content: res.data.loginMsg
+                            });
+                        }
+                    });
+                    return [2 /*return*/];
+            }
+        });
+    }); }, []);
+    var resetHandle = function () {
+        form.resetFields();
+    };
+    return react.createElement("div", { className: 'login-form-wrapper' },
+        react.createElement("div", { className: 'extension-login-title' }, "\u6296\u76D2\u5B50\u63A8\u5E7F\u7CFB\u7EDF"),
+        react.createElement(es/* Form */.l0, { layout: 'horizontal', form: form },
+            react.createElement("div", { className: 'login-item' },
+                react.createElement("span", { className: 'login-item-title' }, "\u624B\u673A\u53F7"),
+                react.createElement("div", { className: 'login-item-component' },
+                    react.createElement(es/* Form.Item */.l0.Item, { noStyle: true, name: 'phoneNum' },
+                        react.createElement(es/* Input */.II, { placeholder: '\u8BF7\u8F93\u516511\u4F4D\u624B\u673A\u53F7', clearable: true, className: 'input-style' })))),
+            react.createElement("div", { className: 'login-item' },
+                react.createElement("span", { className: 'login-item-title' }, "\u5BC6\u7801"),
+                react.createElement("div", { className: 'login-item-component' },
+                    react.createElement(es/* Form.Item */.l0.Item, { name: 'passwd' },
+                        react.createElement(es/* Input */.II, { placeholder: '\u8BF7\u8F93\u5165\u5BC6\u7801', clearable: true, type: 'password', className: 'input-style' })))),
+            react.createElement("div", { className: 'login-item login-item-btn-wrapper' },
+                react.createElement("span", { className: 'btn-style', onClick: resetHandle }, "\u91CD\u7F6E"),
+                react.createElement("span", { className: 'btn-style', onClick: loginHandle }, "\u767B\u5F55"))));
+};
+/* harmony default export */ var ExtensionSystem_Login = (ExtensionLogin);
+
+;// CONCATENATED MODULE: ./src/pages/ExtensionSystem/Home/RenewModal/index.tsx
+
+
+
+
+var levelMap = {
+    1: '一级推广',
+    2: '二级推广'
+};
+var RenewModal = function () {
+    var _a = (0,react.useContext)(store_Context), state = _a.state, dispatch = _a.dispatch;
+    var close = function () {
+        dispatch(setRenewModalData({
+            visible: false
+        }));
+    };
+    return react.createElement(es/* Modal */.u_, { title: '\u7EED\u671F', visible: state.renewModalData.visible, showCloseButton: true, onClose: close, bodyClassName: 'renew-modal-wrapper', content: react.createElement("div", { className: 'renew-content-wrapper' },
+            react.createElement(es/* Space */.T, { direction: 'vertical', block: true },
+                react.createElement("span", null,
+                    react.createElement("label", null, "\u60A8\u7684\u7EA7\u522B\u4E3A\uFF1A"),
+                    react.createElement("label", { className: 'item-value' }, levelMap[state.renewModalData.level])),
+                react.createElement("span", null, "\u8BF7\u626B\u63CF\u5BA2\u670D\u5FAE\u4FE1\u8FDB\u884C\u7EED\u671F"),
+                react.createElement("img", { src: 'https://cdn.tuanzhzh.com/doubi-image/Wechat-k.jpeg' }))) });
+};
+/* harmony default export */ var Home_RenewModal = (RenewModal);
+
+;// CONCATENATED MODULE: ./src/pages/ExtensionSystem/Home/UpgradeModal/index.tsx
+
+
+
+
+var UpgradeModal = function () {
+    var _a = (0,react.useContext)(store_Context), state = _a.state, dispatch = _a.dispatch;
+    var close = function () {
+        dispatch(setUpgradeModalData({
+            visible: false
+        }));
+    };
+    return react.createElement(es/* Modal */.u_, { title: '\u5347\u7EA7', visible: state.upgradeModalData.visible, showCloseButton: true, onClose: close, bodyClassName: 'renew-modal-wrapper', content: react.createElement("div", { className: 'renew-content-wrapper' },
+            react.createElement(es/* Space */.T, { direction: 'vertical', block: true },
+                react.createElement("span", null,
+                    react.createElement("label", null, "\u60A8\u5C06\u5347\u7EA7\u81F3\uFF1A"),
+                    react.createElement("label", { className: 'item-value' }, "\u4E00\u7EA7\u63A8\u5E7F")),
+                react.createElement("span", null, "\u8BF7\u626B\u63CF\u5BA2\u670D\u5FAE\u4FE1\u8FDB\u884C\u5347\u7EA7"),
+                react.createElement("img", { src: 'https://cdn.tuanzhzh.com/doubi-image/Wechat-k.jpeg' }))) });
+};
+/* harmony default export */ var Home_UpgradeModal = (UpgradeModal);
+
+;// CONCATENATED MODULE: ./src/pages/ExtensionSystem/Home/ModifyPay/index.tsx
+
+
+
+
+
+var ModifyPay = function () {
+    var _a = (0,react.useState)(''), value = _a[0], setValue = _a[1];
+    var _b = (0,react.useContext)(store_Context), state = _b.state, dispatch = _b.dispatch;
+    var userInfo = JSON.parse(window.localStorage.getItem('system-user') || '{}');
+    var close = function () {
+        dispatch(setModifyPayData({
+            visible: false
+        }));
+    };
+    var modifySureHandle = function () {
+        apis.modifyAlipay({
+            userId: userInfo.userId,
+            newAlipayId: value
+        }).then(function (res) {
+            if (res.data.modifySuccess) {
+                es/* Toast.show */.FN.show({
+                    icon: 'success',
+                    content: '复制成功'
+                });
+                dispatch(setModifyPayData({
+                    visible: false
+                }));
+                return;
+            }
+            es/* Toast.show */.FN.show({
+                icon: 'fail',
+                content: res.data.modifyFailedMsg
+            });
+        }).catch(function () {
+            es/* Toast.show */.FN.show({
+                icon: 'fail',
+                content: '修改报错'
+            });
+        });
+    };
+    return react.createElement(es/* Modal */.u_, { title: '\u652F\u4ED8\u5B9D\u8D26\u53F7\u4FEE\u6539', visible: state.modifyPayData.visible, showCloseButton: true, onClose: close, bodyClassName: 'modify-pay-modal-wrapper', content: react.createElement("div", { className: 'modify-pay-content-wrapper' },
+            react.createElement(es/* Space */.T, { direction: 'vertical', block: true },
+                react.createElement("span", null,
+                    react.createElement("label", null, "\u60A8\u5F53\u524D\u7684\u7ED3\u7B97\u652F\u4ED8\u5B9D\u4E3A\uFF1A"),
+                    react.createElement("label", { className: 'item-value' }, state.modifyPayData.aliPayId)),
+                react.createElement("span", null, "\u8BF7\u8F93\u5165\u65B0\u7684\u7ED3\u7B97\u652F\u4ED8\u5B9D\uFF1A"),
+                react.createElement(es/* Input */.II, { placeholder: '\u8BF7\u8F93\u5165\u5185\u5BB9', value: value, className: 'pay-input', onChange: function (val) {
+                        setValue(val);
+                    } }),
+                react.createElement("div", { onClick: modifySureHandle, className: 'modify-btn' }, "\u786E\u5B9A"))) });
+};
+/* harmony default export */ var Home_ModifyPay = (ModifyPay);
+
+;// CONCATENATED MODULE: ./src/pages/ExtensionSystem/Home/index.tsx
+var ExtensionSystem_Home_this = undefined;
+
+
+
+
+
+
+
+
+
+
+var Home_levelMap = {
+    1: '一级推广',
+    2: '二级推广'
+};
+var ExtensionHome = function () {
+    var _a = (0,react.useState)({}), extensionData = _a[0], setExtensionData = _a[1];
+    var dispatch = (0,react.useContext)(store_Context).dispatch;
+    var navigate = (0,react_router_dist/* useNavigate */.s0)();
+    // const userInfo = JSON.parse(window.localStorage.getItem('system-user') || '{}')
+    var copyToClipboard = function (textToCopy) {
+        // navigator clipboard 需要https等安全上下文
+        if (navigator.clipboard && window.isSecureContext) {
+            // navigator clipboard 向剪贴板写文本
+            es/* Toast.show */.FN.show({
+                icon: 'success',
+                content: '复制成功'
+            });
+            return navigator.clipboard.writeText(textToCopy);
+        }
+        else {
+            // 创建text area
+            var textArea_1 = document.createElement('textarea');
+            textArea_1.value = textToCopy;
+            // 使text area不在viewport，同时设置不可见
+            textArea_1.style.position = 'absolute';
+            textArea_1.style.opacity = '0';
+            textArea_1.style.left = '999999px';
+            textArea_1.style.top = '-999999px';
+            document.body.appendChild(textArea_1);
+            textArea_1.focus();
+            textArea_1.select();
+            return new Promise(function (resolve, reject) {
+                // 执行复制命令并移除文本框
+                // eslint-disable-next-line prefer-promise-reject-errors
+                document.execCommand('copy') ? resolve('') : reject();
+                textArea_1.remove();
+                es/* Toast.show */.FN.show({
+                    icon: 'success',
+                    content: '复制成功'
+                });
+            });
+        }
+    };
+    var renewHandle = function (level) {
+        dispatch(setRenewModalData({
+            visible: true,
+            level: level
+        }));
+    };
+    var upgradeHandle = function () {
+        dispatch(setUpgradeModalData({
+            visible: true
+        }));
+    };
+    var modifyPayHandle = function (aliPayId) {
+        dispatch(setModifyPayData({
+            visible: true,
+            aliPayId: aliPayId
+        }));
+    };
+    var getProxyUser = function () {
+        apis.getProxyUser({
+            userId: '1588476545ab4a3b9f18833dba5dbb1f' // userInfo.userId
+        }).then(function (res) {
+            Object.keys(res.data || {}).forEach(function (item) {
+                if (['curDateProfit', 'nextMonthProfit', 'historyAllProfit'].includes(item)) {
+                    res.data[item] = Number(res.data[item] / 100).toFixed(2);
+                }
+            });
+            setExtensionData(res.data || {});
+        });
+    };
+    var recruitHandle = function () {
+        navigate({
+            pathname: '/extension-recruit'
+        });
+    };
+    (0,react.useEffect)(function () {
+        getProxyUser();
+    }, []);
+    return react.createElement("div", { className: 'extension-home-wrapper' },
+        react.createElement("div", { className: 'extension-home-title' }, "\u63A8\u5E7F\u540E\u53F0"),
+        react.createElement("div", { className: 'extension-home-date' },
+            react.createElement("span", null,
+                moment_default()(extensionData === null || extensionData === void 0 ? void 0 : extensionData.expDate).format('YYYY/MM/DD'),
+                " \u5230\u671F"),
+            react.createElement("span", { className: 'extension-home-date-btn', onClick: renewHandle.bind(ExtensionSystem_Home_this, extensionData.proxyUserType) }, "\u7EED\u671F")),
+        react.createElement(es/* Divider */.iz, null),
+        react.createElement("div", { className: 'extension-home-profit-wrapper' },
+            react.createElement(es/* Space */.T, { direction: 'vertical' },
+                react.createElement("div", { className: 'extension-home-profit-item' },
+                    react.createElement("span", null, "\u5F53\u65E5\u6536\u76CA"),
+                    react.createElement("span", null, extensionData.curDateProfit)),
+                react.createElement("div", { className: 'extension-home-profit-item' },
+                    react.createElement("span", null, "\u4E0B\u67085\u65E5\u5C06\u7ED3\u7B97"),
+                    react.createElement("span", null, extensionData.nextMonthProfit)),
+                react.createElement("div", { className: 'extension-home-profit-item' },
+                    react.createElement("span", null, "\u5386\u53F2\u603B\u6536\u76CA"),
+                    react.createElement("span", null, extensionData.historyAllProfit)))),
+        react.createElement(es/* Divider */.iz, null),
+        react.createElement("div", { className: 'extension-home-user-wrapper' },
+            react.createElement(es/* Space */.T, { direction: 'vertical' },
+                react.createElement("div", { className: 'extension-home-user-item' },
+                    react.createElement("span", null, "\u7528\u6237\u540D\u79F0"),
+                    react.createElement("span", null, extensionData.userPhoneNum),
+                    react.createElement("span", null, "\u9000\u51FA")),
+                react.createElement("div", { className: 'extension-home-user-item' },
+                    react.createElement("span", null, "\u652F\u4ED8\u5B9D"),
+                    react.createElement("span", null, extensionData.aliPayId),
+                    react.createElement("span", { onClick: modifyPayHandle.bind(ExtensionSystem_Home_this, extensionData.aliPayId) }, "\u4FEE\u6539")),
+                react.createElement("div", { className: 'extension-home-user-item' },
+                    react.createElement("span", null, "\u7528\u6237\u7EA7\u522B"),
+                    react.createElement("span", null, Home_levelMap[extensionData.proxyUserType]),
+                    extensionData.proxyUserType === 2 ? react.createElement("span", { onClick: upgradeHandle }, "\u5347\u7EA7") : ''),
+                react.createElement("div", { className: 'extension-home-user-item' },
+                    react.createElement("span", null, "\u63D0\u6210\u6BD4\u4F8B"),
+                    react.createElement("span", null,
+                        extensionData.commissionRatio,
+                        "%")))),
+        react.createElement(es/* Divider */.iz, null),
+        react.createElement("div", { className: 'extension-home-extension-user-wrapper' },
+            react.createElement(es/* Space */.T, { direction: 'vertical' },
+                react.createElement("span", { className: 'extension-home-extension-user-title' }, "\u63A8\u5E7F\u5458\u7BA1\u7406"),
+                react.createElement("div", { className: 'extension-home-extension-user-info' },
+                    react.createElement("span", null, "\u5DF2\u62DB\u52DF\u7684\u63A8\u5E7F\u5458"),
+                    react.createElement("span", null,
+                        extensionData.subProxyUserCount,
+                        "\u4EBA"),
+                    react.createElement("span", { onClick: recruitHandle }, "\u62DB\u52DF\u65B0\u63A8\u5E7F\u5458")))),
+        react.createElement("div", { className: 'extension-home-extension-new-user-wrapper' },
+            react.createElement("div", { className: 'extension-home-new-user-info' },
+                react.createElement("span", { className: 'extension-home-extension-user-title' }, "\u63A8\u5E7F\u65B0\u7528\u6237"),
+                react.createElement("span", null,
+                    "\u5DF2\u63A8\u5E7F\u7684\u7528\u6237\uFF1A",
+                    extensionData.subUserCount,
+                    "\u4EBA")),
+            react.createElement("div", { className: 'extension-url-link' },
+                react.createElement(es/* Ellipsis */.mH, { direction: 'end', content: extensionData.subUserUrl })),
+            react.createElement("span", { className: 'extension-url-copy', onClick: copyToClipboard.bind(ExtensionSystem_Home_this, extensionData.subUserUrl) }, "\u590D\u5236")),
+        react.createElement(Home_RenewModal, null),
+        react.createElement(Home_UpgradeModal, null),
+        react.createElement(Home_ModifyPay, null));
+};
+/* harmony default export */ var ExtensionSystem_Home = (ExtensionHome);
+
+;// CONCATENATED MODULE: ./src/pages/ExtensionSystem/Recruit/index.tsx
+var Recruit_assign = (undefined && undefined.__assign) || function () {
+    Recruit_assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return Recruit_assign.apply(this, arguments);
+};
+var Recruit_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var Recruit_generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
+
+
+var Recruit_ExtensionLogin = function () {
+    var _a = (0,react.useState)(false), aliPayCode = _a[0], setAliPayCode = _a[1];
+    var _b = (0,react.useState)(false), visible = _b[0], setVisible = _b[1];
+    var _c = (0,react.useState)(['2']), value = _c[0], setValue = _c[1];
+    var form = es/* Form.useForm */.l0.useForm()[0];
+    var navigate = (0,react_router_dist/* useNavigate */.s0)();
+    var userInfo = JSON.parse(window.localStorage.getItem('system-user') || '{}');
+    var loginHandle = function () { return Recruit_awaiter(void 0, void 0, void 0, function () {
+        var obj;
+        return Recruit_generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, form.validateFields()];
+                case 1:
+                    obj = _a.sent();
+                    apis.proxyUserRegister(Recruit_assign(Recruit_assign({}, obj), { subProxyUserType: Number(value[0]) })).then(function (res) {
+                        if (res.data.registerSuccess) {
+                            es/* Toast.show */.FN.show({
+                                icon: 'success',
+                                content: '成功'
+                            });
+                            setAliPayCode(true);
+                            return;
+                        }
+                        es/* Toast.show */.FN.show({
+                            icon: 'fail',
+                            content: res.data.registerFailedMsg
+                        });
+                    }).catch(function (err) {
+                        es/* Toast.show */.FN.show({
+                            icon: 'fail',
+                            content: err
+                        });
+                    });
+                    return [2 /*return*/];
+            }
+        });
+    }); };
+    var resetHandle = function () {
+        form.resetFields();
+    };
+    var loginRecruitHandle = function () {
+        navigate({
+            pathname: '/extension-login'
+        });
+    };
+    var closeHandle = function () {
+        setAliPayCode(false);
+    };
+    return react.createElement("div", { className: 'login-form-wrapper' },
+        react.createElement("div", { className: 'extension-login-title' }, "\u62DB\u52DF\u65B0\u63A8\u5E7F\u5458"),
+        react.createElement(es/* Form */.l0, { layout: 'horizontal', form: form },
+            react.createElement("div", { className: 'login-item' },
+                react.createElement("span", { className: 'login-item-title' }, "\u6307\u5BFC\u4EBA\u624B\u673A\u53F7"),
+                react.createElement("div", { className: 'login-item-component' },
+                    react.createElement(es/* Form.Item */.l0.Item, { noStyle: true, name: 'parentProxyUserPhoneNum', initialValue: userInfo.phoneNum },
+                        react.createElement(es/* Input */.II, { placeholder: '\u8BF7\u8F93\u516511\u4F4D\u624B\u673A\u53F7', disabled: true, clearable: true, className: 'input-style' })))),
+            react.createElement("div", { className: 'login-item' },
+                react.createElement("span", { className: 'login-item-title' }, "\u65B0\u63A8\u5E7F\u5458\u624B\u673A\u53F7"),
+                react.createElement("div", { className: 'login-item-component' },
+                    react.createElement(es/* Form.Item */.l0.Item, { noStyle: true, name: 'subProxyUserPhoneNum' },
+                        react.createElement(es/* Input */.II, { placeholder: '\u8BF7\u8F93\u516511\u4F4D\u624B\u673A\u53F7', clearable: true, className: 'input-style' })))),
+            react.createElement("div", { className: 'login-item', onClick: function () { return setVisible(true); } },
+                react.createElement("span", { className: 'login-item-title' }, "\u65B0\u63A8\u5E7F\u5458\u7EA7\u522B"),
+                react.createElement("div", { className: 'login-item-component login-item-level' },
+                    react.createElement(es/* Form.Item */.l0.Item, { noStyle: true, name: 'subProxyUserType' },
+                        react.createElement(es/* Picker */.cW, { columns: [
+                                [{
+                                        label: '一级推广员',
+                                        value: '1'
+                                    }, {
+                                        label: '二级推广员',
+                                        value: '2'
+                                    }]
+                            ], visible: visible, onClose: function () {
+                                setVisible(false);
+                            }, value: value || ['请选择'], onConfirm: function (v) {
+                                setValue(v);
+                            }, popupClassName: 'level-popup-wrapper' }, function (items) {
+                            return (react.createElement(es/* Space */.T, { align: 'center' }, items.every(function (item) { return item === null; })
+                                ? '未选择'
+                                : items.map(function (item) { var _a; return (_a = item === null || item === void 0 ? void 0 : item.label) !== null && _a !== void 0 ? _a : '未选择'; }).join(' - ')));
+                        })))),
+            react.createElement("div", { className: 'login-item' },
+                react.createElement("span", { className: 'login-item-title' }, "\u65B0\u63A8\u5E7F\u5458\u652F\u4ED8\u5B9D"),
+                react.createElement("div", { className: 'login-item-component' },
+                    react.createElement(es/* Form.Item */.l0.Item, { noStyle: true, name: 'subProxyUserAlipayId' },
+                        react.createElement(es/* Input */.II, { placeholder: '\u8BF7\u8F93\u5165\u652F\u4ED8\u5B9D\u8D26\u53F7', clearable: true, className: 'input-style' })))),
+            react.createElement("div", { className: 'login-system-text', onClick: loginRecruitHandle }, "\u767B\u5F55\u63A8\u5E7F\u7CFB\u7EDF"),
+            react.createElement("div", { className: 'login-item login-item-btn-wrapper' },
+                react.createElement("span", { className: 'btn-style', onClick: resetHandle }, "\u91CD\u7F6E"),
+                react.createElement("span", { className: 'btn-style', onClick: loginHandle }, "\u786E\u5B9A"))),
+        react.createElement(es/* Modal */.u_, { title: '', visible: aliPayCode, showCloseButton: true, onClose: closeHandle, bodyClassName: 'recruit-modal-wrapper', content: react.createElement("div", { className: 'recruit-content-wrapper' },
+                react.createElement(es/* Space */.T, { direction: 'vertical', block: true },
+                    react.createElement("span", { className: 'alipay-title' }, "\u8BF7\u7528\u652F\u4ED8\u5B9D\u626B\u7801\u652F\u4ED8"),
+                    react.createElement("img", { src: 'https://cdn.tuanzhzh.com/doubi-image/alipay.jpeg' }))) }));
+};
+/* harmony default export */ var Recruit = (Recruit_ExtensionLogin);
+
 ;// CONCATENATED MODULE: ./src/route/index.tsx
+
+
+
 
 
 
@@ -2478,7 +3035,10 @@ var ComponentAppRoute = function () {
         { path: '/login', element: react.createElement(pages_Login, null) },
         { path: '/forget', element: react.createElement(pages_ForgetPassword, null) },
         { path: '/extract', element: react.createElement(pages_DoubiExtract, null) },
-        { path: '/history', element: react.createElement(pages_History, null) }
+        { path: '/history', element: react.createElement(pages_History, null) },
+        { path: '/extension-login', element: react.createElement(ExtensionSystem_Login, null) },
+        { path: '/extension-home', element: react.createElement(ExtensionSystem_Home, null) },
+        { path: '/extension-recruit', element: react.createElement(Recruit, null) }
     ]);
     return routes;
 };
@@ -2769,7 +3329,7 @@ react_dom.render(react.createElement(dist/* BrowserRouter */.VK, null,
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [736], function() { return __webpack_require__(3490); })
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [736], function() { return __webpack_require__(2870); })
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

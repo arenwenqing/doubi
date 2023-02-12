@@ -17,7 +17,7 @@ const ExtensionHome = () => {
   const [extensionData, setExtensionData] = useState<any>({})
   const { dispatch } = useContext(Context)
   const navigate = useNavigate()
-  // const userInfo = JSON.parse(window.localStorage.getItem('system-user') || '{}')
+  const userInfo = JSON.parse(window.localStorage.getItem('system-user') || '{}')
   const copyToClipboard = (textToCopy: any) => {
     // navigator clipboard 需要https等安全上下文
     if (navigator.clipboard && window.isSecureContext) {
@@ -74,7 +74,7 @@ const ExtensionHome = () => {
 
   const getProxyUser = () => {
     Apis.getProxyUser({
-      userId: '1588476545ab4a3b9f18833dba5dbb1f' // userInfo.userId
+      userId: userInfo.userId
     }).then(res => {
       Object.keys(res.data || {}).forEach(item => {
         if (['curDateProfit', 'nextMonthProfit', 'historyAllProfit'].includes(item)) {
@@ -140,7 +140,7 @@ const ExtensionHome = () => {
         </div>
         <div className='extension-home-user-item'>
           <span>提成比例</span>
-          <span>{extensionData.commissionRatio}%</span>
+          <span>{extensionData.commissionRatio || 0}%</span>
         </div>
       </Space>
     </div>
