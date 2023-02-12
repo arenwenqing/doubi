@@ -98,6 +98,26 @@ class Apis {
    * 【盒子】盒子-记录
    */
   getLotteryHistory = post('/api/mystery/box/lottery/history')
+
+  /**
+   * 【用户代理】推广员个人信息
+   */
+  getProxyUser = get('/api/mystery/proxyUser/detail')
+
+  /**
+   * 【用户代理】续期
+   */
+  userRenewal = post('/api/mystery/proxyUser/renewal')
+
+  /**
+   * 【用户代理】修改支付宝
+   */
+  modifyAlipay = post('/api/mystery/proxyUser/alipay/modify')
+
+  /**
+   * 【用户代理】注册新的推广员
+   */
+  proxyUserRegister = post('/api/mystery/proxyUser/register')
 }
 
 export const ServiceApis = Apis;

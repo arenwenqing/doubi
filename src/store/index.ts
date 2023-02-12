@@ -5,7 +5,18 @@ export const Context = React.createContext(null)
 
 export const initialState = {
   loginCurrentKey: 'login',
-  userId: ''
+  userId: '',
+  renewModalData: {
+    visible: false,
+    level: 0
+  },
+  upgradeModalData: {
+    visible: false
+  },
+  modifyPayData: {
+    visible: false,
+    aliPayId: ''
+  }
 }
 
 export const reduxSlice = createSlice({
@@ -17,12 +28,21 @@ export const reduxSlice = createSlice({
     },
     setUserId: (state, { payload }) => {
       state.userId = payload
+    },
+    setRenewModalData: (state, { payload }) => {
+      state.renewModalData = payload
+    },
+    setUpgradeModalData: (state, { payload }) => {
+      state.upgradeModalData = payload
+    },
+    setModifyPayData: (state, { payload }) => {
+      state.modifyPayData = payload
     }
   }
 })
 
 // Action creators are generated for each case reducer function
-export const { setLoginCurrentKey, setUserId } = reduxSlice.actions
+export const { setLoginCurrentKey, setUserId, setRenewModalData, setUpgradeModalData, setModifyPayData } = reduxSlice.actions
 
 // redux-thunk actions
 // 拉取是否开通接口

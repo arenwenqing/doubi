@@ -5,6 +5,9 @@ import Login from '@pages/Login'
 import ForgetPassword from '@pages/ForgetPassword'
 import DoubiExtract from '@pages/DoubiExtract'
 import History from '@pages/History'
+import ExtensionLogin from '@pages/ExtensionSystem/Login'
+import ExtensionHome from '@pages/ExtensionSystem/Home'
+import ExtensionRecruit from '@pages/ExtensionSystem/Recruit'
 
 const ComponentAppRoute = () => {
   const routes = useRoutes([
@@ -13,7 +16,10 @@ const ComponentAppRoute = () => {
     { path: '/login', element: <Login /> },
     { path: '/forget', element: <ForgetPassword /> },
     { path: '/extract', element: <DoubiExtract /> },
-    { path: '/history', element: <History /> }
+    { path: '/history', element: <History /> },
+    { path: '/extension-login', element: <ExtensionLogin /> },
+    { path: '/extension-home', element: <ExtensionHome /> },
+    { path: '/extension-recruit', element: <ExtensionRecruit /> }
   ])
   return routes
 }

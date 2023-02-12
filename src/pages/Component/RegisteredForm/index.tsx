@@ -3,6 +3,7 @@ import { Form, Input, Button, Toast as ShowToast } from 'antd-mobile'
 import Toast from '@pages/Component/Toast'
 import Apis from 'src/apis'
 import { Context, setLoginCurrentKey } from 'src/store'
+import { getUrlParam } from 'src/utils'
 import './index.less'
 let count = 60
 const RegisteredForm:React.FC = () => {
@@ -13,7 +14,10 @@ const RegisteredForm:React.FC = () => {
   const [form] = Form.useForm()
   const registerHandle = async () => {
     const obj = await form.validateFields()
-    Apis.registerFromPhone(obj).then(res => {
+    Apis.registerFromPhone({
+      ...obj,
+      proxyUserId: getUrlParam('proxyUserId')
+    }).then(res => {
       // 注册成功，跳转到登录
       if (res.data.registerResult) {
         ShowToast.show({
