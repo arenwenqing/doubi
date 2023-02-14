@@ -249,7 +249,7 @@ const DoubiExtract:React.FC = () => {
                     </span>
                     <span className='list-item-zhi'>至</span>
                     {
-                      item.status.code === 3 ? <span className='list-item-error'>抖音账号异常</span> : ''
+                      item.status.code === 3 ? <span className='list-item-error'>账号异常</span> : ''
                     }
                   </div>
                   <div className='list-item-bottom'>

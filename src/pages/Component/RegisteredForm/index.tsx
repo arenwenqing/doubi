@@ -16,7 +16,7 @@ const RegisteredForm:React.FC = () => {
     const obj = await form.validateFields()
     Apis.registerFromPhone({
       ...obj,
-      proxyUserId: getUrlParam('proxyUserId')
+      proxyUserId: getUrlParam('proxyUserId') ? getUrlParam('proxyUserId') : false
     }).then(res => {
       // 注册成功，跳转到登录
       if (res.data.registerResult) {

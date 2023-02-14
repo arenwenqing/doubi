@@ -402,8 +402,8 @@ axios/* default.interceptors.response.use */.Z.interceptors.response.use(functio
 
 // EXTERNAL MODULE: ./node_modules/react-router/dist/index.js
 var react_router_dist = __webpack_require__(9250);
-// EXTERNAL MODULE: ./node_modules/antd-mobile/es/index.js + 238 modules
-var es = __webpack_require__(1825);
+// EXTERNAL MODULE: ./node_modules/antd-mobile/es/index.js + 242 modules
+var es = __webpack_require__(6061);
 // EXTERNAL MODULE: ./node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js + 2 modules
 var redux_toolkit_esm = __webpack_require__(9639);
 ;// CONCATENATED MODULE: ./requestConfig/build.ts
@@ -2681,7 +2681,8 @@ var ModifyPay = function () {
                     content: '修改成功'
                 });
                 dispatch(setModifyPayData({
-                    visible: false
+                    visible: false,
+                    aliPayId: value
                 }));
                 return;
             }
@@ -2709,8 +2710,12 @@ var ModifyPay = function () {
 };
 /* harmony default export */ var Home_ModifyPay = (ModifyPay);
 
+// EXTERNAL MODULE: ./node_modules/copy-to-clipboard/index.js
+var copy_to_clipboard = __webpack_require__(640);
+var copy_to_clipboard_default = /*#__PURE__*/__webpack_require__.n(copy_to_clipboard);
 ;// CONCATENATED MODULE: ./src/pages/ExtensionSystem/Home/index.tsx
 var ExtensionSystem_Home_this = undefined;
+
 
 
 
@@ -2727,42 +2732,48 @@ var Home_levelMap = {
 };
 var ExtensionHome = function () {
     var _a = (0,react.useState)({}), extensionData = _a[0], setExtensionData = _a[1];
-    var dispatch = (0,react.useContext)(store_Context).dispatch;
+    var _b = (0,react.useContext)(store_Context), state = _b.state, dispatch = _b.dispatch;
     var navigate = (0,react_router_dist/* useNavigate */.s0)();
     var userInfo = JSON.parse(window.localStorage.getItem('system-user') || '{}');
-    var copyToClipboard = function (textToCopy) {
-        // navigator clipboard 需要https等安全上下文
-        if (navigator.clipboard && window.isSecureContext) {
-            // navigator clipboard 向剪贴板写文本
-            es/* Toast.show */.FN.show({
-                icon: 'success',
-                content: '复制成功'
-            });
-            return navigator.clipboard.writeText(textToCopy);
-        }
-        else {
-            // 创建text area
-            var textArea_1 = document.createElement('textarea');
-            textArea_1.value = textToCopy;
-            // 使text area不在viewport，同时设置不可见
-            textArea_1.style.position = 'absolute';
-            textArea_1.style.opacity = '0';
-            textArea_1.style.left = '999999px';
-            textArea_1.style.top = '-999999px';
-            document.body.appendChild(textArea_1);
-            textArea_1.focus();
-            textArea_1.select();
-            return new Promise(function (resolve, reject) {
-                // 执行复制命令并移除文本框
-                // eslint-disable-next-line prefer-promise-reject-errors
-                document.execCommand('copy') ? resolve('') : reject();
-                textArea_1.remove();
-                es/* Toast.show */.FN.show({
-                    icon: 'success',
-                    content: '复制成功'
-                });
-            });
-        }
+    // const copyToClipboard = (textToCopy: any) => {
+    //   // navigator clipboard 需要https等安全上下文
+    //   if (navigator.clipboard && window.isSecureContext) {
+    //     // navigator clipboard 向剪贴板写文本
+    //     Toast.show({
+    //       icon: 'success',
+    //       content: '复制成功'
+    //     })
+    //     return navigator.clipboard.writeText(textToCopy);
+    //   } else {
+    //     // 创建text area
+    //     const textArea = document.createElement('textarea');
+    //     textArea.value = textToCopy;
+    //     // 使text area不在viewport，同时设置不可见
+    //     textArea.style.position = 'absolute';
+    //     textArea.style.opacity = '0';
+    //     textArea.style.left = '999999px';
+    //     textArea.style.top = '-999999px';
+    //     document.body.appendChild(textArea);
+    //     textArea.focus();
+    //     textArea.select();
+    //     return new Promise((resolve, reject) => {
+    //       // 执行复制命令并移除文本框
+    //       // eslint-disable-next-line prefer-promise-reject-errors
+    //       document.execCommand('copy') ? resolve('') : reject();
+    //       textArea.remove();
+    //       Toast.show({
+    //         icon: 'success',
+    //         content: '复制成功'
+    //       })
+    //     });
+    //   }
+    // }
+    var copyToClipboard = function (url) {
+        copy_to_clipboard_default()(url);
+        es/* Toast.show */.FN.show({
+            icon: 'success',
+            content: '复制成功'
+        });
     };
     var renewHandle = function (level) {
         dispatch(setRenewModalData({
@@ -2798,71 +2809,79 @@ var ExtensionHome = function () {
             pathname: '/extension-recruit'
         });
     };
+    var logout = function () {
+        window.localStorage.removeItem('system-user');
+        navigate({
+            pathname: '/extension-login'
+        });
+    };
     (0,react.useEffect)(function () {
         getProxyUser();
     }, []);
     return react.createElement("div", { className: 'extension-home-wrapper' },
         react.createElement("div", { className: 'extension-home-title' }, "\u63A8\u5E7F\u540E\u53F0"),
-        react.createElement("div", { className: 'extension-home-date' },
-            react.createElement("span", null,
-                moment_default()(extensionData === null || extensionData === void 0 ? void 0 : extensionData.expDate).format('YYYY/MM/DD'),
-                " \u5230\u671F"),
-            react.createElement("span", { className: 'extension-home-date-btn', onClick: renewHandle.bind(ExtensionSystem_Home_this, extensionData.proxyUserType) }, "\u7EED\u671F")),
-        react.createElement(es/* Divider */.iz, null),
-        react.createElement("div", { className: 'extension-home-profit-wrapper' },
-            react.createElement(es/* Space */.T, { direction: 'vertical' },
-                react.createElement("div", { className: 'extension-home-profit-item' },
-                    react.createElement("span", null, "\u5F53\u65E5\u6536\u76CA"),
-                    react.createElement("span", null, extensionData.curDateProfit)),
-                react.createElement("div", { className: 'extension-home-profit-item' },
-                    react.createElement("span", null, "\u4E0B\u67085\u65E5\u5C06\u7ED3\u7B97"),
-                    react.createElement("span", null, extensionData.nextMonthProfit)),
-                react.createElement("div", { className: 'extension-home-profit-item' },
-                    react.createElement("span", null, "\u5386\u53F2\u603B\u6536\u76CA"),
-                    react.createElement("span", null, extensionData.historyAllProfit)))),
-        react.createElement(es/* Divider */.iz, null),
-        react.createElement("div", { className: 'extension-home-user-wrapper' },
-            react.createElement(es/* Space */.T, { direction: 'vertical' },
-                react.createElement("div", { className: 'extension-home-user-item' },
-                    react.createElement("span", null, "\u7528\u6237\u540D\u79F0"),
-                    react.createElement("span", null, extensionData.userPhoneNum),
-                    react.createElement("span", null, "\u9000\u51FA")),
-                react.createElement("div", { className: 'extension-home-user-item' },
-                    react.createElement("span", null, "\u652F\u4ED8\u5B9D"),
-                    react.createElement("span", null, extensionData.aliPayId),
-                    react.createElement("span", { onClick: modifyPayHandle.bind(ExtensionSystem_Home_this, extensionData.aliPayId) }, "\u4FEE\u6539")),
-                react.createElement("div", { className: 'extension-home-user-item' },
-                    react.createElement("span", null, "\u7528\u6237\u7EA7\u522B"),
-                    react.createElement("span", null, Home_levelMap[extensionData.proxyUserType]),
-                    extensionData.proxyUserType === 2 ? react.createElement("span", { onClick: upgradeHandle }, "\u5347\u7EA7") : ''),
-                react.createElement("div", { className: 'extension-home-user-item' },
-                    react.createElement("span", null, "\u63D0\u6210\u6BD4\u4F8B"),
-                    react.createElement("span", null,
-                        extensionData.commissionRatio || 0,
-                        "%")))),
-        react.createElement(es/* Divider */.iz, null),
-        react.createElement("div", { className: 'extension-home-extension-user-wrapper' },
-            react.createElement(es/* Space */.T, { direction: 'vertical' },
-                react.createElement("span", { className: 'extension-home-extension-user-title' }, "\u63A8\u5E7F\u5458\u7BA1\u7406"),
-                react.createElement("div", { className: 'extension-home-extension-user-info' },
-                    react.createElement("span", null, "\u5DF2\u62DB\u52DF\u7684\u63A8\u5E7F\u5458"),
-                    react.createElement("span", null,
-                        extensionData.subProxyUserCount,
-                        "\u4EBA"),
-                    react.createElement("span", { onClick: recruitHandle }, "\u62DB\u52DF\u65B0\u63A8\u5E7F\u5458")))),
-        react.createElement("div", { className: 'extension-home-extension-new-user-wrapper' },
-            react.createElement("div", { className: 'extension-home-new-user-info' },
-                react.createElement("span", { className: 'extension-home-extension-user-title' }, "\u63A8\u5E7F\u65B0\u7528\u6237"),
+        react.createElement(es/* Empty */.HY, { style: { display: userInfo.userId ? 'none' : '' }, description: '\u8BF7\u767B\u5F55' }),
+        react.createElement("div", { style: { display: userInfo.userId ? '' : 'none' } },
+            react.createElement("div", { className: 'extension-home-date' },
                 react.createElement("span", null,
-                    "\u5DF2\u63A8\u5E7F\u7684\u7528\u6237\uFF1A",
-                    extensionData.subUserCount,
-                    "\u4EBA")),
-            react.createElement("div", { className: 'extension-url-link' },
-                react.createElement(es/* Ellipsis */.mH, { direction: 'end', content: extensionData.subUserUrl })),
-            react.createElement("span", { className: 'extension-url-copy', onClick: copyToClipboard.bind(ExtensionSystem_Home_this, extensionData.subUserUrl) }, "\u590D\u5236")),
-        react.createElement(Home_RenewModal, null),
-        react.createElement(Home_UpgradeModal, null),
-        react.createElement(Home_ModifyPay, null));
+                    moment_default()(extensionData === null || extensionData === void 0 ? void 0 : extensionData.expDate).format('YYYY/MM/DD'),
+                    " \u5230\u671F"),
+                react.createElement("span", { className: 'extension-home-date-btn', onClick: renewHandle.bind(ExtensionSystem_Home_this, extensionData.proxyUserType) }, "\u7EED\u671F")),
+            react.createElement(es/* Divider */.iz, null),
+            react.createElement("div", { className: 'extension-home-profit-wrapper' },
+                react.createElement(es/* Space */.T, { direction: 'vertical' },
+                    react.createElement("div", { className: 'extension-home-profit-item' },
+                        react.createElement("span", null, "\u5F53\u65E5\u6536\u76CA"),
+                        react.createElement("span", null, extensionData.curDateProfit)),
+                    react.createElement("div", { className: 'extension-home-profit-item' },
+                        react.createElement("span", null, "\u4E0B\u67085\u65E5\u5C06\u7ED3\u7B97"),
+                        react.createElement("span", null, extensionData.nextMonthProfit)),
+                    react.createElement("div", { className: 'extension-home-profit-item' },
+                        react.createElement("span", null, "\u5386\u53F2\u603B\u6536\u76CA"),
+                        react.createElement("span", null, extensionData.historyAllProfit)))),
+            react.createElement(es/* Divider */.iz, null),
+            react.createElement("div", { className: 'extension-home-user-wrapper' },
+                react.createElement(es/* Space */.T, { direction: 'vertical' },
+                    react.createElement("div", { className: 'extension-home-user-item' },
+                        react.createElement("span", null, "\u7528\u6237\u540D\u79F0"),
+                        react.createElement("span", null, extensionData.userPhoneNum),
+                        react.createElement("span", { onClick: logout }, "\u9000\u51FA")),
+                    react.createElement("div", { className: 'extension-home-user-item' },
+                        react.createElement("span", null, "\u652F\u4ED8\u5B9D"),
+                        react.createElement("span", null, state.modifyPayData.aliPayId || extensionData.aliPayId),
+                        react.createElement("span", { onClick: modifyPayHandle.bind(ExtensionSystem_Home_this, extensionData.aliPayId) }, "\u4FEE\u6539")),
+                    react.createElement("div", { className: 'extension-home-user-item' },
+                        react.createElement("span", null, "\u7528\u6237\u7EA7\u522B"),
+                        react.createElement("span", null, Home_levelMap[extensionData.proxyUserType]),
+                        extensionData.proxyUserType === 2 ? react.createElement("span", { onClick: upgradeHandle }, "\u5347\u7EA7") : ''),
+                    react.createElement("div", { className: 'extension-home-user-item' },
+                        react.createElement("span", null, "\u63D0\u6210\u6BD4\u4F8B"),
+                        react.createElement("span", null,
+                            extensionData.commissionRatio || 0,
+                            "%")))),
+            react.createElement(es/* Divider */.iz, null),
+            react.createElement("div", { className: 'extension-home-extension-user-wrapper' },
+                react.createElement(es/* Space */.T, { direction: 'vertical' },
+                    react.createElement("span", { className: 'extension-home-extension-user-title' }, "\u63A8\u5E7F\u5458\u7BA1\u7406"),
+                    react.createElement("div", { className: 'extension-home-extension-user-info' },
+                        react.createElement("span", null, "\u5DF2\u62DB\u52DF\u7684\u63A8\u5E7F\u5458"),
+                        react.createElement("span", null,
+                            extensionData.subProxyUserCount,
+                            "\u4EBA"),
+                        react.createElement("span", { onClick: recruitHandle }, "\u62DB\u52DF\u65B0\u63A8\u5E7F\u5458")))),
+            react.createElement("div", { className: 'extension-home-extension-new-user-wrapper' },
+                react.createElement("div", { className: 'extension-home-new-user-info' },
+                    react.createElement("span", { className: 'extension-home-extension-user-title' }, "\u63A8\u5E7F\u65B0\u7528\u6237"),
+                    react.createElement("span", null,
+                        "\u5DF2\u63A8\u5E7F\u7684\u7528\u6237\uFF1A",
+                        extensionData.subUserCount,
+                        "\u4EBA")),
+                react.createElement("div", { className: 'extension-url-link' },
+                    react.createElement(es/* Ellipsis */.mH, { direction: 'end', content: extensionData.subUserUrl })),
+                react.createElement("span", { className: 'extension-url-copy', onClick: copyToClipboard.bind(ExtensionSystem_Home_this, extensionData.subUserUrl) }, "\u590D\u5236")),
+            react.createElement(Home_RenewModal, null),
+            react.createElement(Home_UpgradeModal, null),
+            react.createElement(Home_ModifyPay, null)));
 };
 /* harmony default export */ var ExtensionSystem_Home = (ExtensionHome);
 
