@@ -125,6 +125,7 @@
     "antd-mobile": "^5.25.1",
     "antd-mobile-icons": "^0.3.0",
     "axios": "^1.1.3",
+    "copy-to-clipboard": "^3.3.3",
     "moment": "^2.29.4"
   }
 }

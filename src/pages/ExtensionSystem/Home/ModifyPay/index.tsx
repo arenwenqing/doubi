@@ -26,7 +26,8 @@ const ModifyPay = () => {
           content: '修改成功'
         })
         dispatch(setModifyPayData({
-          visible: false
+          visible: false,
+          aliPayId: value
         }))
         return
       }

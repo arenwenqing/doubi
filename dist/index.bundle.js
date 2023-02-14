@@ -1343,9 +1343,9 @@ var Home_this = undefined;
 // import Apis from 'src/apis'
 
 var boxMap = {
-    3: 'https://cdn.tuanzhzh.com/doubi-image/tong-box.png',
-    4: 'https://cdn.tuanzhzh.com/doubi-image/yin-box.png',
-    5: 'https://cdn.tuanzhzh.com/doubi-image/gold-box.png'
+    3: 'https://cdn.tuanzhzh.com/doubi-image/tong-box2.png',
+    4: 'https://cdn.tuanzhzh.com/doubi-image/yin-box2.png',
+    5: 'https://cdn.tuanzhzh.com/doubi-image/jin-box.png'
 };
 var keyIcon = {
     3: 'https://cdn.tuanzhzh.com/doubi-image/tong-yaoshi.png',
@@ -2678,7 +2678,7 @@ var ModifyPay = function () {
             if (res.data.modifySuccess) {
                 es/* Toast.show */.FN.show({
                     icon: 'success',
-                    content: '复制成功'
+                    content: '修改成功'
                 });
                 dispatch(setModifyPayData({
                     visible: false
@@ -2729,7 +2729,7 @@ var ExtensionHome = function () {
     var _a = (0,react.useState)({}), extensionData = _a[0], setExtensionData = _a[1];
     var dispatch = (0,react.useContext)(store_Context).dispatch;
     var navigate = (0,react_router_dist/* useNavigate */.s0)();
-    // const userInfo = JSON.parse(window.localStorage.getItem('system-user') || '{}')
+    var userInfo = JSON.parse(window.localStorage.getItem('system-user') || '{}');
     var copyToClipboard = function (textToCopy) {
         // navigator clipboard 需要https等安全上下文
         if (navigator.clipboard && window.isSecureContext) {
@@ -2783,7 +2783,7 @@ var ExtensionHome = function () {
     };
     var getProxyUser = function () {
         apis.getProxyUser({
-            userId: '1588476545ab4a3b9f18833dba5dbb1f' // userInfo.userId
+            userId: userInfo.userId
         }).then(function (res) {
             Object.keys(res.data || {}).forEach(function (item) {
                 if (['curDateProfit', 'nextMonthProfit', 'historyAllProfit'].includes(item)) {
@@ -2838,7 +2838,7 @@ var ExtensionHome = function () {
                 react.createElement("div", { className: 'extension-home-user-item' },
                     react.createElement("span", null, "\u63D0\u6210\u6BD4\u4F8B"),
                     react.createElement("span", null,
-                        extensionData.commissionRatio,
+                        extensionData.commissionRatio || 0,
                         "%")))),
         react.createElement(es/* Divider */.iz, null),
         react.createElement("div", { className: 'extension-home-extension-user-wrapper' },
