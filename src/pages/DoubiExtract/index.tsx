@@ -34,7 +34,8 @@ const DoubiExtract:React.FC = () => {
   }
   const back = useCallback(() => {
     navigate({
-      pathname: '/home'
+      pathname: '/home',
+      search: window.location.search
     })
   }, [])
 
@@ -72,7 +73,8 @@ const DoubiExtract:React.FC = () => {
   }
   const homeBack = () => {
     navigate({
-      pathname: '/home'
+      pathname: '/home',
+      search: window.location.search
     })
   }
 

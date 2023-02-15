@@ -13,7 +13,8 @@ const ForgetPassword: React.FC = () => {
   const [form] = Form.useForm()
   const back = useCallback(() => {
     navigate({
-      pathname: '/login'
+      pathname: '/login',
+      search: window.location.search
     })
   }, [])
 
@@ -37,7 +38,8 @@ const ForgetPassword: React.FC = () => {
           setShowToast(false)
         }, 2000);
         navigate({
-          pathname: '/login'
+          pathname: '/login',
+          search: window.location.search
         })
       } else {
         ShowComToast.show({

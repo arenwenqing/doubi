@@ -9,7 +9,8 @@ const Copyright: React.FC = () => {
 
   const showHistoryRecordHandle = () => {
     navigate({
-      pathname: '/history'
+      pathname: '/history',
+      search: window.location.search
     })
   }
 

@@ -1365,13 +1365,15 @@ var Home = function () {
     var skipLoginPage = function () {
         if (!userInfo.userId) {
             navigate({
-                pathname: '/login'
+                pathname: '/login',
+                search: window.location.search
             });
         }
     };
     var extractHandle = function () {
         navigate({
-            pathname: '/extract'
+            pathname: '/extract',
+            search: window.location.search
         });
     };
     var addRechargeKey = function (type, num) {
@@ -1621,7 +1623,8 @@ var LoginForm = function () {
                             window.localStorage.setItem('user', JSON.stringify(res.data.user || {}));
                             dispatch(setUserId(res.data.user.userId));
                             navigate({
-                                pathname: '/home'
+                                pathname: '/home',
+                                search: window.location.search
                             });
                         }
                         else {
@@ -1637,7 +1640,8 @@ var LoginForm = function () {
     }); }, []);
     var forgetPasswordHandle = function () {
         navigate({
-            pathname: '/forget'
+            pathname: '/forget',
+            search: window.location.search
         });
     };
     // const wechatLogin = () => {
@@ -1749,7 +1753,7 @@ var RegisteredForm = function () {
                 case 0: return [4 /*yield*/, form.validateFields()];
                 case 1:
                     obj = _a.sent();
-                    apis.registerFromPhone(RegisteredForm_assign(RegisteredForm_assign({}, obj), { proxyUserId: getUrlParam('proxyUserId') })).then(function (res) {
+                    apis.registerFromPhone(RegisteredForm_assign(RegisteredForm_assign({}, obj), { proxyUserId: getUrlParam('proxyUserId') ? getUrlParam('proxyUserId') : false })).then(function (res) {
                         // 注册成功，跳转到登录
                         if (res.data.registerResult) {
                             es/* Toast.show */.FN.show({
@@ -1874,7 +1878,8 @@ var Login = function () {
     };
     var back = (0,react.useCallback)(function () {
         navigate({
-            pathname: '/home'
+            pathname: '/home',
+            search: window.location.search
         });
     }, []);
     var tabChangeHandle = (0,react.useCallback)(function (key) {
@@ -1941,7 +1946,8 @@ var ForgetPassword = function () {
     var form = es/* Form.useForm */.l0.useForm()[0];
     var back = (0,react.useCallback)(function () {
         navigate({
-            pathname: '/login'
+            pathname: '/login',
+            search: window.location.search
         });
     }, []);
     var pkgNameRule = {
@@ -1967,7 +1973,8 @@ var ForgetPassword = function () {
                                 setShowToast(false);
                             }, 2000);
                             navigate({
-                                pathname: '/login'
+                                pathname: '/login',
+                                search: window.location.search
                             });
                         }
                         else {
@@ -2136,7 +2143,8 @@ var DoubiExtract = function () {
     };
     var back = (0,react.useCallback)(function () {
         navigate({
-            pathname: '/home'
+            pathname: '/home',
+            search: window.location.search
         });
     }, []);
     // 抖币提取
@@ -2186,7 +2194,8 @@ var DoubiExtract = function () {
     }
     var homeBack = function () {
         navigate({
-            pathname: '/home'
+            pathname: '/home',
+            search: window.location.search
         });
     };
     var extractHandle = function () {
@@ -2338,7 +2347,7 @@ var DoubiExtract = function () {
                                     react.createElement("label", null, "\u63D0\u53D6\u6296\u5E01"),
                                     react.createElement("label", { className: 'list-item-num' }, item.drawDyMoneyAmount || 0)),
                                 react.createElement("span", { className: 'list-item-zhi' }, "\u81F3"),
-                                item.status.code === 3 ? react.createElement("span", { className: 'list-item-error' }, "\u6296\u97F3\u8D26\u53F7\u5F02\u5E38") : ''),
+                                item.status.code === 3 ? react.createElement("span", { className: 'list-item-error' }, "\u8D26\u53F7\u5F02\u5E38") : ''),
                             react.createElement("div", { className: 'list-item-bottom' },
                                 react.createElement("span", { className: 'list-item-time' }, item.drawTime || '--'),
                                 react.createElement("span", null,
@@ -2431,12 +2440,14 @@ var History = function () {
     var isLoad = (0,react.useRef)(true);
     var back = (0,react.useCallback)(function () {
         navigate({
-            pathname: '/home'
+            pathname: '/home',
+            search: window.location.search
         });
     }, []);
     var homeBack = function () {
         navigate({
-            pathname: '/home'
+            pathname: '/home',
+            search: window.location.search
         });
     };
     function loadMore() {
@@ -2571,7 +2582,8 @@ var ExtensionLogin = function () {
                             window.localStorage.setItem('system-user', JSON.stringify(res.data.user || {}));
                             // dispatch(setUserId(res.data.user.userId))
                             navigate({
-                                pathname: '/extension-home'
+                                pathname: '/extension-home',
+                                search: window.location.search
                             });
                         }
                         else {
@@ -2806,13 +2818,15 @@ var ExtensionHome = function () {
     };
     var recruitHandle = function () {
         navigate({
-            pathname: '/extension-recruit'
+            pathname: '/extension-recruit',
+            search: window.location.search
         });
     };
     var logout = function () {
         window.localStorage.removeItem('system-user');
         navigate({
-            pathname: '/extension-login'
+            pathname: '/extension-login',
+            search: window.location.search
         });
     };
     (0,react.useEffect)(function () {
@@ -2980,7 +2994,8 @@ var Recruit_ExtensionLogin = function () {
     };
     var loginRecruitHandle = function () {
         navigate({
-            pathname: '/extension-login'
+            pathname: '/extension-login',
+            search: window.location.search
         });
     };
     var closeHandle = function () {
@@ -3073,7 +3088,8 @@ var Copyright = function () {
     var navigate = (0,react_router_dist/* useNavigate */.s0)();
     var showHistoryRecordHandle = function () {
         navigate({
-            pathname: '/history'
+            pathname: '/history',
+            search: window.location.search
         });
     };
     (0,react.useEffect)(function () {

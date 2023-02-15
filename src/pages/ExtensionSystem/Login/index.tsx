@@ -15,7 +15,8 @@ const ExtensionLogin:React.FC = () => {
         window.localStorage.setItem('system-user', JSON.stringify(res.data.user || {}))
         // dispatch(setUserId(res.data.user.userId))
         navigate({
-          pathname: '/extension-home'
+          pathname: '/extension-home',
+          search: window.location.search
         })
       } else {
         Toast.show({

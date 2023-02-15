@@ -96,14 +96,16 @@ const ExtensionHome = () => {
 
   const recruitHandle = () => {
     navigate({
-      pathname: '/extension-recruit'
+      pathname: '/extension-recruit',
+      search: window.location.search
     })
   }
 
   const logout = () => {
     window.localStorage.removeItem('system-user')
     navigate({
-      pathname: '/extension-login'
+      pathname: '/extension-login',
+      search: window.location.search
     })
   }
 

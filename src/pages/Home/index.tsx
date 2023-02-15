@@ -42,14 +42,16 @@ const Home: React.FC = () => {
   const skipLoginPage = () => {
     if (!userInfo.userId) {
       navigate({
-        pathname: '/login'
+        pathname: '/login',
+        search: window.location.search
       })
     }
   }
 
   const extractHandle = () => {
     navigate({
-      pathname: '/extract'
+      pathname: '/extract',
+      search: window.location.search
     })
   }
 

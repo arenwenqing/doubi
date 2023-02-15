@@ -25,7 +25,8 @@ const LoginForm: React.FC = () => {
         window.localStorage.setItem('user', JSON.stringify(res.data.user || {}))
         dispatch(setUserId(res.data.user.userId))
         navigate({
-          pathname: '/home'
+          pathname: '/home',
+          search: window.location.search
         })
       } else {
         Toast.show({
@@ -38,7 +39,8 @@ const LoginForm: React.FC = () => {
 
   const forgetPasswordHandle = () => {
     navigate({
-      pathname: '/forget'
+      pathname: '/forget',
+      search: window.location.search
     })
   }
 

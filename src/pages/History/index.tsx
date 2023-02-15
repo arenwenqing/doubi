@@ -24,12 +24,14 @@ const History:React.FC = () => {
 
   const back = useCallback(() => {
     navigate({
-      pathname: '/home'
+      pathname: '/home',
+      search: window.location.search
     })
   }, [])
   const homeBack = () => {
     navigate({
-      pathname: '/home'
+      pathname: '/home',
+      search: window.location.search
     })
   }
 

@@ -21,7 +21,8 @@ const Login: React.FC = () => {
   }
   const back = useCallback(() => {
     navigate({
-      pathname: '/home'
+      pathname: '/home',
+      search: window.location.search
     })
   }, [])
 

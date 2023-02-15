@@ -47,7 +47,8 @@ const ExtensionLogin:React.FC = () => {
 
   const loginRecruitHandle = () => {
     navigate({
-      pathname: '/extension-login'
+      pathname: '/extension-login',
+      search: window.location.search
     })
   }
 
