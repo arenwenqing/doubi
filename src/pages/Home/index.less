@@ -1,6 +1,9 @@
 :root {
   --adm-color-background: #181A20;
 }
+.hide {
+  display: none !important;
+}
 .home-page {
   .home-user-wrapper {
     display: flex;
@@ -23,6 +26,9 @@
       font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: #FFFFFF;
+    }
+    .user-logout-btn {
+      margin-left: 15px;
     }
   }
   .home-keys-wrapper {
@@ -178,6 +184,10 @@
       bottom: -45px;
     }
   }
+  .contact-customer {
+    position: fixed;
+    margin-top: 122px;
+  }
 }
 .renw {
   font-size: 40px;
@@ -212,4 +222,23 @@
   color: #fff;
   line-height: 80px;
   margin: 0 auto;
+}
+
+.user-logout-modal {
+  .adm-modal-content {
+    color: #fff;
+  }
+  .adm-modal-button-primary {
+    --color: #fff;
+    --background-color: var(--border-color);
+    --border-color: #FD3636;
+  }
+  // .adm-button:not(.adm-button-default) {
+  //   --color: #fff;
+  //   --background-color: var(--border-color);
+  //   --border-color: #FD3636;
+  // }
+  .adm-button-fill-none{
+    --color: #fff;
+  }
 }

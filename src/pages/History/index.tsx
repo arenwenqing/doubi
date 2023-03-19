@@ -1,9 +1,11 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react'
+import React, { useCallback, useEffect, useState, useRef, useContext } from 'react'
 import TopRolling from '@pages/Component/TopRolling/index'
 import { useNavigate } from 'react-router-dom'
 import { NavBar, List, Toast, InfiniteScroll } from 'antd-mobile'
 import Apis from 'src/apis'
 import moment from 'moment'
+import CustomServiceModal from '../Component/CustomServiceModal'
+import { Context, setCustomServiceModal } from '../../store'
 import './index.less'
 
 const borderColorMap = {
@@ -16,6 +18,7 @@ const borderColorMap = {
 const History:React.FC = () => {
   const [data, setData] = useState<any[]>([])
   const [hasMore, setHasMore] = useState(true)
+  const { dispatch } = useContext(Context)
   const userInfo = JSON.parse(window.localStorage.getItem('user') || '{}')
   const navigate = useNavigate()
 
@@ -33,6 +36,12 @@ const History:React.FC = () => {
       pathname: '/home',
       search: window.location.search
     })
+  }
+
+  const contactCustomService = () => {
+    dispatch(setCustomServiceModal({
+      visible: true
+    }))
   }
 
   async function loadMore() {
@@ -87,6 +96,10 @@ const History:React.FC = () => {
       <img className='doubi-tiqu' src='https://cdn.tuanzhzh.com/doubi-image/home-icon.png' />
       <span className='doubi-tiqu-text'>返回首页</span>
     </div>
+    <div className='home-back contact-customer' onClick={contactCustomService}>
+      <img className='doubi-tiqu' src='https://cdn.tuanzhzh.com/doubi-image/kefu.png' />
+      <span className='doubi-tiqu-text'>联系客服</span>
+    </div>
     <div className='extract-list-wrapper'>
       <List>
         {
@@ -116,6 +129,7 @@ const History:React.FC = () => {
       </List>
       <InfiniteScroll loadMore={loadMore} hasMore={hasMore} />
     </div>
+    <CustomServiceModal />
   </div>
 }
 export default History

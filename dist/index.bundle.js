@@ -299,7 +299,7 @@ webpackContext.id = 6700;
 
 /***/ }),
 
-/***/ 2870:
+/***/ 3942:
 /***/ (function(__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -402,8 +402,8 @@ axios/* default.interceptors.response.use */.Z.interceptors.response.use(functio
 
 // EXTERNAL MODULE: ./node_modules/react-router/dist/index.js
 var react_router_dist = __webpack_require__(9250);
-// EXTERNAL MODULE: ./node_modules/antd-mobile/es/index.js + 242 modules
-var es = __webpack_require__(6061);
+// EXTERNAL MODULE: ./node_modules/antd-mobile/es/index.js + 251 modules
+var es = __webpack_require__(6020);
 // EXTERNAL MODULE: ./node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js + 2 modules
 var redux_toolkit_esm = __webpack_require__(9639);
 ;// CONCATENATED MODULE: ./requestConfig/build.ts
@@ -593,6 +593,14 @@ var Apis = /** @class */ (function () {
          * 【用户代理】注册新的推广员
          */
         this.proxyUserRegister = post('/api/mystery/proxyUser/register');
+        /**
+         * 【用户代理】下级代理用户数据检索
+         */
+        this.getSubList = post('/api/mystery/proxyUser/sub/search');
+        /**
+         * 【用户代理】推广员个人销售数据
+         */
+        this.getSaleData = get('/api/mystery/proxyUser/saleData');
     }
     return Apis;
 }());
@@ -1314,6 +1322,102 @@ var Lottery = function () {
 };
 /* harmony default export */ var LotteryModal = (Lottery);
 
+;// CONCATENATED MODULE: ./src/store/index.ts
+var src_store_a;
+
+
+var store_Context = react.createContext(null);
+var store_initialState = {
+    loginCurrentKey: 'login',
+    userId: '',
+    renewModalData: {
+        visible: false,
+        level: 0
+    },
+    upgradeModalData: {
+        visible: false
+    },
+    modifyPayData: {
+        visible: false,
+        aliPayId: ''
+    },
+    customServiceModal: {
+        visible: false
+    }
+};
+var store_reduxSlice = (0,redux_toolkit_esm/* createSlice */.oM)({
+    name: 'reduxSlice',
+    initialState: store_initialState,
+    reducers: {
+        setLoginCurrentKey: function (state, _a) {
+            var payload = _a.payload;
+            state.loginCurrentKey = payload;
+        },
+        setUserId: function (state, _a) {
+            var payload = _a.payload;
+            state.userId = payload;
+        },
+        setRenewModalData: function (state, _a) {
+            var payload = _a.payload;
+            state.renewModalData = payload;
+        },
+        setUpgradeModalData: function (state, _a) {
+            var payload = _a.payload;
+            state.upgradeModalData = payload;
+        },
+        setModifyPayData: function (state, _a) {
+            var payload = _a.payload;
+            state.modifyPayData = payload;
+        },
+        setCustomServiceModal: function (state, _a) {
+            var payload = _a.payload;
+            state.customServiceModal = payload;
+        }
+    }
+});
+// Action creators are generated for each case reducer function
+var setLoginCurrentKey = (src_store_a = store_reduxSlice.actions, src_store_a.setLoginCurrentKey), setUserId = src_store_a.setUserId, setRenewModalData = src_store_a.setRenewModalData, setUpgradeModalData = src_store_a.setUpgradeModalData, setModifyPayData = src_store_a.setModifyPayData, setCustomServiceModal = src_store_a.setCustomServiceModal;
+// redux-thunk actions
+// 拉取是否开通接口
+// export const getIsOpen =
+//   (query = {}) =>
+//   async (dispatch) => {
+//     const res = await Apis.getIsOpen(query).catch((err) => {
+//       console.log('getIsOpen err', err)
+//     })
+//     const isOpen = res?.data ?? false
+//     dispatch(setIsOpen(isOpen))
+//   }
+// 数据配置：拉取数据配置列表
+// export const getDataTableList = (params) => async (dispatch) => {
+//   const res = await Apis.getDataTableList(params).catch((err) => {
+//     console.log('getDataTableList err', err)
+//     return []
+//   })
+//   return res?.data
+// }
+// Reducer
+/* harmony default export */ var src_store = (store_reduxSlice.reducer);
+
+;// CONCATENATED MODULE: ./src/pages/Component/CustomServiceModal/index.tsx
+
+
+
+
+var CustomServiceModal = function () {
+    var _a = (0,react.useContext)(store_Context), state = _a.state, dispatch = _a.dispatch;
+    var close = function () {
+        dispatch(setCustomServiceModal({
+            visible: false
+        }));
+    };
+    return react.createElement(es/* Modal */.u_, { title: '', visible: state.customServiceModal.visible, showCloseButton: true, onClose: close, bodyClassName: 'custom-service-modal-wrapper', content: react.createElement("div", { className: 'custom-service-content-wrapper' },
+            react.createElement(es/* Space */.T, { direction: 'vertical', block: true },
+                react.createElement("span", null, "\u8BF7\u626B\u63CF\u5BA2\u670D\u5FAE\u4FE1"),
+                react.createElement("img", { src: 'https://cdn.tuanzhzh.com/doubi-image/Wechat-k.jpeg' }))) });
+};
+/* harmony default export */ var Component_CustomServiceModal = (CustomServiceModal);
+
 ;// CONCATENATED MODULE: ./src/pages/Home/index.tsx
 var Home_assign = (undefined && undefined.__assign) || function () {
     Home_assign = Object.assign || function(t) {
@@ -1326,6 +1430,42 @@ var Home_assign = (undefined && undefined.__assign) || function () {
     };
     return Home_assign.apply(this, arguments);
 };
+var Home_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var Home_generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
 var Home_this = undefined;
 
 // import Api from './apis'
@@ -1333,6 +1473,8 @@ var Home_this = undefined;
 
 
 // import TopRolling from '@pages/Component/TopRolling'
+
+
 
 
 
@@ -1358,6 +1500,9 @@ var Home = function () {
         nickName: '请登录',
         avatarUrl: 'https://cdn.tuanzhzh.com/doubi-image/no-login-icon.png'
     }), loginInfo = _b[0], setLoginInfo = _b[1];
+    var globalDispatch = (0,react.useContext)(store_Context).dispatch;
+    // const [, updateState] = useState<any>();
+    // const forceUpdate = useCallback(() => updateState({}), []);
     var userInfo = JSON.parse(window.localStorage.getItem('user') || '{}');
     var _c = UseEnhancedReducer(store, initialState), state = _c[0], dispatch = _c[1];
     var navigate = (0,react_router_dist/* useNavigate */.s0)();
@@ -1370,6 +1515,11 @@ var Home = function () {
             });
         }
     };
+    var contactCustomService = function () {
+        globalDispatch(setCustomServiceModal({
+            visible: true
+        }));
+    };
     var extractHandle = function () {
         navigate({
             pathname: '/extract',
@@ -1377,6 +1527,12 @@ var Home = function () {
         });
     };
     var addRechargeKey = function (type, num) {
+        if (!userInfo.userId) {
+            return es/* Toast.show */.FN.show({
+                content: '请先登录',
+                duration: 2000
+            });
+        }
         dispatch(setViewModal({
             visible: true,
             num: num,
@@ -1417,6 +1573,20 @@ var Home = function () {
             }
         }));
     };
+    var logout = function () {
+        try {
+            window.localStorage.removeItem('user');
+            es/* Toast.show */.FN.show({ content: '退出成功', position: 'center' });
+            setLoginInfo({
+                nickName: '请登录',
+                avatarUrl: 'https://cdn.tuanzhzh.com/doubi-image/no-login-icon.png'
+            });
+            // forceUpdate()
+        }
+        catch (error) {
+            es/* Toast.show */.FN.show({ content: '退出失败', position: 'center' });
+        }
+    };
     (0,react.useEffect)(function () {
         if (Object.keys(userInfo).length) {
             dispatch(getKeys({
@@ -1452,7 +1622,28 @@ var Home = function () {
                 react.createElement("div", { className: 'home-user-wrapper' },
                     react.createElement("span", { className: 'user-portrait' },
                         react.createElement("img", { className: 'portrait-icon', src: loginInfo.avatarUrl || 'https://cdn.tuanzhzh.com/doubi-image/no-login-icon.png' })),
-                    react.createElement("span", { className: 'user-name', onClick: skipLoginPage }, loginInfo.nickName || '游客')),
+                    react.createElement("span", { className: 'user-name', onClick: skipLoginPage }, loginInfo.nickName || '游客'),
+                    react.createElement(es/* Button */.zx, { color: 'danger', className: userInfo.userId ? 'user-logout-btn' : 'hide user-logout-btn', size: 'mini', onClick: function () { return Home_awaiter(void 0, void 0, void 0, function () {
+                            var result;
+                            return Home_generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0: return [4 /*yield*/, es/* Modal.confirm */.u_.confirm({
+                                            content: '您确定要退出么？',
+                                            bodyClassName: 'user-logout-modal'
+                                        })];
+                                    case 1:
+                                        result = _a.sent();
+                                        if (result) {
+                                            logout();
+                                            // Toast.show({ content: '点击了确认', position: 'center' })
+                                        }
+                                        else {
+                                            // Toast.show({ content: '点击了取消', position: 'center' })
+                                        }
+                                        return [2 /*return*/];
+                                }
+                            });
+                        }); } }, "\u9000\u51FA")),
                 react.createElement("div", { className: 'home-keys-wrapper' }, keyInfo.map(function (item, i) {
                     return react.createElement("div", { className: 'key-item', key: i },
                         react.createElement("img", { className: 'key-type', src: keyIcon[item.keyType] }),
@@ -1477,10 +1668,14 @@ var Home = function () {
                 react.createElement("div", { className: 'home-doubi-extract', onClick: extractHandle },
                     react.createElement("img", { className: 'doubi-tiqu', src: 'https://cdn.tuanzhzh.com/doubi-image/doubi-tiqu-icon.png' }),
                     react.createElement("span", { className: 'doubi-tiqu-text' }, "\u6296\u5E01\u63D0\u53D6")),
+                react.createElement("div", { className: 'home-doubi-extract contact-customer', onClick: contactCustomService },
+                    react.createElement("img", { className: 'doubi-tiqu', src: 'https://cdn.tuanzhzh.com/doubi-image/kefu.png' }),
+                    react.createElement("span", { className: 'doubi-tiqu-text' }, "\u8054\u7CFB\u5BA2\u670D")),
                 react.createElement(Component_RollingList, null)),
             react.createElement(component_RechargeKey, null),
             react.createElement(component_DetailDescription, null),
-            react.createElement(LotteryModal, null)));
+            react.createElement(LotteryModal, null),
+            react.createElement(Component_CustomServiceModal, null)));
 };
 /* harmony default export */ var pages_Home = (Home);
 
@@ -1488,76 +1683,6 @@ var Home = function () {
 var EyeInvisibleOutline = __webpack_require__(8934);
 // EXTERNAL MODULE: ./node_modules/antd-mobile-icons/es/EyeOutline.js
 var EyeOutline = __webpack_require__(4080);
-;// CONCATENATED MODULE: ./src/store/index.ts
-var src_store_a;
-
-
-var store_Context = react.createContext(null);
-var store_initialState = {
-    loginCurrentKey: 'login',
-    userId: '',
-    renewModalData: {
-        visible: false,
-        level: 0
-    },
-    upgradeModalData: {
-        visible: false
-    },
-    modifyPayData: {
-        visible: false,
-        aliPayId: ''
-    }
-};
-var store_reduxSlice = (0,redux_toolkit_esm/* createSlice */.oM)({
-    name: 'reduxSlice',
-    initialState: store_initialState,
-    reducers: {
-        setLoginCurrentKey: function (state, _a) {
-            var payload = _a.payload;
-            state.loginCurrentKey = payload;
-        },
-        setUserId: function (state, _a) {
-            var payload = _a.payload;
-            state.userId = payload;
-        },
-        setRenewModalData: function (state, _a) {
-            var payload = _a.payload;
-            state.renewModalData = payload;
-        },
-        setUpgradeModalData: function (state, _a) {
-            var payload = _a.payload;
-            state.upgradeModalData = payload;
-        },
-        setModifyPayData: function (state, _a) {
-            var payload = _a.payload;
-            state.modifyPayData = payload;
-        }
-    }
-});
-// Action creators are generated for each case reducer function
-var setLoginCurrentKey = (src_store_a = store_reduxSlice.actions, src_store_a.setLoginCurrentKey), setUserId = src_store_a.setUserId, setRenewModalData = src_store_a.setRenewModalData, setUpgradeModalData = src_store_a.setUpgradeModalData, setModifyPayData = src_store_a.setModifyPayData;
-// redux-thunk actions
-// 拉取是否开通接口
-// export const getIsOpen =
-//   (query = {}) =>
-//   async (dispatch) => {
-//     const res = await Apis.getIsOpen(query).catch((err) => {
-//       console.log('getIsOpen err', err)
-//     })
-//     const isOpen = res?.data ?? false
-//     dispatch(setIsOpen(isOpen))
-//   }
-// 数据配置：拉取数据配置列表
-// export const getDataTableList = (params) => async (dispatch) => {
-//   const res = await Apis.getDataTableList(params).catch((err) => {
-//     console.log('getDataTableList err', err)
-//     return []
-//   })
-//   return res?.data
-// }
-// Reducer
-/* harmony default export */ var src_store = (store_reduxSlice.reducer);
-
 ;// CONCATENATED MODULE: ./src/pages/Component/LoginForm/index.tsx
 var LoginForm_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -1753,7 +1878,7 @@ var RegisteredForm = function () {
                 case 0: return [4 /*yield*/, form.validateFields()];
                 case 1:
                     obj = _a.sent();
-                    apis.registerFromPhone(RegisteredForm_assign(RegisteredForm_assign({}, obj), { proxyUserId: getUrlParam('proxyUserId') ? getUrlParam('proxyUserId') : false })).then(function (res) {
+                    apis.registerFromPhone(RegisteredForm_assign(RegisteredForm_assign({}, obj), { proxyUserId: getUrlParam('proxyUserId') ? getUrlParam('proxyUserId') : '' })).then(function (res) {
                         // 注册成功，跳转到登录
                         if (res.data.registerResult) {
                             es/* Toast.show */.FN.show({
@@ -1826,11 +1951,6 @@ var RegisteredForm = function () {
     return react.createElement("div", { className: 'resgister-form-wrapper' },
         react.createElement(es/* Form */.l0, { layout: 'horizontal', form: form, requiredMarkStyle: 'none' },
             react.createElement("div", { className: 'login-item' },
-                react.createElement("span", { className: 'login-item-title' }, "\u9080\u8BF7\u7801"),
-                react.createElement("div", { className: 'login-item-component' },
-                    react.createElement(es/* Form.Item */.l0.Item, { name: 'invitationCode', rules: [{ required: false, message: '请输入邀请码' }] },
-                        react.createElement(es/* Input */.II, { placeholder: '\u8BF7\u8F93\u5165\u9080\u8BF7\u7801', clearable: true, className: 'input-style' })))),
-            react.createElement("div", { className: 'login-item' },
                 react.createElement("span", { className: 'login-item-title' }, "\u624B\u673A\u53F7"),
                 react.createElement("div", { className: 'login-item-component' },
                     react.createElement(es/* Form.Item */.l0.Item, { name: 'phoneNum', validateTrigger: ['onBlur'], rules: [
@@ -1851,7 +1971,12 @@ var RegisteredForm = function () {
                             { required: true, message: '8~16位数字、英文混合' },
                             passwordRule
                         ] },
-                        react.createElement(es/* Input */.II, { type: 'password', placeholder: '8~16\u4F4D\u6570\u5B57\u3001\u82F1\u6587\u6DF7\u5408', clearable: true, className: 'input-style' }))))),
+                        react.createElement(es/* Input */.II, { type: 'password', placeholder: '8~16\u4F4D\u6570\u5B57\u3001\u82F1\u6587\u6DF7\u5408', clearable: true, className: 'input-style' })))),
+            react.createElement("div", { className: 'login-item' },
+                react.createElement("span", { className: 'login-item-title' }, "\u9080\u8BF7\u7801"),
+                react.createElement("div", { className: 'login-item-component' },
+                    react.createElement(es/* Form.Item */.l0.Item, { name: 'invitationCode', rules: [{ required: false, message: '请输入邀请码' }] },
+                        react.createElement(es/* Input */.II, { placeholder: '\u9009\u586B', clearable: true, className: 'input-style' }))))),
         react.createElement("div", { className: 'login-btn login-register-btn', onClick: registerHandle },
             react.createElement("span", null, "\u6CE8\u518C")),
         react.createElement(Component_Toast, { content: text, visible: showToast }));
@@ -2118,6 +2243,8 @@ var DoubiExtract_this = undefined;
 
 
 
+
+
 var showText = {
     1: '提取中',
     2: '已完成',
@@ -2133,6 +2260,7 @@ var DoubiExtract = function () {
     var _f = (0,react.useState)(''), douyin = _f[0], setDouyin = _f[1];
     var _g = (0,react.useState)([]), dyIds = _g[0], setDyIds = _g[1];
     var _h = (0,react.useState)(false), showDyIds = _h[0], setShowDyIds = _h[1];
+    var dispatch = (0,react.useContext)(store_Context).dispatch;
     var numRef = (0,react.useRef)(1);
     var isLoad = (0,react.useRef)(true);
     var userInfo = JSON.parse(window.localStorage.getItem('user') || '{}');
@@ -2192,6 +2320,11 @@ var DoubiExtract = function () {
             });
         });
     }
+    var contactCustomService = function () {
+        dispatch(setCustomServiceModal({
+            visible: true
+        }));
+    };
     var homeBack = function () {
         navigate({
             pathname: '/home',
@@ -2204,6 +2337,12 @@ var DoubiExtract = function () {
         //     content: <span>当前抖币数量为 <label style={{ color: 'red' }}>0</label></span>
         //   })
         // }
+        if (!userInfo.userId) {
+            return es/* Toast.show */.FN.show({
+                content: '请先登录',
+                duration: 2000
+            });
+        }
         setVisible(true);
     };
     var coinChangeHandle = function (val) {
@@ -2336,6 +2475,9 @@ var DoubiExtract = function () {
         react.createElement("div", { className: 'home-back', onClick: homeBack },
             react.createElement("img", { className: 'doubi-tiqu', src: 'https://cdn.tuanzhzh.com/doubi-image/home-icon.png' }),
             react.createElement("span", { className: 'doubi-tiqu-text' }, "\u8FD4\u56DE\u9996\u9875")),
+        react.createElement("div", { className: 'home-back contact-customer', onClick: contactCustomService },
+            react.createElement("img", { className: 'doubi-tiqu', src: 'https://cdn.tuanzhzh.com/doubi-image/kefu.png' }),
+            react.createElement("span", { className: 'doubi-tiqu-text' }, "\u8054\u7CFB\u5BA2\u670D")),
         react.createElement("div", { className: 'extract-list-wrapper' },
             react.createElement(es/* List */.aV, null, data.map(function (item, i) {
                 return react.createElement(es/* List.Item */.aV.Item, { key: i },
@@ -2376,7 +2518,8 @@ var DoubiExtract = function () {
                         react.createElement("span", null, "\u786E\u5B9A")),
                     react.createElement("div", { className: 'extract-bottom-text' }, "\u7CFB\u7EDF\u4F1A\u6309\u7167\u60A8\u9009\u62E9\u6216\u8F93\u5165\u7684\u6296\u97F3\u53F7\u8FDB\u884C\u5145\u503C"))), closeOnAction: true, onClose: function () {
                 setVisible(false);
-            } }));
+            } }),
+        react.createElement(Component_CustomServiceModal, null));
 };
 /* harmony default export */ var pages_DoubiExtract = (DoubiExtract);
 
@@ -2424,6 +2567,8 @@ var History_generator = (undefined && undefined.__generator) || function (thisAr
 
 
 
+
+
 var borderColorMap = {
     '#FD3636': 'red-border',
     '#FFAD5E': 'yellow-border',
@@ -2434,6 +2579,7 @@ var borderColorMap = {
 var History = function () {
     var _a = (0,react.useState)([]), data = _a[0], setData = _a[1];
     var _b = (0,react.useState)(true), hasMore = _b[0], setHasMore = _b[1];
+    var dispatch = (0,react.useContext)(store_Context).dispatch;
     var userInfo = JSON.parse(window.localStorage.getItem('user') || '{}');
     var navigate = (0,react_router_dist/* useNavigate */.s0)();
     var numRef = (0,react.useRef)(1);
@@ -2449,6 +2595,11 @@ var History = function () {
             pathname: '/home',
             search: window.location.search
         });
+    };
+    var contactCustomService = function () {
+        dispatch(setCustomServiceModal({
+            visible: true
+        }));
     };
     function loadMore() {
         return History_awaiter(this, void 0, void 0, function () {
@@ -2505,6 +2656,9 @@ var History = function () {
         react.createElement("div", { className: 'home-back', onClick: homeBack },
             react.createElement("img", { className: 'doubi-tiqu', src: 'https://cdn.tuanzhzh.com/doubi-image/home-icon.png' }),
             react.createElement("span", { className: 'doubi-tiqu-text' }, "\u8FD4\u56DE\u9996\u9875")),
+        react.createElement("div", { className: 'home-back contact-customer', onClick: contactCustomService },
+            react.createElement("img", { className: 'doubi-tiqu', src: 'https://cdn.tuanzhzh.com/doubi-image/kefu.png' }),
+            react.createElement("span", { className: 'doubi-tiqu-text' }, "\u8054\u7CFB\u5BA2\u670D")),
         react.createElement("div", { className: 'extract-list-wrapper' },
             react.createElement(es/* List */.aV, null, data === null || data === void 0 ? void 0 : data.map(function (item, i) {
                 var _a, _b, _c, _d, _e, _f, _g, _h;
@@ -2521,7 +2675,8 @@ var History = function () {
                                     react.createElement("label", null, "\u6296\u97F3\u4EF7\u503C"),
                                     react.createElement("label", { className: 'list-item-douyin-number', style: { color: (_f = item.gift) === null || _f === void 0 ? void 0 : _f.giftColor } }, (_h = (_g = item.gift) === null || _g === void 0 ? void 0 : _g.dyMoneyAmount) !== null && _h !== void 0 ? _h : 0))))));
             })),
-            react.createElement(es/* InfiniteScroll */.v_, { loadMore: loadMore, hasMore: hasMore })));
+            react.createElement(es/* InfiniteScroll */.v_, { loadMore: loadMore, hasMore: hasMore })),
+        react.createElement(Component_CustomServiceModal, null));
 };
 /* harmony default export */ var pages_History = (History);
 
@@ -2806,7 +2961,7 @@ var ExtensionHome = function () {
     };
     var getProxyUser = function () {
         apis.getProxyUser({
-            userId: userInfo.userId
+            userId: userInfo.userId // '1588476545ab4a3b9f18833dba5dbb1f' userInfo.userId
         }).then(function (res) {
             Object.keys(res.data || {}).forEach(function (item) {
                 if (['curDateProfit', 'nextMonthProfit', 'historyAllProfit'].includes(item)) {
@@ -2829,12 +2984,24 @@ var ExtensionHome = function () {
             search: window.location.search
         });
     };
+    var showDetail = function () {
+        navigate({
+            pathname: '/extension-wild',
+            search: window.location.search
+        });
+    };
+    var extensionLogin = function () {
+        navigate({
+            pathname: '/extension-login',
+            search: window.location.search
+        });
+    };
     (0,react.useEffect)(function () {
         getProxyUser();
     }, []);
     return react.createElement("div", { className: 'extension-home-wrapper' },
         react.createElement("div", { className: 'extension-home-title' }, "\u63A8\u5E7F\u540E\u53F0"),
-        react.createElement(es/* Empty */.HY, { style: { display: userInfo.userId ? 'none' : '' }, description: '\u8BF7\u767B\u5F55' }),
+        react.createElement(es/* Empty */.HY, { style: { display: userInfo.userId ? 'none' : '' }, description: react.createElement("span", { className: 'extension-login-btn', onClick: extensionLogin }, "\u70B9\u51FB\u767B\u5F55") }),
         react.createElement("div", { style: { display: userInfo.userId ? '' : 'none' } },
             react.createElement("div", { className: 'extension-home-date' },
                 react.createElement("span", null,
@@ -2852,7 +3019,8 @@ var ExtensionHome = function () {
                         react.createElement("span", null, extensionData.nextMonthProfit)),
                     react.createElement("div", { className: 'extension-home-profit-item' },
                         react.createElement("span", null, "\u5386\u53F2\u603B\u6536\u76CA"),
-                        react.createElement("span", null, extensionData.historyAllProfit)))),
+                        react.createElement("span", null, extensionData.historyAllProfit),
+                        extensionData.hasDetailSaleData ? react.createElement("span", { onClick: showDetail }, "\u63A8\u5E7F\u660E\u7EC6") : ''))),
             react.createElement(es/* Divider */.iz, null),
             react.createElement("div", { className: 'extension-home-user-wrapper' },
                 react.createElement(es/* Space */.T, { direction: 'vertical' },
@@ -3051,7 +3219,503 @@ var Recruit_ExtensionLogin = function () {
 };
 /* harmony default export */ var Recruit = (Recruit_ExtensionLogin);
 
+;// CONCATENATED MODULE: ./src/pages/ExtensionSystem/SociatySmallProxy/index.tsx
+var SociatySmallProxy_assign = (undefined && undefined.__assign) || function () {
+    SociatySmallProxy_assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return SociatySmallProxy_assign.apply(this, arguments);
+};
+var SociatySmallProxy_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var SociatySmallProxy_generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
+
+
+
+var SociatySmallProxy = function () {
+    var _a = (0,react.useState)(false), visible = _a[0], setVisible = _a[1];
+    var _b = (0,react.useState)(false), startFlag = _b[0], setStartFlag = _b[1];
+    var _c = (0,react.useState)(false), endFlag = _c[0], setEndFlag = _c[1];
+    var _d = (0,react.useState)({
+        startTime: moment_default()().subtract(7, 'day').startOf('day').valueOf(),
+        endTime: moment_default()().subtract(1, 'day').startOf('day').valueOf(),
+        page: 1,
+        pageSize: 30
+    }), param = _d[0], setParam = _d[1];
+    var _e = (0,react.useState)(false), datePickerVisible = _e[0], setDatePickerVisible = _e[1];
+    var _f = (0,react.useState)([]), dataList = _f[0], setDataList = _f[1];
+    var _g = (0,react.useState)(true), hasMore = _g[0], setHasMore = _g[1];
+    var _h = (0,react.useState)({}), saleData = _h[0], setSaleData = _h[1];
+    var form = es/* Form.useForm */.l0.useForm()[0];
+    var navigate = (0,react_router_dist/* useNavigate */.s0)();
+    var userInfo = JSON.parse(window.localStorage.getItem('system-user') || '{}');
+    var back = function () {
+        navigate({
+            pathname: '/extension-home',
+            search: window.location.search
+        });
+    };
+    var showFilter = function () {
+        setVisible(true);
+    };
+    var searchHandle = function () { return SociatySmallProxy_awaiter(void 0, void 0, void 0, function () {
+        var value;
+        return SociatySmallProxy_generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, form.validateFields()];
+                case 1:
+                    value = _a.sent();
+                    setParam({
+                        startTime: moment_default()(value.startTime).valueOf(),
+                        endTime: moment_default()(value.endTime).valueOf(),
+                        page: 1,
+                        pageSize: 50
+                    });
+                    return [2 /*return*/];
+            }
+        });
+    }); };
+    var dataPickerClose = function () {
+        setDatePickerVisible(false);
+        if (startFlag)
+            setStartFlag(false);
+        if (endFlag)
+            setEndFlag(false);
+    };
+    var dataPickerConfirm = function (val) {
+        var time = moment_default()(val).format('YYYY/MM/DD');
+        if (startFlag) {
+            form.setFieldValue('startTime', time);
+        }
+        if (endFlag) {
+            form.setFieldValue('endTime', time);
+        }
+    };
+    var getList = function () {
+        apis.getSubList(SociatySmallProxy_assign({}, param)).then(function (res) {
+            var _a, _b, _c;
+            setDataList(((_a = res.data) === null || _a === void 0 ? void 0 : _a.detailList) || []);
+            if (((_c = (_b = res.data) === null || _b === void 0 ? void 0 : _b.dataList) === null || _c === void 0 ? void 0 : _c.length) < 30) {
+                setHasMore(false);
+            }
+        }).catch(function () {
+            setHasMore(false);
+            es/* Toast.show */.FN.show({
+                icon: 'fail',
+                content: '明细出错'
+            });
+        });
+    };
+    function loadMore() {
+        return SociatySmallProxy_awaiter(this, void 0, void 0, function () {
+            var arr, i;
+            return SociatySmallProxy_generator(this, function (_a) {
+                arr = [];
+                for (i = 0; i < 30; i++) {
+                    arr.push({
+                        subUserPhoneNum: '18612439870',
+                        detailDate: '2024/01/02',
+                        waterAmount: 122225.2
+                    });
+                }
+                setDataList(arr);
+                return [2 /*return*/];
+            });
+        });
+    }
+    var getSaleData = function () {
+        apis.getSaleData({
+            userId: userInfo.userId
+        }).then(function (res) {
+            var tempMap = ['ytdWaterAmount', 'curMonthWaterAmount', 'historyAllWaterAmount'];
+            Object.keys(res.data || {}).forEach(function (item) {
+                if (tempMap.includes(item)) {
+                    res.data[item] = (res.data[item] / 100).toFixed(2);
+                }
+            });
+            setSaleData(res.data || {});
+        }).catch(function () {
+            es/* Toast.show */.FN.show({
+                icon: 'fail',
+                content: '流水出错'
+            });
+        });
+    };
+    (0,react.useEffect)(function () {
+        getSaleData();
+    }, []);
+    (0,react.useEffect)(function () {
+        getList();
+    }, [param]);
+    return react.createElement("div", { className: 'sociaty-small-proxy-wrapper' },
+        react.createElement(es/* NavBar */.l2, { back: '\u8FD4\u56DE', onBack: back }, "\u63A8\u5E7F\u660E\u7EC6"),
+        react.createElement(es/* Space */.T, { className: 'sociaty-small-yesterday' },
+            react.createElement("span", null, "\u6628\u65E5\u6D41\u6C34"),
+            react.createElement("span", null, saleData.ytdWaterAmount || 0)),
+        react.createElement(es/* Space */.T, { className: 'sociaty-small-month' },
+            react.createElement(es/* Space */.T, null,
+                react.createElement("span", null, "\u672C\u6708\u6D41\u6C34"),
+                react.createElement("span", null, saleData.curMonthWaterAmount || 0)),
+            react.createElement(es/* Space */.T, null,
+                react.createElement("span", null, "\u5386\u53F2\u6D41\u6C34"),
+                react.createElement("span", null, saleData.historyAllWaterAmount || 0))),
+        react.createElement("div", { className: 'sociaty-filter' },
+            react.createElement("span", { className: 'sociaty-filter-btn', onClick: showFilter }, "\u7B5B\u9009")),
+        react.createElement("div", { className: 'sociaty-fitler-condition-show' },
+            react.createElement("span", null, "\u5F53\u524D\u6761\u4EF6\uFF1A"),
+            react.createElement("span", null, "2023/01/26~2023/02/26")),
+        react.createElement("div", null, dataList.map(function (item, i) {
+            return react.createElement("div", { key: i, className: 'sociaty-data-list' },
+                react.createElement("div", { className: 'list-item' },
+                    i === 0 ? react.createElement("span", null, "\u63A8\u5E7F\u4EBA\u624B\u673A\u53F7") : '',
+                    react.createElement("span", { className: 'list-item-content' }, item.subUserPhoneNum)),
+                react.createElement("div", { className: 'list-item' },
+                    i === 0 ? react.createElement("span", null, "\u65E5\u671F") : '',
+                    react.createElement("span", { className: 'list-item-content' }, item.detailDate)),
+                react.createElement("div", { className: 'list-item' },
+                    i === 0 ? react.createElement("span", null, "\u6D41\u6C34\u603B\u989D") : '',
+                    react.createElement("span", { className: 'list-item-content' }, (item.waterAmount / 100).toFixed(2))));
+        })),
+        react.createElement(es/* InfiniteScroll */.v_, { loadMore: loadMore, hasMore: hasMore }),
+        react.createElement(es/* Popup */.GI, { visible: visible, onMaskClick: function () {
+                setVisible(false);
+            }, className: 'sociaty-filter-popup-wrapper', closeOnMaskClick: false, bodyStyle: {
+                borderTopLeftRadius: '8px',
+                borderTopRightRadius: '8px',
+                minHeight: '30vh',
+                background: '#fff'
+            } },
+            react.createElement("div", { className: 'filter-conter-wrapper' },
+                react.createElement("div", { className: 'filter-content-top' },
+                    react.createElement("span", { onClick: function () { return setVisible(false); } }, "\u53D6\u6D88"),
+                    react.createElement("span", { onClick: searchHandle }, "\u786E\u5B9A")),
+                react.createElement(es/* Form */.l0, { layout: 'horizontal', form: form, requiredMarkStyle: 'none' },
+                    react.createElement(es/* Form.Item */.l0.Item, { label: '\u5F00\u59CB\u65F6\u95F4', name: 'startTime', rules: [{ required: true }] },
+                        react.createElement(es/* Input */.II, { placeholder: '\u8BF7\u8F93\u5165', onFocus: function () {
+                                setDatePickerVisible(true);
+                                setStartFlag(true);
+                            } })),
+                    react.createElement(es/* Form.Item */.l0.Item, { label: '\u7ED3\u675F\u65F6\u95F4', name: 'endTime', rules: [{ required: true }] },
+                        react.createElement(es/* Input */.II, { placeholder: '\u8BF7\u8F93\u5165', onFocus: function () {
+                                setDatePickerVisible(true);
+                                setEndFlag(true);
+                            } }))))),
+        react.createElement(es/* DatePicker */.Mt, { visible: datePickerVisible, onClose: dataPickerClose, precision: 'day', onConfirm: function (val) {
+                dataPickerConfirm(val);
+            } }));
+};
+/* harmony default export */ var ExtensionSystem_SociatySmallProxy = (SociatySmallProxy);
+
+;// CONCATENATED MODULE: ./src/pages/ExtensionSystem/BigProxy/index.tsx
+var BigProxy_assign = (undefined && undefined.__assign) || function () {
+    BigProxy_assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return BigProxy_assign.apply(this, arguments);
+};
+var BigProxy_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var BigProxy_generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+var BigProxy_spreadArray = (undefined && undefined.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
+
+
+
+
+
+
+var BigProxy = function () {
+    var _a = (0,react.useState)(false), visible = _a[0], setVisible = _a[1];
+    var _b = (0,react.useState)(false), startFlag = _b[0], setStartFlag = _b[1];
+    var _c = (0,react.useState)(false), endFlag = _c[0], setEndFlag = _c[1];
+    var _d = (0,react.useState)(false), datePickerVisible = _d[0], setDatePickerVisible = _d[1];
+    var _e = (0,react.useState)([]), dataList = _e[0], setDataList = _e[1];
+    var _f = (0,react.useState)(true), hasMore = _f[0], setHasMore = _f[1];
+    var _g = (0,react.useState)({}), saleData = _g[0], setSaleData = _g[1];
+    // const [param, setParam] = useState({
+    //   startTime: moment().subtract(7, 'day').startOf('day').valueOf(),
+    //   endTime: moment().subtract(1, 'day').startOf('day').valueOf(),
+    //   page: 1,
+    //   pageSize: 30,
+    //   proxyUserId: 'dd5821c9c0744a5383f43ee62a458acc' // userInfo.userId
+    // })
+    var userInfo = JSON.parse(window.localStorage.getItem('system-user') || '{}');
+    var paramRef = (0,react.useRef)({
+        startTime: moment_default()().subtract(7, 'day').startOf('day').valueOf(),
+        endTime: moment_default()().subtract(1, 'day').startOf('day').valueOf(),
+        page: 1,
+        pageSize: 30,
+        proxyUserId: userInfo.userId
+    });
+    var form = es/* Form.useForm */.l0.useForm()[0];
+    var navigate = (0,react_router_dist/* useNavigate */.s0)();
+    var back = function () {
+        navigate({
+            pathname: '/extension-home',
+            search: window.location.search
+        });
+    };
+    var showFilter = function () {
+        setVisible(true);
+    };
+    var searchHandle = function () { return BigProxy_awaiter(void 0, void 0, void 0, function () {
+        var value;
+        return BigProxy_generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, form.validateFields()];
+                case 1:
+                    value = _a.sent();
+                    paramRef.current = {
+                        startTime: moment_default()(value.startTime).valueOf(),
+                        endTime: moment_default()(value.endTime).valueOf(),
+                        page: 1,
+                        pageSize: 30,
+                        proxyUserId: userInfo.userId
+                    };
+                    getList();
+                    setVisible(false);
+                    return [2 /*return*/];
+            }
+        });
+    }); };
+    var dataPickerClose = function () {
+        setDatePickerVisible(false);
+        if (startFlag)
+            setStartFlag(false);
+        if (endFlag)
+            setEndFlag(false);
+    };
+    var dataPickerConfirm = function (val) {
+        var time = moment_default()(val).format('YYYY/MM/DD');
+        if (startFlag) {
+            form.setFieldValue('startTime', time);
+        }
+        if (endFlag) {
+            form.setFieldValue('endTime', time);
+        }
+    };
+    var getList = function () {
+        return apis.getSubList(BigProxy_assign({}, paramRef.current)).then(function (res) {
+            return res;
+        }).catch(function () {
+            setHasMore(false);
+            es/* Toast.show */.FN.show({
+                icon: 'fail',
+                content: '明细出错'
+            });
+        });
+    };
+    function loadMore() {
+        return BigProxy_awaiter(this, void 0, void 0, function () {
+            var res;
+            return BigProxy_generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, getList()];
+                    case 1:
+                        res = _a.sent();
+                        if (res.data.detailList.length) {
+                            paramRef.current = BigProxy_assign(BigProxy_assign({}, paramRef.current), { page: paramRef.current.page + 1 });
+                        }
+                        setDataList(function (val) { return BigProxy_spreadArray(BigProxy_spreadArray([], val, true), res.data.detailList, true); });
+                        setHasMore(res.data.detailList.length > 0);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    }
+    var getSaleData = function () {
+        apis.getSaleData({
+            userId: userInfo.userId // 'dd5821c9c0744a5383f43ee62a458acc '
+        }).then(function (res) {
+            var tempMap = ['ytdWaterAmount', 'ytdProfit', 'curMonthWaterAmount', 'curMonthProfit', 'historyAllWaterAmount', 'historyAllProfit', 'toSettledProfit'];
+            Object.keys(res.data || {}).forEach(function (item) {
+                if (tempMap.includes(item)) {
+                    res.data[item] = (res.data[item] / 100).toFixed(2);
+                }
+            });
+            setSaleData(res.data || {});
+        }).catch(function () {
+            es/* Toast.show */.FN.show({
+                icon: 'fail',
+                content: '流水出错'
+            });
+        });
+    };
+    (0,react.useEffect)(function () {
+        getSaleData();
+    }, []);
+    return react.createElement("div", { className: 'sociaty-small-proxy-wrapper' },
+        react.createElement(es/* NavBar */.l2, { back: '\u8FD4\u56DE', onBack: back }, "\u63A8\u5E7F\u660E\u7EC6"),
+        react.createElement(es/* Space */.T, { className: 'sociaty-small-month' },
+            react.createElement(es/* Space */.T, null,
+                react.createElement("span", null, "\u6628\u65E5\u6D41\u6C34"),
+                react.createElement("span", null, saleData.ytdWaterAmount || 0)),
+            react.createElement(es/* Space */.T, null,
+                react.createElement("span", null, "\u6628\u65E5\u6536\u76CA"),
+                react.createElement("span", null, saleData.ytdProfit || 0))),
+        react.createElement(es/* Space */.T, { className: 'sociaty-small-month' },
+            react.createElement(es/* Space */.T, null,
+                react.createElement("span", null, "\u672C\u6708\u6D41\u6C34"),
+                react.createElement("span", null, saleData.curMonthWaterAmount || 0)),
+            react.createElement(es/* Space */.T, null,
+                react.createElement("span", null, "\u672C\u6708\u6536\u76CA"),
+                react.createElement("span", null, saleData.curMonthProfit || 0))),
+        react.createElement(es/* Space */.T, { className: 'sociaty-small-month' },
+            react.createElement(es/* Space */.T, null,
+                react.createElement("span", null, "\u5386\u53F2\u6D41\u6C34"),
+                react.createElement("span", null, saleData.historyAllWaterAmount || 0)),
+            react.createElement(es/* Space */.T, null,
+                react.createElement("span", null, "\u5386\u53F2\u6536\u76CA"),
+                react.createElement("span", null, saleData.historyAllProfit || 0))),
+        react.createElement(es/* Space */.T, { className: 'sociaty-small-month' },
+            react.createElement(es/* Space */.T, null,
+                react.createElement("span", null, "\u5F85\u7ED3\u7B97\u6536\u76CA"),
+                react.createElement("span", null, saleData.toSettledProfit || 0)),
+            react.createElement(es/* Space */.T, null,
+                react.createElement("span", null, "\u7ED3\u7B97\u5468\u671F"),
+                react.createElement("span", null,
+                    "\u6BCF\u6708",
+                    saleData.settleDayOfMonth || 0,
+                    "\u53F7"))),
+        react.createElement("div", { className: 'sociaty-filter' },
+            react.createElement("span", { className: 'sociaty-filter-btn', onClick: showFilter }, "\u7B5B\u9009")),
+        react.createElement("div", { className: 'sociaty-fitler-condition-show' },
+            react.createElement("span", null, "\u5F53\u524D\u6761\u4EF6\uFF1A"),
+            react.createElement("span", null, "2023/01/26~2023/02/26")),
+        react.createElement("div", null, dataList.map(function (item, i) {
+            return react.createElement("div", { key: i, className: 'sociaty-data-list' },
+                react.createElement("div", { className: 'list-item' },
+                    i === 0 ? react.createElement("span", null, "\u63A8\u5E7F\u4EBA\u624B\u673A\u53F7") : '',
+                    react.createElement("span", { className: 'list-item-content' }, item.subUserPhoneNum)),
+                react.createElement("div", { className: 'list-item' },
+                    i === 0 ? react.createElement("span", null, "\u65E5\u671F") : '',
+                    react.createElement("span", { className: 'list-item-content' }, item.detailDate)),
+                react.createElement("div", { className: 'list-item' },
+                    i === 0 ? react.createElement("span", null, "\u6D41\u6C34\u603B\u989D") : '',
+                    react.createElement("span", { className: 'list-item-content' }, (item.waterAmount / 100).toFixed(2))),
+                react.createElement("div", { className: 'list-item' },
+                    i === 0 ? react.createElement("span", null, "\u6536\u76CA\u603B\u989D") : '',
+                    react.createElement("span", { className: 'list-item-content' }, (item.profit / 100).toFixed(2))));
+        })),
+        react.createElement(es/* InfiniteScroll */.v_, { loadMore: loadMore, hasMore: hasMore }),
+        react.createElement(es/* Popup */.GI, { visible: visible, onMaskClick: function () {
+                setVisible(false);
+            }, className: 'sociaty-filter-popup-wrapper', closeOnMaskClick: false, bodyStyle: {
+                borderTopLeftRadius: '8px',
+                borderTopRightRadius: '8px',
+                minHeight: '30vh',
+                background: '#fff'
+            } },
+            react.createElement("div", { className: 'filter-conter-wrapper' },
+                react.createElement("div", { className: 'filter-content-top' },
+                    react.createElement("span", { onClick: function () { return setVisible(false); } }, "\u53D6\u6D88"),
+                    react.createElement("span", { onClick: searchHandle }, "\u786E\u5B9A")),
+                react.createElement(es/* Form */.l0, { layout: 'horizontal', form: form, requiredMarkStyle: 'none' },
+                    react.createElement(es/* Form.Item */.l0.Item, { label: '\u5F00\u59CB\u65F6\u95F4', name: 'startTime', rules: [{ required: true }] },
+                        react.createElement(es/* Input */.II, { placeholder: '\u8BF7\u8F93\u5165', onFocus: function () {
+                                setDatePickerVisible(true);
+                                setStartFlag(true);
+                            } })),
+                    react.createElement(es/* Form.Item */.l0.Item, { label: '\u7ED3\u675F\u65F6\u95F4', name: 'endTime', rules: [{ required: true }] },
+                        react.createElement(es/* Input */.II, { placeholder: '\u8BF7\u8F93\u5165', onFocus: function () {
+                                setDatePickerVisible(true);
+                                setEndFlag(true);
+                            } }))))),
+        react.createElement(es/* DatePicker */.Mt, { visible: datePickerVisible, onClose: dataPickerClose, precision: 'day', onConfirm: function (val) {
+                dataPickerConfirm(val);
+            } }));
+};
+/* harmony default export */ var ExtensionSystem_BigProxy = (BigProxy);
+
 ;// CONCATENATED MODULE: ./src/route/index.tsx
+
+
 
 
 
@@ -3072,7 +3736,9 @@ var ComponentAppRoute = function () {
         { path: '/history', element: react.createElement(pages_History, null) },
         { path: '/extension-login', element: react.createElement(ExtensionSystem_Login, null) },
         { path: '/extension-home', element: react.createElement(ExtensionSystem_Home, null) },
-        { path: '/extension-recruit', element: react.createElement(Recruit, null) }
+        { path: '/extension-recruit', element: react.createElement(Recruit, null) },
+        { path: '/extension-sociaty', element: react.createElement(ExtensionSystem_SociatySmallProxy, null) },
+        { path: '/extension-wild', element: react.createElement(ExtensionSystem_BigProxy, null) }
     ]);
     return routes;
 };
@@ -3364,7 +4030,7 @@ react_dom.render(react.createElement(dist/* BrowserRouter */.VK, null,
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [736], function() { return __webpack_require__(2870); })
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [736], function() { return __webpack_require__(3942); })
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

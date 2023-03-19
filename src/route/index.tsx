@@ -8,6 +8,8 @@ import History from '@pages/History'
 import ExtensionLogin from '@pages/ExtensionSystem/Login'
 import ExtensionHome from '@pages/ExtensionSystem/Home'
 import ExtensionRecruit from '@pages/ExtensionSystem/Recruit'
+import SociatySmallProxy from '@pages/ExtensionSystem/SociatySmallProxy'
+import BigProxy from '@pages/ExtensionSystem/BigProxy'
 
 const ComponentAppRoute = () => {
   const routes = useRoutes([
@@ -19,7 +21,9 @@ const ComponentAppRoute = () => {
     { path: '/history', element: <History /> },
     { path: '/extension-login', element: <ExtensionLogin /> },
     { path: '/extension-home', element: <ExtensionHome /> },
-    { path: '/extension-recruit', element: <ExtensionRecruit /> }
+    { path: '/extension-recruit', element: <ExtensionRecruit /> },
+    { path: '/extension-sociaty', element: <SociatySmallProxy /> },
+    { path: '/extension-wild', element: <BigProxy /> }
   ])
   return routes
 }

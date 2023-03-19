@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 // import Api from './apis'
 import { Divider, CapsuleTabs, Button, Modal, Toast } from 'antd-mobile'
 import RollingList from '@pages/Component/RollingList'
@@ -11,6 +11,8 @@ import RechargeKey from './component/RechargeKey'
 import DetailDescription from './component/DetailDescription'
 import Lottery from './component/LotteryModal'
 import { getUrlParams } from 'src/utils'
+import CustomServiceModal from '../Component/CustomServiceModal'
+import { Context as globalContext, setCustomServiceModal } from '../../store'
 // import Apis from 'src/apis'
 import './index.less'
 
@@ -31,6 +33,9 @@ const Home: React.FC = () => {
     nickName: '请登录',
     avatarUrl: 'https://cdn.tuanzhzh.com/doubi-image/no-login-icon.png'
   })
+  const { dispatch: globalDispatch } = useContext(globalContext)
+  // const [, updateState] = useState<any>();
+  // const forceUpdate = useCallback(() => updateState({}), []);
   const userInfo = JSON.parse(window.localStorage.getItem('user') || '{}')
   const [state, dispatch] = useEnhancedReducerv(reducer, initialState)
   const navigate = useNavigate()
@@ -48,6 +53,12 @@ const Home: React.FC = () => {
     }
   }
 
+  const contactCustomService = () => {
+    globalDispatch(setCustomServiceModal({
+      visible: true
+    }))
+  }
+
   const extractHandle = () => {
     navigate({
       pathname: '/extract',
@@ -56,6 +67,12 @@ const Home: React.FC = () => {
   }
 
   const addRechargeKey = (type, num) => {
+    if (!userInfo.userId) {
+      return Toast.show({
+        content: '请先登录',
+        duration: 2000
+      })
+    }
     dispatch(setViewModal({
       visible: true,
       num,
@@ -100,6 +117,20 @@ const Home: React.FC = () => {
     }))
   }
 
+  const logout = () => {
+    try {
+      window.localStorage.removeItem('user')
+      Toast.show({ content: '退出成功', position: 'center' })
+      setLoginInfo({
+        nickName: '请登录',
+        avatarUrl: 'https://cdn.tuanzhzh.com/doubi-image/no-login-icon.png'
+      })
+      // forceUpdate()
+    } catch (error) {
+      Toast.show({ content: '退出失败', position: 'center' })
+    }
+  }
+
   useEffect(() => {
     if (Object.keys(userInfo).length) {
       dispatch(getKeys({
@@ -139,6 +170,23 @@ const Home: React.FC = () => {
             <img className='portrait-icon' src={loginInfo.avatarUrl || 'https://cdn.tuanzhzh.com/doubi-image/no-login-icon.png'}></img>
           </span>
           <span className='user-name' onClick={skipLoginPage}>{loginInfo.nickName || '游客'}</span>
+          <Button
+            color='danger'
+            className={ userInfo.userId ? 'user-logout-btn' : 'hide user-logout-btn'}
+            size='mini'
+            onClick={async () => {
+              const result = await Modal.confirm({
+                content: '您确定要退出么？',
+                bodyClassName: 'user-logout-modal'
+              })
+              if (result) {
+                logout()
+                // Toast.show({ content: '点击了确认', position: 'center' })
+              } else {
+                // Toast.show({ content: '点击了取消', position: 'center' })
+              }
+            }}
+          >退出</Button>
         </div>
         <div className='home-keys-wrapper'>
           {
@@ -178,11 +226,16 @@ const Home: React.FC = () => {
           <img className='doubi-tiqu' src='https://cdn.tuanzhzh.com/doubi-image/doubi-tiqu-icon.png' />
           <span className='doubi-tiqu-text'>抖币提取</span>
         </div>
+        <div className='home-doubi-extract contact-customer' onClick={contactCustomService}>
+          <img className='doubi-tiqu' src='https://cdn.tuanzhzh.com/doubi-image/kefu.png' />
+          <span className='doubi-tiqu-text'>联系客服</span>
+        </div>
         <RollingList />
       </div>
       <RechargeKey />
       <DetailDescription />
       <Lottery />
+      <CustomServiceModal />
     </Context.Provider>
   </>
 }

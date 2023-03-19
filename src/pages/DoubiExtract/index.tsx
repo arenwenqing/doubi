@@ -1,10 +1,12 @@
-import React, { useCallback, useEffect, useRef, useState} from 'react'
+import React, { useCallback, useContext, useEffect, useRef, useState} from 'react'
 import TopRolling from '@pages/Component/TopRolling'
 import { useNavigate } from 'react-router-dom'
 import { NavBar, Modal, Input, List, InfiniteScroll, Toast } from 'antd-mobile'
 // import { sleep } from 'antd-mobile/es/utils/sleep'
 import Api from 'src/apis'
 import moment from 'moment'
+import CustomServiceModal from '../Component/CustomServiceModal'
+import { Context, setCustomServiceModal } from '../../store'
 import './index.less'
 
 const showText = {
@@ -22,6 +24,8 @@ const DoubiExtract:React.FC = () => {
   const [douyin, setDouyin] = useState('')
   const [dyIds, setDyIds] = useState([])
   const [showDyIds, setShowDyIds] = useState(false)
+
+  const { dispatch } = useContext(Context)
 
   const numRef = useRef(1)
   const isLoad = useRef(true)
@@ -71,6 +75,13 @@ const DoubiExtract:React.FC = () => {
   async function loadMore() {
     await getCoinHistory()
   }
+
+  const contactCustomService = () => {
+    dispatch(setCustomServiceModal({
+      visible: true
+    }))
+  }
+
   const homeBack = () => {
     navigate({
       pathname: '/home',
@@ -84,6 +95,12 @@ const DoubiExtract:React.FC = () => {
     //     content: <span>当前抖币数量为 <label style={{ color: 'red' }}>0</label></span>
     //   })
     // }
+    if (!userInfo.userId) {
+      return Toast.show({
+        content: '请先登录',
+        duration: 2000
+      })
+    }
     setVisible(true)
   }
 
@@ -236,6 +253,10 @@ const DoubiExtract:React.FC = () => {
       <img className='doubi-tiqu' src='https://cdn.tuanzhzh.com/doubi-image/home-icon.png' />
       <span className='doubi-tiqu-text'>返回首页</span>
     </div>
+    <div className='home-back contact-customer' onClick={contactCustomService}>
+      <img className='doubi-tiqu' src='https://cdn.tuanzhzh.com/doubi-image/kefu.png' />
+      <span className='doubi-tiqu-text'>联系客服</span>
+    </div>
     <div className='extract-list-wrapper'>
       <List>
         {
@@ -328,7 +349,7 @@ const DoubiExtract:React.FC = () => {
         setVisible(false)
       }}
     />
-
+    <CustomServiceModal />
   </div>
 }
 export default DoubiExtract

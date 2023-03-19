@@ -83,7 +83,7 @@ const ExtensionHome = () => {
 
   const getProxyUser = () => {
     Apis.getProxyUser({
-      userId: userInfo.userId
+      userId: userInfo.userId // '1588476545ab4a3b9f18833dba5dbb1f' userInfo.userId
     }).then(res => {
       Object.keys(res.data || {}).forEach(item => {
         if (['curDateProfit', 'nextMonthProfit', 'historyAllProfit'].includes(item)) {
@@ -109,13 +109,27 @@ const ExtensionHome = () => {
     })
   }
 
+  const showDetail = () => {
+    navigate({
+      pathname: '/extension-wild',
+      search: window.location.search
+    })
+  }
+
+  const extensionLogin = () => {
+    navigate({
+      pathname: '/extension-login',
+      search: window.location.search
+    })
+  }
+
   useEffect(() => {
     getProxyUser()
   }, [])
 
   return <div className='extension-home-wrapper'>
     <div className='extension-home-title'>推广后台</div>
-    <Empty style={{ display: userInfo.userId ? 'none' : '' }} description='请登录' />
+    <Empty style={{ display: userInfo.userId ? 'none' : '' }} description={<span className='extension-login-btn' onClick={extensionLogin}>点击登录</span>} />
     <div style={{ display: userInfo.userId ? '' : 'none' }}>
       <div className='extension-home-date'>
         <span>{moment(extensionData?.expDate).format('YYYY/MM/DD')} 到期</span>
@@ -135,6 +149,9 @@ const ExtensionHome = () => {
           <div className='extension-home-profit-item'>
             <span>历史总收益</span>
             <span>{extensionData.historyAllProfit}</span>
+            {
+              extensionData.hasDetailSaleData ? <span onClick={showDetail}>推广明细</span> : ''
+            }
           </div>
         </Space>
       </div>

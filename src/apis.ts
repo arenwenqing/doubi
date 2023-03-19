@@ -118,6 +118,16 @@ class Apis {
    * 【用户代理】注册新的推广员
    */
   proxyUserRegister = post('/api/mystery/proxyUser/register')
+
+  /**
+   * 【用户代理】下级代理用户数据检索
+   */
+  getSubList = post('/api/mystery/proxyUser/sub/search')
+
+  /**
+   * 【用户代理】推广员个人销售数据
+   */
+  getSaleData = get('/api/mystery/proxyUser/saleData')
 }
 
 export const ServiceApis = Apis;

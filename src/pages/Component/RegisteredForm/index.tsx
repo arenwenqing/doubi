@@ -16,7 +16,7 @@ const RegisteredForm:React.FC = () => {
     const obj = await form.validateFields()
     Apis.registerFromPhone({
       ...obj,
-      proxyUserId: getUrlParam('proxyUserId') ? getUrlParam('proxyUserId') : false
+      proxyUserId: getUrlParam('proxyUserId') ? getUrlParam('proxyUserId') : ''
     }).then(res => {
       // 注册成功，跳转到登录
       if (res.data.registerResult) {
@@ -90,14 +90,6 @@ const RegisteredForm:React.FC = () => {
   return <div className='resgister-form-wrapper'>
     <Form layout='horizontal' form={form} requiredMarkStyle='none'>
       <div className='login-item'>
-        <span className='login-item-title'>邀请码</span>
-        <div className='login-item-component'>
-          <Form.Item name='invitationCode' rules={[{ required: false, message: '请输入邀请码'}]}>
-            <Input placeholder='请输入邀请码' clearable className='input-style' />
-          </Form.Item>
-        </div>
-      </div>
-      <div className='login-item'>
         <span className='login-item-title'>手机号</span>
         <div className='login-item-component'>
           <Form.Item name='phoneNum' validateTrigger={['onBlur']} rules={[
@@ -127,6 +119,14 @@ const RegisteredForm:React.FC = () => {
             passwordRule
           ]}>
             <Input type='password' placeholder='8~16位数字、英文混合' clearable className='input-style' />
+          </Form.Item>
+        </div>
+      </div>
+      <div className='login-item'>
+        <span className='login-item-title'>邀请码</span>
+        <div className='login-item-component'>
+          <Form.Item name='invitationCode' rules={[{ required: false, message: '请输入邀请码'}]}>
+            <Input placeholder='选填' clearable className='input-style' />
           </Form.Item>
         </div>
       </div>

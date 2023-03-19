@@ -16,6 +16,9 @@ export const initialState = {
   modifyPayData: {
     visible: false,
     aliPayId: ''
+  },
+  customServiceModal: {
+    visible: false
   }
 }
 
@@ -37,12 +40,15 @@ export const reduxSlice = createSlice({
     },
     setModifyPayData: (state, { payload }) => {
       state.modifyPayData = payload
+    },
+    setCustomServiceModal: (state, { payload }) => {
+      state.customServiceModal = payload
     }
   }
 })
 
 // Action creators are generated for each case reducer function
-export const { setLoginCurrentKey, setUserId, setRenewModalData, setUpgradeModalData, setModifyPayData } = reduxSlice.actions
+export const { setLoginCurrentKey, setUserId, setRenewModalData, setUpgradeModalData, setModifyPayData, setCustomServiceModal } = reduxSlice.actions
 
 // redux-thunk actions
 // 拉取是否开通接口

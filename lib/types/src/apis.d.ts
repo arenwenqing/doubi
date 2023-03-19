@@ -91,6 +91,14 @@ declare class Apis {
      * 【用户代理】注册新的推广员
      */
     proxyUserRegister: import("axios-service").IAxiosFun;
+    /**
+     * 【用户代理】下级代理用户数据检索
+     */
+    getSubList: import("axios-service").IAxiosFun;
+    /**
+     * 【用户代理】推广员个人销售数据
+     */
+    getSaleData: import("axios-service").IAxiosFun;
 }
 export declare const ServiceApis: typeof Apis;
 declare const _default: Apis;
