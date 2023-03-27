@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState, useRef, useContext } from 'react'
-import TopRolling from '@pages/Component/TopRolling/index'
+// import TopRolling from '@pages/Component/TopRolling/index'
 import { useNavigate } from 'react-router-dom'
 import { NavBar, List, Toast, InfiniteScroll } from 'antd-mobile'
 import Apis from 'src/apis'
 import moment from 'moment'
 import CustomServiceModal from '../Component/CustomServiceModal'
 import { Context, setCustomServiceModal } from '../../store'
+import GiftBroadcast from '@pages/Component/GiftBroadcast'
 import './index.less'
 
 const borderColorMap = {
@@ -91,7 +92,8 @@ const History:React.FC = () => {
     >
       历史记录
     </NavBar>
-    <TopRolling height={48} speed={3} />
+    {/* <TopRolling height={48} speed={3} /> */}
+    <GiftBroadcast />
     <div className='home-back' onClick={homeBack}>
       <img className='doubi-tiqu' src='https://cdn.tuanzhzh.com/doubi-image/home-icon.png' />
       <span className='doubi-tiqu-text'>返回首页</span>

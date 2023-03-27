@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from 'react'
-import TopRolling from '@pages/Component/TopRolling'
+// import TopRolling from '@pages/Component/TopRolling'
 import { NavBar, CapsuleTabs } from 'antd-mobile'
 import { useNavigate } from 'react-router-dom'
 import LoginForm from '@pages/Component/LoginForm'
@@ -36,7 +36,7 @@ const Login: React.FC = () => {
       back='返回'
     >
     </NavBar>
-    <TopRolling height={48} speed={3} />
+    {/* <TopRolling height={48} speed={3} /> */}
     <CapsuleTabs className='login-btn-wrapper' onChange={tabChangeHandle} activeKey={loginCurrentKey}>
       <CapsuleTabs.Tab title='登录' key='login' />
       <CapsuleTabs.Tab title='注册' key='registered' />

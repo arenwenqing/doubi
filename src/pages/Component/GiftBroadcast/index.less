@@ -1,0 +1,78 @@
+@keyframes showDh {
+  from {
+    left: 750px;
+  }
+	to {
+    left: 0px;
+  }
+}
+@keyframes hideDh {
+  from {
+    left: 0px;
+  }
+	to {
+    left: 750px;
+  }
+}
+.show-dh {
+  animation: showDh 0.4s ease-out forwards;
+}
+
+.hide-dh {
+  animation: hideDh 0.4s ease-out forwards;
+}
+
+.gift-broadcast-wrapper {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  width: 750px;
+  height: 288px;
+  background: url('https://cdn.tuanzhzh.com/doubi-image/liwu-bg.png') no-repeat;
+  background-color: #181A20;
+  background-size: contain;
+  background-position: center;
+  top: 80px;
+  left: 750px;
+  z-index: 9999;
+  .gift-left {
+    margin-left: 80px;
+    margin-right: 60px;
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: center;
+
+    .gift-left-top {
+      margin-top: 10px;
+    }
+
+    .gift-title {
+      font-size: 40px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 500;
+      color: #181A20;
+      line-height: 40px;
+      margin-right: 14px;
+    }
+    .gift-price {
+      font-size: 40px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 500;
+      color: #FFFFFF;
+      line-height: 40px;
+    }
+  }
+  .gift-img {
+    display: block;
+    width: 200px;
+    height: 200px;
+    margin-top: 12px;
+  }
+  .gift-close {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    right: 68px;
+    bottom: 44px;
+  }
+}

@@ -37,7 +37,10 @@ export const initialState = {
     keyType: 5,
     keyCount: 0
   }],
-  commonScreenData: []
+  commonScreenData: [],
+  exchangeCodeModal: {
+    visible: false
+  }
 }
 
 export const reduxSlice = createSlice({
@@ -59,6 +62,9 @@ export const reduxSlice = createSlice({
     },
     setCommonScreenData: (state, { payload }) => {
       state.commonScreenData = payload
+    },
+    setExchangeCodeModal: (state, { payload }) => {
+      state.exchangeCodeModal = payload
     }
   }
 })
@@ -69,7 +75,8 @@ export const {
   setDetailModal,
   setLotteryModal,
   setKeyInfo,
-  setCommonScreenData
+  setCommonScreenData,
+  setExchangeCodeModal
 } = reduxSlice.actions
 
 // 获取钥匙数量

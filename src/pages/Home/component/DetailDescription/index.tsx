@@ -35,22 +35,22 @@ const DetailDescription: React.FC = () => {
           <li className='detail-description-li'>
             <span>金色礼物</span>
             <span>5%</span>
-            <span>私人飞机</span>
+            <span>保时捷</span>
           </li>
           <li className='detail-description-li'>
             <span>紫色礼物</span>
             <span>15%</span>
-            <span>心花怒放</span>
+            <span>星星点灯、爱的守护</span>
           </li>
           <li className='detail-description-li'>
             <span>蓝色礼物</span>
             <span>50%</span>
-            <span>爱你哟*4、比心</span>
+            <span>爱你哟*4、送你花花*4、鲜花*18</span>
           </li>
           <li className='detail-description-li'>
             <span>白色礼物</span>
             <span>30%</span>
-            <span>爱你哟*2、墨镜</span>
+            <span>爱你哟、鲜花*6、棒棒糖*8、加油鸭*5</span>
           </li>
           <li className='probability-li'>银光盒子-使用银钥匙:</li>
           <li className='detail-description-li'>
@@ -61,22 +61,22 @@ const DetailDescription: React.FC = () => {
           <li className='detail-description-li'>
             <span>金色礼物</span>
             <span>5%</span>
-            <span>真的爱你</span>
+            <span>爱的守护</span>
           </li>
           <li className='detail-description-li'>
             <span>紫色礼物</span>
             <span>15%</span>
-            <span>爱你哟*2</span>
+            <span>亲吻、爱的纸鹤</span>
           </li>
           <li className='detail-description-li'>
             <span>蓝色礼物</span>
             <span>50%</span>
-            <span>鲜花*7、加油鸭*4</span>
+            <span>鲜花*6、棒棒糖*8、加油鸭*5</span>
           </li>
           <li className='detail-description-li'>
             <span>白色礼物</span>
             <span>30%</span>
-            <span>爱你哟、加油鸭*2</span>
+            <span>大啤酒*9、棒棒糖*2、鲜花*2、玫瑰*25</span>
           </li>
           <li className='probability-li'>铜质盒子-使用金钥匙:</li>
           <li className='detail-description-li'>
@@ -87,22 +87,22 @@ const DetailDescription: React.FC = () => {
           <li className='detail-description-li'>
             <span>金色礼物</span>
             <span>5%</span>
-            <span>墨镜</span>
+            <span>鲜花*4</span>
           </li>
           <li className='detail-description-li'>
             <span>紫色礼物</span>
             <span>15%</span>
-            <span>加油鸭*2</span>
+            <span>鲜花*2、大啤酒*9</span>
           </li>
           <li className='detail-description-li'>
             <span>蓝色礼物</span>
             <span>50%</span>
-            <span>啤酒*7、小心心*13</span>
+            <span>棒棒糖、鲜花、加油鸭</span>
           </li>
           <li className='detail-description-li'>
             <span>白色礼物</span>
             <span>30%</span>
-            <span>棒棒糖、啤酒*3</span>
+            <span>小心心、你最好看、大啤酒*2、玫瑰*5</span>
           </li>
         </ul>
       </div>

@@ -1,14 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
 // import Api from './apis'
-import { Divider, CapsuleTabs, Button, Modal, Toast } from 'antd-mobile'
+import { Divider, CapsuleTabs, Button, Modal, Toast, Space } from 'antd-mobile'
 import RollingList from '@pages/Component/RollingList'
 import { useNavigate } from 'react-router-dom'
 // import TopRolling from '@pages/Component/TopRolling'
-import TopRolling2 from '@pages/Component/TopRolling/index'
+// import TopRolling2 from '@pages/Component/TopRolling/index'
+import GiftBroadcast from '@pages/Component/GiftBroadcast'
 import useEnhancedReducerv from '../Component/UseEnhancedReducer'
-import reducer, { Context, setViewModal, initialState, setDetailModal, lotteryDraw, getKeys } from './store'
+import reducer, { Context, setViewModal, initialState, setDetailModal, lotteryDraw, getKeys, setExchangeCodeModal } from './store'
 import RechargeKey from './component/RechargeKey'
 import DetailDescription from './component/DetailDescription'
+import ExchangeCode from './component/ExchangeCode'
 import Lottery from './component/LotteryModal'
 import { getUrlParams } from 'src/utils'
 import CustomServiceModal from '../Component/CustomServiceModal'
@@ -131,6 +133,12 @@ const Home: React.FC = () => {
     }
   }
 
+  const exchangeHandle = () => {
+    dispatch(setExchangeCodeModal({
+      visible: true
+    }))
+  }
+
   useEffect(() => {
     if (Object.keys(userInfo).length) {
       dispatch(getKeys({
@@ -164,29 +172,38 @@ const Home: React.FC = () => {
     <Context.Provider value={{ state, dispatch }}>
       <div className='home-page'>
         {/* <TopRolling /> */}
-        <TopRolling2 height={48} speed={3} />
+        {/* <TopRolling2 height={48} speed={3} /> */}
+        <GiftBroadcast />
         <div className='home-user-wrapper'>
-          <span className='user-portrait'>
-            <img className='portrait-icon' src={loginInfo.avatarUrl || 'https://cdn.tuanzhzh.com/doubi-image/no-login-icon.png'}></img>
-          </span>
-          <span className='user-name' onClick={skipLoginPage}>{loginInfo.nickName || '游客'}</span>
-          <Button
-            color='danger'
-            className={ userInfo.userId ? 'user-logout-btn' : 'hide user-logout-btn'}
-            size='mini'
-            onClick={async () => {
-              const result = await Modal.confirm({
-                content: '您确定要退出么？',
-                bodyClassName: 'user-logout-modal'
-              })
-              if (result) {
-                logout()
-                // Toast.show({ content: '点击了确认', position: 'center' })
-              } else {
-                // Toast.show({ content: '点击了取消', position: 'center' })
-              }
-            }}
-          >退出</Button>
+          <div className='home-user-content'>
+            <span className='user-portrait'>
+              <img className='portrait-icon' src={loginInfo.avatarUrl || 'https://cdn.tuanzhzh.com/doubi-image/no-login-icon.png'}></img>
+            </span>
+            <span className='user-name' onClick={skipLoginPage}>{loginInfo.nickName || '游客'}</span>
+            <Button
+              color='danger'
+              className={ userInfo.userId ? 'user-logout-btn' : 'hide user-logout-btn'}
+              size='mini'
+              onClick={async () => {
+                const result = await Modal.confirm({
+                  content: '您确定要退出么？',
+                  bodyClassName: 'user-logout-modal'
+                })
+                if (result) {
+                  logout()
+                  // Toast.show({ content: '点击了确认', position: 'center' })
+                } else {
+                  // Toast.show({ content: '点击了取消', position: 'center' })
+                }
+              }}
+            >
+              退出
+            </Button>
+          </div>
+          <Space className='home-operation-btn'>
+            <label>分享</label>
+            <label onClick={exchangeHandle}>兑换钥匙</label>
+          </Space>
         </div>
         <div className='home-keys-wrapper'>
           {
@@ -236,6 +253,7 @@ const Home: React.FC = () => {
       <DetailDescription />
       <Lottery />
       <CustomServiceModal />
+      <ExchangeCode />
     </Context.Provider>
   </>
 }

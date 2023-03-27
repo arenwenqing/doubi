@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useRef, useState} from 'react'
-import TopRolling from '@pages/Component/TopRolling'
+// import TopRolling from '@pages/Component/TopRolling'
 import { useNavigate } from 'react-router-dom'
 import { NavBar, Modal, Input, List, InfiniteScroll, Toast } from 'antd-mobile'
 // import { sleep } from 'antd-mobile/es/utils/sleep'
@@ -7,6 +7,7 @@ import Api from 'src/apis'
 import moment from 'moment'
 import CustomServiceModal from '../Component/CustomServiceModal'
 import { Context, setCustomServiceModal } from '../../store'
+import GiftBroadcast from '@pages/Component/GiftBroadcast'
 import './index.less'
 
 const showText = {
@@ -231,7 +232,8 @@ const DoubiExtract:React.FC = () => {
     >
       抖币提取
     </NavBar>
-    <TopRolling height={48} speed={3} />
+    {/* <TopRolling height={48} speed={3} /> */}
+    <GiftBroadcast />
     <div className='extract-header-wrapper'>
       <div className='extract-header'>
         <div className='extract-header-top'>
