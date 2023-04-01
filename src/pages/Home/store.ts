@@ -40,6 +40,9 @@ export const initialState = {
   commonScreenData: [],
   exchangeCodeModal: {
     visible: false
+  },
+  shareModal: {
+    visible: false
   }
 }
 
@@ -65,6 +68,9 @@ export const reduxSlice = createSlice({
     },
     setExchangeCodeModal: (state, { payload }) => {
       state.exchangeCodeModal = payload
+    },
+    setShareModal: (state, { payload }) => {
+      state.shareModal = payload
     }
   }
 })
@@ -76,7 +82,8 @@ export const {
   setLotteryModal,
   setKeyInfo,
   setCommonScreenData,
-  setExchangeCodeModal
+  setExchangeCodeModal,
+  setShareModal
 } = reduxSlice.actions
 
 // 获取钥匙数量

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // import Api from './apis'
 import { Divider, CapsuleTabs, Button, Modal, Toast, Space } from 'antd-mobile'
 import RollingList from '@pages/Component/RollingList'
@@ -7,15 +7,24 @@ import { useNavigate } from 'react-router-dom'
 // import TopRolling2 from '@pages/Component/TopRolling/index'
 import GiftBroadcast from '@pages/Component/GiftBroadcast'
 import useEnhancedReducerv from '../Component/UseEnhancedReducer'
-import reducer, { Context, setViewModal, initialState, setDetailModal, lotteryDraw, getKeys, setExchangeCodeModal } from './store'
+import reducer, {
+  Context,
+  setViewModal,
+  initialState,
+  setDetailModal,
+  lotteryDraw,
+  getKeys,
+  setExchangeCodeModal,
+  setShareModal
+} from './store'
 import RechargeKey from './component/RechargeKey'
 import DetailDescription from './component/DetailDescription'
 import ExchangeCode from './component/ExchangeCode'
 import Lottery from './component/LotteryModal'
 import { getUrlParams } from 'src/utils'
 import CustomServiceModal from '../Component/CustomServiceModal'
-import { Context as globalContext, setCustomServiceModal } from '../../store'
-// import Apis from 'src/apis'
+import Share from './component/Share'
+// import { Context as globalContext, setCustomServiceModal } from '../../store'
 import './index.less'
 
 const boxMap = {
@@ -35,9 +44,7 @@ const Home: React.FC = () => {
     nickName: '请登录',
     avatarUrl: 'https://cdn.tuanzhzh.com/doubi-image/no-login-icon.png'
   })
-  const { dispatch: globalDispatch } = useContext(globalContext)
-  // const [, updateState] = useState<any>();
-  // const forceUpdate = useCallback(() => updateState({}), []);
+  // const { dispatch: globalDispatch } = useContext(globalContext)
   const userInfo = JSON.parse(window.localStorage.getItem('user') || '{}')
   const [state, dispatch] = useEnhancedReducerv(reducer, initialState)
   const navigate = useNavigate()
@@ -55,11 +62,11 @@ const Home: React.FC = () => {
     }
   }
 
-  const contactCustomService = () => {
-    globalDispatch(setCustomServiceModal({
-      visible: true
-    }))
-  }
+  // const contactCustomService = () => {
+  //   globalDispatch(setCustomServiceModal({
+  //     visible: true
+  //   }))
+  // }
 
   const extractHandle = () => {
     navigate({
@@ -139,6 +146,12 @@ const Home: React.FC = () => {
     }))
   }
 
+  const shareHandle = () => {
+    dispatch(setShareModal({
+      visible: true
+    }))
+  }
+
   useEffect(() => {
     if (Object.keys(userInfo).length) {
       dispatch(getKeys({
@@ -201,7 +214,7 @@ const Home: React.FC = () => {
             </Button>
           </div>
           <Space className='home-operation-btn'>
-            <label>分享</label>
+            <label onClick={shareHandle}>分享</label>
             <label onClick={exchangeHandle}>兑换钥匙</label>
           </Space>
         </div>
@@ -243,10 +256,10 @@ const Home: React.FC = () => {
           <img className='doubi-tiqu' src='https://cdn.tuanzhzh.com/doubi-image/doubi-tiqu-icon.png' />
           <span className='doubi-tiqu-text'>抖币提取</span>
         </div>
-        <div className='home-doubi-extract contact-customer' onClick={contactCustomService}>
+        {/* <div className='home-doubi-extract contact-customer' onClick={contactCustomService}>
           <img className='doubi-tiqu' src='https://cdn.tuanzhzh.com/doubi-image/kefu.png' />
           <span className='doubi-tiqu-text'>联系客服</span>
-        </div>
+        </div> */}
         <RollingList />
       </div>
       <RechargeKey />
@@ -254,6 +267,7 @@ const Home: React.FC = () => {
       <Lottery />
       <CustomServiceModal />
       <ExchangeCode />
+      <Share />
     </Context.Provider>
   </>
 }
