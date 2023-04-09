@@ -43,6 +43,10 @@ export const initialState = {
   },
   shareModal: {
     visible: false
+  },
+  showCurrentBroadCast: {
+    img: '',
+    value: ''
   }
 }
 
@@ -71,6 +75,9 @@ export const reduxSlice = createSlice({
     },
     setShareModal: (state, { payload }) => {
       state.shareModal = payload
+    },
+    setShowCurrentBroadCast: (state, { payload }) => {
+      state.showCurrentBroadCast = payload
     }
   }
 })
@@ -83,7 +90,8 @@ export const {
   setKeyInfo,
   setCommonScreenData,
   setExchangeCodeModal,
-  setShareModal
+  setShareModal,
+  setShowCurrentBroadCast
 } = reduxSlice.actions
 
 // 获取钥匙数量

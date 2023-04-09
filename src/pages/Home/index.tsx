@@ -50,7 +50,8 @@ const Home: React.FC = () => {
   const navigate = useNavigate()
 
   const {
-    keyInfo
+    keyInfo,
+    showCurrentBroadCast
   } = state
 
   const skipLoginPage = () => {
@@ -186,7 +187,7 @@ const Home: React.FC = () => {
       <div className='home-page'>
         {/* <TopRolling /> */}
         {/* <TopRolling2 height={48} speed={3} /> */}
-        <GiftBroadcast />
+        <GiftBroadcast showCurrentUser={showCurrentBroadCast} />
         <div className='home-user-wrapper'>
           <div className='home-user-content'>
             <span className='user-portrait'>

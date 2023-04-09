@@ -1,5 +1,6 @@
 .lottery-wrapper {
   ul,li{list-style:none;}
+  
 
   @keyframes mymove {
     from {
@@ -13,11 +14,11 @@
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 656px;
+    width: 680px; // 656
     height: 1156px;
     border-radius: 40px;
     margin-top: -578px;
-    margin-left: -328px;
+    margin-left: -340px;
     background: #262A34;
 
     .lottery-close-icon {
@@ -34,24 +35,69 @@
       width: 472px;
       height: 472px;
       margin: 84px auto 46px;
+      border-radius: 20px;
       img {
-        width: 100%;
+        display: inline-block;
+        width: 336px;
+        height: 336px;
         animation: mymove 0.5s linear;
       }
     }
+    .max-value-lottery-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 40px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 500;
+    }
     .lottery-list-ul {
-      margin: 0 34px;
+      margin: 0 10px;
       display: flex;
       align-items: center;
       flex-wrap: wrap;
       .lottery-list-item {
-        width: 108px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 6px;
+        border: 1px solid #444444;
+        width: 118px;
         height: 178px;
         border-radius: 6px;
-        margin: 0 9px 18px 0;
+        margin: 0 9px 15px 0;
+      }
+      .lottery-list-title {
+        -webkit-text-size-adjust: none;
+        font-size: 10px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #FFFFFF;
+        display: inline-block;
+        transform: scale(0.8);
+      }
+      .lottery-list-dymomeny-amount {
+        -webkit-text-size-adjust: none;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #FFFFFF;
+        display: flex;
+        label {
+          -webkit-text-size-adjust: none;
+          display: inline-block;
+          font-size: 8px;
+          transform: scale(0.8);
+          flex: none;
+        }
+        .lottery-list-amount {
+          position: relative;
+          right: 12px;
+        }
       }
       img {
-        width: 100%;
+        // width: 100%;
+        width: 96px;
+        height: 96px;
         animation: mymove 0.5s linear;
       }
     }
@@ -115,7 +161,7 @@
       position: absolute;
       .load-draw-img {
         display: inline-block;
-        width: 656px;
+        width: 680px;
         height: 1156px;
       }
     }

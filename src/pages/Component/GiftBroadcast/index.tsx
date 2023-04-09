@@ -47,13 +47,18 @@ const interval = {
     this._active.delete(id)
   }
 }
-const GiftBroadcast = () => {
+const GiftBroadcast = (props) => {
   const [flag, setFlag] = useState(false)
   const [iphoneStart, setIphoneStart] = useState<any>()
   const [iphoneEnd, setIphoneEnd] = useState<any>()
   const [giftInfo, setGiftInfo] = useState<any>()
   const creatTimeRef = useRef<any>()
   const clearTimeRef = useRef<any>()
+  const userInfo = JSON.parse(window.localStorage.getItem('user') || '{}')
+  const {
+    showCurrentUser
+  } = props
+
   const closeGift = () => {
     const dom = document.getElementById('gift_id')
     dom.classList.add('hide-dh')
@@ -76,6 +81,13 @@ const GiftBroadcast = () => {
     }, rand(15, 30) * 1000)
   }, [])
 
+  const closeCurrentUserBroadcast = () => {
+    setTimeout(() => {
+      closeGift()
+      randomHandle()
+    }, 4500);
+  }
+
   useEffect(()=> {
     if (flag) {
       clearTimeRef.current = interval.set(() => {
@@ -86,6 +98,23 @@ const GiftBroadcast = () => {
       }, 4500)
     }
   }, [flag])
+
+  useEffect(() => {
+    if (showCurrentUser.value && userInfo) {
+      interval.clear(creatTimeRef.current)
+      interval.clear(clearTimeRef.current)
+      setTimeout(() => {
+        const dom = document.getElementById('gift_id')
+        dom.classList.remove('hide-dh')
+        dom.classList.add('show-dh')
+        setIphoneStart(userInfo.phoneNum.slice(0, 3))
+        setIphoneEnd(userInfo.phoneNum.slice(7))
+        setGiftInfo(showCurrentUser)
+        setFlag(true)
+        closeCurrentUserBroadcast()
+      }, 2000);
+    }
+  }, [showCurrentUser])
 
   useEffect(() => {
     randomHandle()

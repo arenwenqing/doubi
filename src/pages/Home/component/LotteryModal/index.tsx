@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { Mask, Button } from 'antd-mobile'
-import { setLotteryModal, Context, lotteryDraw, setViewModal } from '../../store'
+import { setLotteryModal, Context, lotteryDraw, setViewModal, setShowCurrentBroadCast } from '../../store'
 import RechargeKey from '../RechargeKey'
 import { genId } from 'src/utils'
 import './index.less'
@@ -60,7 +60,17 @@ const Lottery: React.FC = () => {
     const tempArr = JSON.parse(JSON.stringify(lotteryModal.lotteryDataSource?.giftList || []))
     tempArr.splice(index, 1)
     setMaxValue(findObj)
+    if (findObj.giftColor === '#FFFFFF') {
+      findObj.giftColor = '#2FBFFF'
+    }
+    setMaxValue(findObj)
     setList(tempArr)
+    if (findObj.lotteryLevel === 1) {
+      dispatch(setShowCurrentBroadCast({
+        value: findObj.giftName,
+        img: findObj.mainPicUrl
+      }))
+    }
   }, [lotteryModal])
 
   return <div className='lottery-wrapper'>
@@ -73,16 +83,25 @@ const Lottery: React.FC = () => {
           }
         </div>
         <div>
-          <div className='max-value-lottery'>
-            {
-              maxValue.bigPicUrl && <img src={maxValue.bigPicUrl} />
-            }
-          </div>
+          {
+            maxValue.bigPicUrl && <div className='max-value-lottery' style={{ boxShadow: `inset 0px 0px 22px 0px ${maxValue.giftColor}`, border: `1px solid ${maxValue.giftColor}` }}>
+              <div className='max-value-lottery-content'>
+                <img src={maxValue.mainPicUrl} />
+                <div style={{ color: maxValue.giftColor }}>{maxValue.giftName}</div>
+                <div style={{ color: maxValue.giftColor }}>(价值抖币{maxValue.dyMoneyAmount})</div>
+              </div>
+            </div>
+          }
           <ul className='lottery-list-ul'>
             {
               list.map((item, i) => {
                 return <li className='lottery-list-item' key={i}>
-                  <img src={item.smallPicUrl} />
+                  <img src={item.mainPicUrl} />
+                  <span className='lottery-list-title' style={{ color: item.giftColor }}>{item.giftName}</span>
+                  <span className='lottery-list-dymomeny-amount' style={{ color: item.giftColor }}>
+                    <label>价值抖币</label>
+                    <label className='lottery-list-amount'>{item.dyMoneyAmount}</label>
+                  </span>
                 </li>
               })
             }

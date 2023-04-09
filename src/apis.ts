@@ -128,6 +128,11 @@ class Apis {
    * 【用户代理】推广员个人销售数据
    */
   getSaleData = get('/api/mystery/proxyUser/saleData')
+
+  /**
+   * 【首页】兑换钥匙
+   */
+  exchargeCode = post('/api/mystery/key/exchange')
 }
 
 export const ServiceApis = Apis;
