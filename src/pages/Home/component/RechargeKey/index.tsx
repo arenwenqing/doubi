@@ -20,7 +20,7 @@ interface KeysListType {
   extraKeyInfoList?: ListObjectType []
 }
 interface RechargeKeyType {
-  keyInfo?: {
+  keyCountInfo?: {
     keyType: number
     keyCount: number
   }
@@ -68,7 +68,7 @@ const RechargeKey: React.FC = () => {
     setActive(index)
     setPayVisible(true)
     setRechargeKeyInfo({
-      keyInfo: {
+      keyCountInfo: {
         keyType: viewModal.type,
         keyCount: num * 1
       }
@@ -115,8 +115,8 @@ const RechargeKey: React.FC = () => {
       content: '加载中…'
     })
     const str = stringifyParams({
-      keyType: rechargeKeyInfo.keyInfo.keyType,
-      keyCount: rechargeKeyInfo.keyInfo.keyCount,
+      keyType: rechargeKeyInfo.keyCountInfo.keyType,
+      keyCount: rechargeKeyInfo.keyCountInfo.keyCount,
       userId: userInfo.userId,
       from: 'h5'
     })
@@ -132,8 +132,8 @@ const RechargeKey: React.FC = () => {
 
   const getWeixinUrl = () => {
     const str = stringifyParams({
-      keyType: rechargeKeyInfo.keyInfo.keyType,
-      keyCount: rechargeKeyInfo.keyInfo.keyCount,
+      keyType: rechargeKeyInfo.keyCountInfo.keyType,
+      keyCount: rechargeKeyInfo.keyCountInfo.keyCount,
       userId: userInfo.userId,
       from: 'h5'
     })
