@@ -103,6 +103,10 @@ declare class Apis {
      * 【首页】兑换钥匙
      */
     exchargeCode: import("axios-service").IAxiosFun;
+    /**
+     * 【小程序】生成跳转小程序链接
+     */
+    createMiniProgram: import("axios-service").IAxiosFun;
 }
 export declare const ServiceApis: typeof Apis;
 declare const _default: Apis;

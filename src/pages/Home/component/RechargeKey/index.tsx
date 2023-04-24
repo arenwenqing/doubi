@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useContext, useEffect, useState } from 'react'
 import { Mask, Toast } from 'antd-mobile'
 import { Context, setViewModal } from '../../store'
@@ -115,8 +114,20 @@ const RechargeKey: React.FC = () => {
       icon: 'loading',
       content: '加载中…'
     })
-    getWeixinUrl()
-    // window.location.href='weixin://dl/business/?t=tAlhEOadqVb'
+    const str = stringifyParams({
+      keyType: rechargeKeyInfo.keyInfo.keyType,
+      keyCount: rechargeKeyInfo.keyInfo.keyCount,
+      userId: userInfo.userId,
+      from: 'h5'
+    })
+    // 判断是否是小程序环境
+    if (window.__wxjs_environment === 'miniprogram') {
+      window.wx.miniProgram.navigateTo({
+        url: `/pages/index/index?${str}`
+      })
+    } else  {
+      getWeixinUrl()
+    }
   }
 
   const getWeixinUrl = () => {
@@ -128,11 +139,10 @@ const RechargeKey: React.FC = () => {
     })
     Api.createMiniProgram({
       path: '/pages/index/index',
-      'env_version': 'release',
+      'env_version': 'develop',
       query: str
     }).then(res => {
       if (!res.code) {
-        debugger
         window.location.href = res.data
       } else {
         Toast.show({

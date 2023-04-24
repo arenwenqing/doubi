@@ -7,6 +7,12 @@ export declare function classNames(prefix: any, styles: any): any;
  * @example 'a=1&b=3' => {a: 1, b: 3}
  */
 export declare function getUrlParams(sourceStr?: string): {};
+/**
+ * 参数格式化, 符合url方式
+ * @params {Object} {a: '123', age: '18'}
+ * @return {String} 'a=123&age=18'
+ */
+export declare function stringifyParams(params: any, cb?: any): string;
 export declare function genId(): string;
 /**
  * 得到url中某个参数
