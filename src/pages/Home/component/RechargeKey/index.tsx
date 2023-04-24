@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Mask, Toast } from 'antd-mobile'
+import { Mask, Toast, Dialog } from 'antd-mobile'
 import { Context, setViewModal } from '../../store'
 import Api from 'src/apis'
 import { stringifyParams } from 'src/utils'
@@ -120,6 +120,20 @@ const RechargeKey: React.FC = () => {
       userId: userInfo.userId,
       from: 'h5'
     })
+    setTimeout(() => {
+      Dialog.confirm({
+        content: '您是否已支付完成？',
+        bodyStyle: {
+          background: '#fff'
+        }
+      }).then(res => {
+        if (res) {
+          window.location.reload()
+        } else {
+          console.log('点击取消')
+        }
+      })
+    }, 1500);
     // 判断是否是小程序环境
     if (window.__wxjs_environment === 'miniprogram') {
       window.wx.miniProgram.navigateTo({
@@ -143,6 +157,8 @@ const RechargeKey: React.FC = () => {
       query: str
     }).then(res => {
       if (!res.code) {
+        closePay()
+        closeModal()
         window.location.href = res.data
       } else {
         Toast.show({
@@ -219,7 +235,7 @@ const RechargeKey: React.FC = () => {
         <img onClick={closePay} className='pay-close-icon' src='https://cdn.tuanzhzh.com/doubi-image/close-modal-icon.png' />
         <div className='pay-title'>请选择支付方式</div>
         <div className='pay-sub-title'>
-          <span>支付完成后若未自动跳转, 请手动返回</span>
+          <span>支付完成后请手动返回抖盒子页面并刷新</span>
         </div>
         <div className='pay-way-content'>
           <div className='pay-way-item pay-way-item-wechat' onClick={wechatPay}>
