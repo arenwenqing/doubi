@@ -1,7 +1,11 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useContext, useEffect, useState } from 'react'
 import { Mask, Toast } from 'antd-mobile'
 import { Context, setViewModal } from '../../store'
 import Api from 'src/apis'
+import { stringifyParams } from 'src/utils'
+
+// import Openwechat from './openwechat'
 import './index.less'
 
 interface ListObjectType {
@@ -22,6 +26,7 @@ interface RechargeKeyType {
     keyCount: number
   }
 }
+
 const keyMap = {
   3: 'https://cdn.tuanzhzh.com/doubi-image/tong-yaoshi.png',
   4: 'https://cdn.tuanzhzh.com/doubi-image/yin-yaoshi.png',
@@ -45,6 +50,16 @@ const RechargeKey: React.FC = () => {
       visible: false
     }))
   }
+
+  // 判断微信环境
+  // const isWeixin = () => {
+  //   const ua = navigator.userAgent.toLowerCase()
+  //   const match = ua.match(/MicroMessenger/i)
+  //   if (match?.includes('micromessenger')) {
+  //     return true
+  //   }
+  //   return false
+  // }
 
   const closePay = () => {
     setPayVisible(false)
@@ -94,10 +109,63 @@ const RechargeKey: React.FC = () => {
     })
   }
 
+  // 微信支付
+  const wechatPay = () => {
+    Toast.show({
+      icon: 'loading',
+      content: '加载中…'
+    })
+    getWeixinUrl()
+    // window.location.href='weixin://dl/business/?t=tAlhEOadqVb'
+  }
+
+  const getWeixinUrl = () => {
+    const str = stringifyParams({
+      keyType: rechargeKeyInfo.keyInfo.keyType,
+      keyCount: rechargeKeyInfo.keyInfo.keyCount,
+      userId: userInfo.userId,
+      from: 'h5'
+    })
+    Api.createMiniProgram({
+      path: '/pages/index/index',
+      'env_version': 'release',
+      query: str
+    }).then(res => {
+      if (!res.code) {
+        debugger
+        window.location.href = res.data
+      } else {
+        Toast.show({
+          content: '支付异常，稍后重试'
+        })
+      }
+    }).catch(() => {
+      Toast.show({
+        content: '支付异常，稍后重试'
+      })
+    }).finally(() => {
+      Toast.clear()
+    })
+  }
+
   useEffect(() => {
     if (viewModal.visible) {
       setActive(-1)
       rechargeKeysList()
+    }
+  }, [viewModal.visible])
+
+  useEffect(() => {
+    if (viewModal.visible) {
+      setTimeout(() => {
+        const btn = document.getElementById('launch-btn');
+        btn.addEventListener('launch', function (e) {
+          console.log(e);
+        });
+        btn.addEventListener('error', function (e: any) {
+          console.log('fail', e.detail);
+        });
+      }, 1000);
     }
   }, [viewModal.visible])
 
@@ -144,10 +212,10 @@ const RechargeKey: React.FC = () => {
           <span>支付完成后若未自动跳转, 请手动返回</span>
         </div>
         <div className='pay-way-content'>
-          {/* <div className='pay-way-item pay-way-item-wechat'>
+          <div className='pay-way-item pay-way-item-wechat' onClick={wechatPay}>
             <img src='https://cdn.tuanzhzh.com/doubi-image/wechat.png' />
             <span className='pay-item-text'>微信支付</span>
-          </div> */}
+          </div>
           <div className='pay-way-item' onClick={aliPay}>
             <img src='https://cdn.tuanzhzh.com/doubi-image/alipay.png' />
             <span className='pay-item-text'>支付宝支付</span>

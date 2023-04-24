@@ -4,6 +4,9 @@ module.exports = {
     es6: true,
     node: true
   },
+  globals: {
+    wx: true
+  },
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
   extends: ['plugin:@typescript-eslint/recommended'],

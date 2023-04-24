@@ -133,6 +133,11 @@ class Apis {
    * 【首页】兑换钥匙
    */
   exchargeCode = post('/api/mystery/key/exchange')
+
+  /**
+   * 【小程序】生成跳转小程序链接
+   */
+  createMiniProgram = post('/api/mystery/mini/url')
 }
 
 export const ServiceApis = Apis;

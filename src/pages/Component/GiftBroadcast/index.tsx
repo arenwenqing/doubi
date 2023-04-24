@@ -85,7 +85,7 @@ const GiftBroadcast = (props) => {
     setTimeout(() => {
       closeGift()
       randomHandle()
-    }, 4500);
+    }, 3000);
   }
 
   useEffect(()=> {
@@ -95,12 +95,12 @@ const GiftBroadcast = (props) => {
         interval.clear(clearTimeRef.current)
         closeGift()
         randomHandle()
-      }, 4500)
+      }, 3000)
     }
   }, [flag])
 
   useEffect(() => {
-    if (showCurrentUser.value && userInfo) {
+    if (showCurrentUser?.value && userInfo) {
       interval.clear(creatTimeRef.current)
       interval.clear(clearTimeRef.current)
       setTimeout(() => {
@@ -128,15 +128,15 @@ const GiftBroadcast = (props) => {
       <Space direction='vertical' block>
         <span className='gift-left-top'>
           <label className='gift-title'>恭喜</label>
-          <label className='gift-price'>{iphoneStart}****{iphoneEnd}</label>
+          <label className='gift-price'>{iphoneStart || phoneHead[5]}****{iphoneEnd || '328'}</label>
         </span>
         <span>
           <label className='gift-title'>开出了</label>
-          <label className='gift-price'>{giftInfo?.value}</label>
+          <label className='gift-price'>{giftInfo?.value || giftMap[1].value}</label>
         </span>
       </Space>
     </div>
-    <img className='gift-img' src={giftInfo?.img} />
+    <img className='gift-img' src={giftInfo?.img || giftMap[1].img} />
     {/* <img className='gift-close' onClick={closeGift} src='https://cdn.tuanzhzh.com/doubi-image/gift-close.png' /> */}
   </div>
 }

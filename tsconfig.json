@@ -35,7 +35,7 @@
       "es2015"
     ],
     "jsx": "react",
-    "allowJs": true
+    "allowJs": true,
   },
   "include": [
     "src/**/*.ts",

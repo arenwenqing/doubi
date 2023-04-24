@@ -56,16 +56,16 @@ const Lottery: React.FC = () => {
 
   useEffect(() => {
     const index = lotteryModal.lotteryDataSource?.giftList?.findIndex(item => item.giftId === lotteryModal.lotteryDataSource?.maxValueGiftId)
-    const findObj = lotteryModal.lotteryDataSource?.giftList?.find(item => item.giftId === lotteryModal.lotteryDataSource?.maxValueGiftId) || {}
+    const findObj:any = lotteryModal.lotteryDataSource?.giftList?.find(item => item.giftId === lotteryModal.lotteryDataSource?.maxValueGiftId) || {}
     const tempArr = JSON.parse(JSON.stringify(lotteryModal.lotteryDataSource?.giftList || []))
     tempArr.splice(index, 1)
     setMaxValue(findObj)
-    if (findObj.giftColor === '#FFFFFF') {
-      findObj.giftColor = '#2FBFFF'
-    }
+    // if (findObj?.giftColor === '#FFFFFF') {
+    //   findObj.giftColor = '#2FBFFF'
+    // }
     setMaxValue(findObj)
     setList(tempArr)
-    if (findObj.lotteryLevel === 1) {
+    if (findObj?.lotteryLevel === 1) {
       dispatch(setShowCurrentBroadCast({
         value: findObj.giftName,
         img: findObj.mainPicUrl
@@ -84,7 +84,12 @@ const Lottery: React.FC = () => {
         </div>
         <div>
           {
-            maxValue.bigPicUrl && <div className='max-value-lottery' style={{ boxShadow: `inset 0px 0px 22px 0px ${maxValue.giftColor}`, border: `1px solid ${maxValue.giftColor}` }}>
+            maxValue.bigPicUrl && <div className='max-value-lottery'
+              style={{
+                boxShadow: `inset 0px 0px 22px 0px ${maxValue.giftColor === '#FFFFFF' ? '#2FBFFF' : maxValue.giftColor}`,
+                border: `1px solid ${maxValue.giftColor === '#FFFFFF' ? '#2FBFFF' : maxValue.giftColor}`
+              }}
+            >
               <div className='max-value-lottery-content'>
                 <img src={maxValue.mainPicUrl} />
                 <div style={{ color: maxValue.giftColor }}>{maxValue.giftName}</div>

@@ -37,3 +37,4 @@ declare module 'axios-service' {
 
   export function init(a:any, b: any): any
 }
+

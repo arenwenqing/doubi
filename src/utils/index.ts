@@ -61,6 +61,25 @@ export function getUrlParams (sourceStr?: string) {
   return urlParams;
 }
 
+/**
+ * 参数格式化, 符合url方式
+ * @params {Object} {a: '123', age: '18'}
+ * @return {String} 'a=123&age=18'
+ */
+export function stringifyParams(params, cb?:any) {
+  let name
+  let value
+  let str = ''
+
+  /* eslint-disable-next-line */
+  for (name in params) {
+    value = params[name]
+    str += `${name}=${typeof cb === 'function' ? cb(value, name) : value}&`
+  }
+
+  return str.slice(0, -1)
+}
+
 export function genId () {
   /* eslint-disable no-bitwise */
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {

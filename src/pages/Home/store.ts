@@ -145,7 +145,11 @@ export const lotteryDraw =
         duration: 1300
       })
       timerId = setTimeout( async () => {
-        const res = await Apis.lotteryDraw(query)
+        const res = await Apis.lotteryDraw(query).catch(err => {
+          if (err.response.status === 500) {
+            flag = true
+          }
+        })
         if (res.data.drawSuccess) {
           Toast.clear()
           dispatch(setLotteryModal({

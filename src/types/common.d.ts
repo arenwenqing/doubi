@@ -6,6 +6,19 @@ declare namespace CommonType {
   }
 }
 
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      WxOpenLaunchWeapp: {
+        username: string;
+        path: string;
+        ref: RefObject<HTMLElement>;
+        children: ReactNode;
+      };
+    }
+  }
+}
+
 interface ReturnListOtherType {
   page: number
   total: number

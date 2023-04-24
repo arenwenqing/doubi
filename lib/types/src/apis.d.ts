@@ -99,6 +99,10 @@ declare class Apis {
      * 【用户代理】推广员个人销售数据
      */
     getSaleData: import("axios-service").IAxiosFun;
+    /**
+     * 【首页】兑换钥匙
+     */
+    exchargeCode: import("axios-service").IAxiosFun;
 }
 export declare const ServiceApis: typeof Apis;
 declare const _default: Apis;
