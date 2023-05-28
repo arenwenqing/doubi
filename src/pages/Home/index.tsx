@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-// import Api from './apis'
+import Api from '../../apis'
 import { Divider, CapsuleTabs, Button, Modal, Toast, Space } from 'antd-mobile'
 import RollingList from '@pages/Component/RollingList'
 import { useNavigate } from 'react-router-dom'
@@ -15,15 +15,18 @@ import reducer, {
   lotteryDraw,
   getKeys,
   setExchangeCodeModal,
-  setShareModal
+  setShareModal,
+  setNoticeModal
 } from './store'
 import RechargeKey from './component/RechargeKey'
 import DetailDescription from './component/DetailDescription'
+import NoticeModal from './component/NoticeModal'
 import ExchangeCode from './component/ExchangeCode'
 import Lottery from './component/LotteryModal'
 import { getUrlParams } from 'src/utils'
 import CustomServiceModal from '../Component/CustomServiceModal'
 import Share from './component/Share'
+import moment from 'moment'
 // import { Context as globalContext, setCustomServiceModal } from '../../store'
 import './index.less'
 
@@ -147,10 +150,50 @@ const Home: React.FC = () => {
     }))
   }
 
+  const getUserInfo = () => {
+    Toast.show({
+      icon: 'loading',
+      content: '加载中…'
+    })
+    Api.getUserInfo({
+      userId: userInfo.userId
+    }).then(res => {
+      Toast.clear()
+      dispatch(setShareModal({
+        visible: true,
+        data: res.data || {}
+      }))
+    })
+  }
+
   const shareHandle = () => {
-    dispatch(setShareModal({
-      visible: true
-    }))
+    getUserInfo()
+  }
+
+  const getNotice = () => {
+    const currentTime = moment().format('YYYY-MM-DD HH:mm:ss')
+    const saveTime = window.localStorage.getItem('saveTime')
+    if (!saveTime) {
+      window.localStorage.setItem('saveTime', currentTime)
+      getNoticeData()
+    } else {
+      const getSaveTime = window.localStorage.getItem('saveTime')
+      const diff = moment(currentTime).valueOf() - moment(getSaveTime).valueOf()
+      if (diff > 24 * 60 * 60 * 1000) {
+        window.localStorage.setItem('saveTime', currentTime)
+        getNoticeData()
+      }
+    }
+  }
+
+  // 获取首页公告
+  const getNoticeData = () => {
+    Api.getNotice().then(res => {
+      dispatch(setNoticeModal({
+        visible: true,
+        data: res.data || {}
+      }))
+    })
   }
 
   useEffect(() => {
@@ -180,6 +223,7 @@ const Home: React.FC = () => {
         }]
       })
     }
+    getNotice()
   }, [])
 
   return <>
@@ -265,6 +309,7 @@ const Home: React.FC = () => {
       </div>
       <RechargeKey />
       <DetailDescription />
+      <NoticeModal />
       <Lottery />
       <CustomServiceModal />
       <ExchangeCode />

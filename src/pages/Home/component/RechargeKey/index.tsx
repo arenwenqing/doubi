@@ -153,7 +153,7 @@ const RechargeKey: React.FC = () => {
     })
     Api.createMiniProgram({
       path: '/pages/index/index',
-      'env_version': 'develop',
+      'env_version': 'release',
       query: str
     }).then(res => {
       if (!res.code) {

@@ -22,6 +22,10 @@ export const initialState = {
   detailModal: {
     visible: false
   },
+  noticeModal: {
+    visible: false,
+    data: {}
+  },
   lotteryModal: {
     visible: false,
     currentBoxType: 3,
@@ -42,7 +46,8 @@ export const initialState = {
     visible: false
   },
   shareModal: {
-    visible: false
+    visible: false,
+    data: {}
   },
   showCurrentBroadCast: {
     img: '',
@@ -60,6 +65,9 @@ export const reduxSlice = createSlice({
     },
     setDetailModal: (state, { payload }) => {
       state.detailModal = payload
+    },
+    setNoticeModal: (state, { payload }) => {
+      state.noticeModal = payload
     },
     setLotteryModal: (state, { payload }) => {
       state.lotteryModal = payload
@@ -91,7 +99,8 @@ export const {
   setCommonScreenData,
   setExchangeCodeModal,
   setShareModal,
-  setShowCurrentBroadCast
+  setShowCurrentBroadCast,
+  setNoticeModal
 } = reduxSlice.actions
 
 // 获取钥匙数量

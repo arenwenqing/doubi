@@ -138,6 +138,16 @@ class Apis {
    * 【小程序】生成跳转小程序链接
    */
   createMiniProgram = post('/api/mystery/mini/url')
+
+  /**
+   * 获取首页公告
+   */
+  getNotice = get('/api/mystery/announce/homePage')
+
+  /**
+   * 获取用户信息
+   */
+  getUserInfo = get('/api/mystery/user/detail')
 }
 
 export const ServiceApis = Apis;

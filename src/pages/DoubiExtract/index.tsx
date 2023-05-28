@@ -18,6 +18,7 @@ const showText = {
 let cacheDyIds = []
 const DoubiExtract:React.FC = () => {
   const [visible, setVisible] = useState(false)
+  const [confirmModalVisible, setConfirmModalVisible] = useState(false)
   const [data, setData] = useState<any[]>([])
   const [hasMore, setHasMore] = useState(true)
   const [coinNum, setCoinNum] = useState(0)
@@ -25,6 +26,7 @@ const DoubiExtract:React.FC = () => {
   const [douyin, setDouyin] = useState('')
   const [dyIds, setDyIds] = useState([])
   const [showDyIds, setShowDyIds] = useState(false)
+  const [customerVisible, setCustomerVisible] = useState(false)
 
   const { dispatch } = useContext(Context)
 
@@ -114,12 +116,11 @@ const DoubiExtract:React.FC = () => {
     const tempArr = cacheDyIds.filter(item => item.indexOf(val) !== -1)
     setDyIds(tempArr)
   }
-
   // 抖币提取
   const coinExtract = () => {
-    if ((extractNum * 1) % 10 !== 0) {
+    if (extractNum * 1 < 1000 || extractNum * 1 > 50000) {
       Toast.show({
-        content: '请输入10的整数倍,最大50000',
+        content: '请输入1000-50000',
         duration: 2000
       })
       return
@@ -131,6 +132,11 @@ const DoubiExtract:React.FC = () => {
       })
       return
     }
+    setConfirmModalVisible(true)
+  }
+
+  const suerHandle = () => {
+    setConfirmModalVisible(false)
     Toast.show({
       icon: 'loading',
       content: '加载中…'
@@ -156,6 +162,9 @@ const DoubiExtract:React.FC = () => {
         getCoinInfo()
         getCoinHistory()
         setVisible(false)
+        setTimeout(() => {
+          setCustomerVisible(true)
+        }, 500);
       }
     }, err => {
       Toast.show({
@@ -211,6 +220,10 @@ const DoubiExtract:React.FC = () => {
   // 选择抖音号
   const choiceDyIds = (val) => {
     setDouyin(val)
+  }
+
+  const cancelHandle = () => {
+    setConfirmModalVisible(false)
   }
 
   useEffect(() => {
@@ -308,7 +321,7 @@ const DoubiExtract:React.FC = () => {
           <div className='form-item'>
             <span className='form-item-name'>提取抖币</span>
             <Input
-              placeholder='10的整数倍,最大50000'
+              placeholder='1000-50000'
               className='form-input-style'
               onChange={coinChangeHandle}
               value={extractNum}
@@ -338,6 +351,10 @@ const DoubiExtract:React.FC = () => {
             }
           </div>
         </div>
+        <div className='extract-bottom-text-style'>
+          <span>活动期间抖币最小提取1000</span>
+          <span>活动期间每日9点~12点，16点~20点可提取抖币</span>
+        </div>
         <div className='extract-bottom-wrapper'>
           <div className='extract-bottom-btn' onClick={coinExtract}>
             <span>确定</span>
@@ -350,6 +367,31 @@ const DoubiExtract:React.FC = () => {
       onClose={() => {
         setVisible(false)
       }}
+    />
+    <Modal
+      bodyClassName='confirm-modal-wrapper'
+      visible={confirmModalVisible}
+      title={null}
+      content={
+        <div className='confirm-modal-content'>
+          <span className='confirm-content-title'>您将提取<label className='confirm-content-tip'>{extractNum}</label>抖币至抖音号<label className='confirm-content-tip'>{douyin}</label></span>
+          <span className='confirm-content-tip'>当日多次小额提取抖币可能导致抖音账号风控，短时间内无法充值抖币</span>
+          <div className='confirm-content-btn'>
+            <span className='btn-cancle' onClick={cancelHandle}>取消</span>
+            <span className='btn-sure' onClick={suerHandle}>确定</span>
+          </div>
+        </div>
+      }
+    />
+    <Modal
+      bodyClassName='customer-service-modal-wrapper'
+      visible={customerVisible}
+      title='您的抖币提取已提交'
+      content={<div className='customer-content'>
+        <img className='customer-img' src='https://cdn.tuanzhzh.com/doubi-image/Wechat-k.jpeg' />
+        <span className='customer-content-tip'>请务必添加客服微信以完成后续校验</span>
+        <span className='customer-content-btn' onClick={() => setCustomerVisible(false)}>确定</span>
+      </div>}
     />
     <CustomServiceModal />
   </div>
