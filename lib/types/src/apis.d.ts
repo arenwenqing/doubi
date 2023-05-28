@@ -107,6 +107,14 @@ declare class Apis {
      * 【小程序】生成跳转小程序链接
      */
     createMiniProgram: import("axios-service").IAxiosFun;
+    /**
+     * 获取首页公告
+     */
+    getNotice: import("axios-service").IAxiosFun;
+    /**
+     * 获取用户信息
+     */
+    getUserInfo: import("axios-service").IAxiosFun;
 }
 export declare const ServiceApis: typeof Apis;
 declare const _default: Apis;

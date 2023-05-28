@@ -118,9 +118,9 @@ const DoubiExtract:React.FC = () => {
   }
   // 抖币提取
   const coinExtract = () => {
-    if (extractNum * 1 < 1000 || extractNum * 1 > 50000) {
+    if ((extractNum * 1) % 1000 !== 0  || extractNum * 1 > 50000) {
       Toast.show({
-        content: '请输入1000-50000',
+        content: '1000的整数倍最大50000',
         duration: 2000
       })
       return
@@ -321,7 +321,7 @@ const DoubiExtract:React.FC = () => {
           <div className='form-item'>
             <span className='form-item-name'>提取抖币</span>
             <Input
-              placeholder='1000-50000'
+              placeholder='1000的整数倍最大50000'
               className='form-input-style'
               onChange={coinChangeHandle}
               value={extractNum}

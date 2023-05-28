@@ -21,7 +21,7 @@ const NoticeModal: React.FC = () => {
         <img onClick={closeModal} className='detail-close-icon' src='https://cdn.tuanzhzh.com/doubi-image/close-modal-icon.png' />
         <div className='detail-title'>{noticeModal.data?.title || '公告'}</div>
         <ul className='detail-description-ul'>
-          <li>{noticeModal.data.content || '暂无'}</li>
+          <li dangerouslySetInnerHTML={{__html: noticeModal.data?.content || '暂无' }}></li>
         </ul>
       </div>
     </Mask>

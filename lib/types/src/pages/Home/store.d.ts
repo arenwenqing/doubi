@@ -16,6 +16,10 @@ export declare const initialState: {
     detailModal: {
         visible: boolean;
     };
+    noticeModal: {
+        visible: boolean;
+        data: {};
+    };
     lotteryModal: {
         visible: boolean;
         currentBoxType: number;
@@ -31,6 +35,7 @@ export declare const initialState: {
     };
     shareModal: {
         visible: boolean;
+        data: {};
     };
     showCurrentBroadCast: {
         img: string;
@@ -46,6 +51,10 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
     detailModal: {
         visible: boolean;
     };
+    noticeModal: {
+        visible: boolean;
+        data: {};
+    };
     lotteryModal: {
         visible: boolean;
         currentBoxType: number;
@@ -61,6 +70,7 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
     };
     shareModal: {
         visible: boolean;
+        data: {};
     };
     showCurrentBroadCast: {
         img: string;
@@ -75,6 +85,10 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
         };
         detailModal: {
             visible: boolean;
+        };
+        noticeModal: {
+            visible: boolean;
+            data: {};
         };
         lotteryModal: {
             visible: boolean;
@@ -91,6 +105,7 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
         };
         shareModal: {
             visible: boolean;
+            data: {};
         };
         showCurrentBroadCast: {
             img: string;
@@ -109,6 +124,10 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
         detailModal: {
             visible: boolean;
         };
+        noticeModal: {
+            visible: boolean;
+            data: {};
+        };
         lotteryModal: {
             visible: boolean;
             currentBoxType: number;
@@ -124,6 +143,45 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
         };
         shareModal: {
             visible: boolean;
+            data: {};
+        };
+        showCurrentBroadCast: {
+            img: string;
+            value: string;
+        };
+    }>, { payload }: {
+        payload: any;
+        type: string;
+    }) => void;
+    setNoticeModal: (state: import("immer/dist/internal").WritableDraft<{
+        viewModal: {
+            visible: boolean;
+            type: number;
+            num: number;
+        };
+        detailModal: {
+            visible: boolean;
+        };
+        noticeModal: {
+            visible: boolean;
+            data: {};
+        };
+        lotteryModal: {
+            visible: boolean;
+            currentBoxType: number;
+            lotteryDataSource: {};
+        };
+        keyInfo: {
+            keyType: number;
+            keyCount: number;
+        }[];
+        commonScreenData: any[];
+        exchangeCodeModal: {
+            visible: boolean;
+        };
+        shareModal: {
+            visible: boolean;
+            data: {};
         };
         showCurrentBroadCast: {
             img: string;
@@ -142,6 +200,10 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
         detailModal: {
             visible: boolean;
         };
+        noticeModal: {
+            visible: boolean;
+            data: {};
+        };
         lotteryModal: {
             visible: boolean;
             currentBoxType: number;
@@ -157,6 +219,7 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
         };
         shareModal: {
             visible: boolean;
+            data: {};
         };
         showCurrentBroadCast: {
             img: string;
@@ -175,6 +238,10 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
         detailModal: {
             visible: boolean;
         };
+        noticeModal: {
+            visible: boolean;
+            data: {};
+        };
         lotteryModal: {
             visible: boolean;
             currentBoxType: number;
@@ -190,6 +257,7 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
         };
         shareModal: {
             visible: boolean;
+            data: {};
         };
         showCurrentBroadCast: {
             img: string;
@@ -208,6 +276,10 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
         detailModal: {
             visible: boolean;
         };
+        noticeModal: {
+            visible: boolean;
+            data: {};
+        };
         lotteryModal: {
             visible: boolean;
             currentBoxType: number;
@@ -223,6 +295,7 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
         };
         shareModal: {
             visible: boolean;
+            data: {};
         };
         showCurrentBroadCast: {
             img: string;
@@ -241,6 +314,10 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
         detailModal: {
             visible: boolean;
         };
+        noticeModal: {
+            visible: boolean;
+            data: {};
+        };
         lotteryModal: {
             visible: boolean;
             currentBoxType: number;
@@ -256,6 +333,7 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
         };
         shareModal: {
             visible: boolean;
+            data: {};
         };
         showCurrentBroadCast: {
             img: string;
@@ -274,6 +352,10 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
         detailModal: {
             visible: boolean;
         };
+        noticeModal: {
+            visible: boolean;
+            data: {};
+        };
         lotteryModal: {
             visible: boolean;
             currentBoxType: number;
@@ -289,6 +371,7 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
         };
         shareModal: {
             visible: boolean;
+            data: {};
         };
         showCurrentBroadCast: {
             img: string;
@@ -307,6 +390,10 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
         detailModal: {
             visible: boolean;
         };
+        noticeModal: {
+            visible: boolean;
+            data: {};
+        };
         lotteryModal: {
             visible: boolean;
             currentBoxType: number;
@@ -322,6 +409,7 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
         };
         shareModal: {
             visible: boolean;
+            data: {};
         };
         showCurrentBroadCast: {
             img: string;
@@ -332,7 +420,7 @@ export declare const reduxSlice: import("@reduxjs/toolkit").Slice<{
         type: string;
     }) => void;
 }, "reduxSlice">;
-export declare const setViewModal: import("@reduxjs/toolkit").ActionCreatorWithPayload<any, "reduxSlice/setViewModal">, setDetailModal: import("@reduxjs/toolkit").ActionCreatorWithPayload<any, "reduxSlice/setDetailModal">, setLotteryModal: import("@reduxjs/toolkit").ActionCreatorWithPayload<any, "reduxSlice/setLotteryModal">, setKeyInfo: import("@reduxjs/toolkit").ActionCreatorWithPayload<any, "reduxSlice/setKeyInfo">, setCommonScreenData: import("@reduxjs/toolkit").ActionCreatorWithPayload<any, "reduxSlice/setCommonScreenData">, setExchangeCodeModal: import("@reduxjs/toolkit").ActionCreatorWithPayload<any, "reduxSlice/setExchangeCodeModal">, setShareModal: import("@reduxjs/toolkit").ActionCreatorWithPayload<any, "reduxSlice/setShareModal">, setShowCurrentBroadCast: import("@reduxjs/toolkit").ActionCreatorWithPayload<any, "reduxSlice/setShowCurrentBroadCast">;
+export declare const setViewModal: import("@reduxjs/toolkit").ActionCreatorWithPayload<any, "reduxSlice/setViewModal">, setDetailModal: import("@reduxjs/toolkit").ActionCreatorWithPayload<any, "reduxSlice/setDetailModal">, setLotteryModal: import("@reduxjs/toolkit").ActionCreatorWithPayload<any, "reduxSlice/setLotteryModal">, setKeyInfo: import("@reduxjs/toolkit").ActionCreatorWithPayload<any, "reduxSlice/setKeyInfo">, setCommonScreenData: import("@reduxjs/toolkit").ActionCreatorWithPayload<any, "reduxSlice/setCommonScreenData">, setExchangeCodeModal: import("@reduxjs/toolkit").ActionCreatorWithPayload<any, "reduxSlice/setExchangeCodeModal">, setShareModal: import("@reduxjs/toolkit").ActionCreatorWithPayload<any, "reduxSlice/setShareModal">, setShowCurrentBroadCast: import("@reduxjs/toolkit").ActionCreatorWithPayload<any, "reduxSlice/setShowCurrentBroadCast">, setNoticeModal: import("@reduxjs/toolkit").ActionCreatorWithPayload<any, "reduxSlice/setNoticeModal">;
 export declare const getKeys: (query: any) => (dispatch: any) => Promise<void>;
 export declare const getCommonScreen: () => (dispatch: any) => Promise<void>;
 export declare const lotteryDraw: (query: LotteryType) => (dispatch: any) => Promise<void>;
@@ -344,6 +432,10 @@ declare const _default: import("redux").Reducer<{
     };
     detailModal: {
         visible: boolean;
+    };
+    noticeModal: {
+        visible: boolean;
+        data: {};
     };
     lotteryModal: {
         visible: boolean;
@@ -360,6 +452,7 @@ declare const _default: import("redux").Reducer<{
     };
     shareModal: {
         visible: boolean;
+        data: {};
     };
     showCurrentBroadCast: {
         img: string;

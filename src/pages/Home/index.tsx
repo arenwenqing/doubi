@@ -223,9 +223,12 @@ const Home: React.FC = () => {
         }]
       })
     }
-    getNotice()
   }, [])
-
+  useEffect(() => {
+    if (userInfo.userId) {
+      getNotice()
+    }
+  })
   return <>
     <Context.Provider value={{ state, dispatch }}>
       <div className='home-page'>
