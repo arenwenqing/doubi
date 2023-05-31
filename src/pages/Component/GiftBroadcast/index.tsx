@@ -10,13 +10,13 @@ const phoneHead = [
 ]
 
 const giftMap = [{
-  img: 'https://cdn.tuanzhzh.com/doubi-image/feichuan.png',
+  img: 'https://cdn.tuanzhzh.com/doubi-image/tangguofeichuang.png',
   value: '糖果飞船'
 }, {
-  img: 'https://cdn.tuanzhzh.com/doubi-image/douyinyihao.png',
-  value: '抖音1号'
+  img: 'https://cdn.tuanzhzh.com/doubi-image/huojian-new.png',
+  value: '火箭'
 }, {
-  img: 'https://cdn.tuanzhzh.com/doubi-image/jianianhua.png',
+  img: 'https://cdn.tuanzhzh.com/doubi-image/jianianhua-new.png',
   value: '嘉年华'
 }]
 function rand (min, max) {
