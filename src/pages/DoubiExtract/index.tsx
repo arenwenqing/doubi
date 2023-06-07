@@ -26,7 +26,7 @@ const DoubiExtract:React.FC = () => {
   const [douyin, setDouyin] = useState('')
   const [dyIds, setDyIds] = useState([])
   const [showDyIds, setShowDyIds] = useState(false)
-  const [customerVisible, setCustomerVisible] = useState(false)
+  // const [customerVisible, setCustomerVisible] = useState(false)
 
   const { dispatch } = useContext(Context)
 
@@ -118,9 +118,9 @@ const DoubiExtract:React.FC = () => {
   }
   // 抖币提取
   const coinExtract = () => {
-    if ((extractNum * 1) % 1000 !== 0  || extractNum * 1 > 50000) {
+    if ((extractNum * 1) % 10 !== 0 || extractNum * 1 > 50000) {
       Toast.show({
-        content: '1000的整数倍最大50000',
+        content: '请输入10的整数倍,最大50000',
         duration: 2000
       })
       return
@@ -162,9 +162,9 @@ const DoubiExtract:React.FC = () => {
         getCoinInfo()
         getCoinHistory()
         setVisible(false)
-        setTimeout(() => {
-          setCustomerVisible(true)
-        }, 500);
+        // setTimeout(() => {
+        //   setCustomerVisible(true)
+        // }, 500);
       }
     }, err => {
       Toast.show({
@@ -321,7 +321,7 @@ const DoubiExtract:React.FC = () => {
           <div className='form-item'>
             <span className='form-item-name'>提取抖币</span>
             <Input
-              placeholder='1000的整数倍最大50000'
+              placeholder='请输入10的整数倍,最大50000'
               className='form-input-style'
               onChange={coinChangeHandle}
               value={extractNum}
@@ -351,10 +351,10 @@ const DoubiExtract:React.FC = () => {
             }
           </div>
         </div>
-        <div className='extract-bottom-text-style'>
+        {/* <div className='extract-bottom-text-style'>
           <span>活动期间抖币最小提取1000</span>
           <span>活动期间每日9点~12点，16点~20点可提取抖币</span>
-        </div>
+        </div> */}
         <div className='extract-bottom-wrapper'>
           <div className='extract-bottom-btn' onClick={coinExtract}>
             <span>确定</span>
@@ -383,7 +383,7 @@ const DoubiExtract:React.FC = () => {
         </div>
       }
     />
-    <Modal
+    {/* <Modal
       bodyClassName='customer-service-modal-wrapper'
       visible={customerVisible}
       title='您的抖币提取已提交'
@@ -392,7 +392,7 @@ const DoubiExtract:React.FC = () => {
         <span className='customer-content-tip'>请务必添加客服微信以完成后续校验</span>
         <span className='customer-content-btn' onClick={() => setCustomerVisible(false)}>确定</span>
       </div>}
-    />
+    /> */}
     <CustomServiceModal />
   </div>
 }

@@ -15,18 +15,18 @@ import reducer, {
   lotteryDraw,
   getKeys,
   setExchangeCodeModal,
-  setShareModal,
-  setNoticeModal
+  setShareModal
+  // setNoticeModal
 } from './store'
 import RechargeKey from './component/RechargeKey'
 import DetailDescription from './component/DetailDescription'
-import NoticeModal from './component/NoticeModal'
+// import NoticeModal from './component/NoticeModal'
 import ExchangeCode from './component/ExchangeCode'
 import Lottery from './component/LotteryModal'
 import { getUrlParams } from 'src/utils'
-import CustomServiceModal from '../Component/CustomServiceModal'
+// import CustomServiceModal from '../Component/CustomServiceModal'
 import Share from './component/Share'
-import moment from 'moment'
+// import moment from 'moment'
 // import { Context as globalContext, setCustomServiceModal } from '../../store'
 import './index.less'
 
@@ -170,31 +170,31 @@ const Home: React.FC = () => {
     getUserInfo()
   }
 
-  const getNotice = () => {
-    const currentTime = moment().format('YYYY-MM-DD HH:mm:ss')
-    const saveTime = window.localStorage.getItem('saveTime')
-    if (!saveTime) {
-      window.localStorage.setItem('saveTime', currentTime)
-      getNoticeData()
-    } else {
-      const getSaveTime = window.localStorage.getItem('saveTime')
-      const diff = moment(currentTime).valueOf() - moment(getSaveTime).valueOf()
-      if (diff > 24 * 60 * 60 * 1000) {
-        window.localStorage.setItem('saveTime', currentTime)
-        getNoticeData()
-      }
-    }
-  }
+  // const getNotice = () => {
+  //   const currentTime = moment().format('YYYY-MM-DD HH:mm:ss')
+  //   const saveTime = window.localStorage.getItem('saveTime')
+  //   if (!saveTime) {
+  //     window.localStorage.setItem('saveTime', currentTime)
+  //     getNoticeData()
+  //   } else {
+  //     const getSaveTime = window.localStorage.getItem('saveTime')
+  //     const diff = moment(currentTime).valueOf() - moment(getSaveTime).valueOf()
+  //     if (diff > 24 * 60 * 60 * 1000) {
+  //       window.localStorage.setItem('saveTime', currentTime)
+  //       getNoticeData()
+  //     }
+  //   }
+  // }
 
   // 获取首页公告
-  const getNoticeData = () => {
-    Api.getNotice().then(res => {
-      dispatch(setNoticeModal({
-        visible: true,
-        data: res.data || {}
-      }))
-    })
-  }
+  // const getNoticeData = () => {
+  //   Api.getNotice().then(res => {
+  //     dispatch(setNoticeModal({
+  //       visible: true,
+  //       data: res.data || {}
+  //     }))
+  //   })
+  // }
 
   useEffect(() => {
     if (Object.keys(userInfo).length) {
@@ -224,11 +224,11 @@ const Home: React.FC = () => {
       })
     }
   }, [])
-  useEffect(() => {
-    if (userInfo.userId) {
-      getNotice()
-    }
-  })
+  // useEffect(() => {
+  //   if (userInfo.userId) {
+  //     getNotice()
+  //   }
+  // })
   return <>
     <Context.Provider value={{ state, dispatch }}>
       <div className='home-page'>
@@ -312,9 +312,9 @@ const Home: React.FC = () => {
       </div>
       <RechargeKey />
       <DetailDescription />
-      <NoticeModal />
+      {/* <NoticeModal /> */}
       <Lottery />
-      <CustomServiceModal />
+      {/* <CustomServiceModal /> */}
       <ExchangeCode />
       <Share />
     </Context.Provider>

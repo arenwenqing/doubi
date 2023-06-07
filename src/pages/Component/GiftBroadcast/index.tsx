@@ -11,13 +11,13 @@ const phoneHead = [
 
 const giftMap = [{
   img: 'https://cdn.tuanzhzh.com/doubi-image/tangguofeichuang.png',
-  value: '糖果飞船'
+  value: '小飞船'
 }, {
   img: 'https://cdn.tuanzhzh.com/doubi-image/huojian-new.png',
-  value: '火箭'
+  value: '小火箭'
 }, {
   img: 'https://cdn.tuanzhzh.com/doubi-image/jianianhua-new.png',
-  value: '嘉年华'
+  value: '小嘉年华'
 }]
 function rand (min, max) {
   return Math.floor(Math.random()*(max - min)) + min;
