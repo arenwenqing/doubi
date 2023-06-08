@@ -321,7 +321,7 @@ const DoubiExtract:React.FC = () => {
           <div className='form-item'>
             <span className='form-item-name'>提取抖币</span>
             <Input
-              placeholder='请输入10的整数倍,最大50000'
+              placeholder='10的整数倍,最大50000'
               className='form-input-style'
               onChange={coinChangeHandle}
               value={extractNum}
