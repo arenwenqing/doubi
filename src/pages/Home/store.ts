@@ -151,7 +151,7 @@ export const lotteryDraw =
       Toast.show({
         icon: 'loading',
         content: '加载中…',
-        duration: 1300
+        duration: 1500
       })
       timerId = setTimeout( async () => {
         const res = await Apis.lotteryDraw(query).catch(err => {
@@ -182,7 +182,7 @@ export const lotteryDraw =
         timerId2 = setTimeout(() => {
           flag = true
         }, 1000);
-      }, 3000);
+      }, query.keyInfo.keyCount === 1 ? 2000 : 100);
     }
 
 // Reducer
